@@ -16,7 +16,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ f
         <div className="intro">
           <p className="eyebrow">Independent design & development</p>
           <h1>Your next idea.<br/><span>Beautifully built.</span></h1>
-          <p className="description">Websites and web apps, designed around you.<br className="wide-break"/> From a simple first page to a complete platform.</p>
+          <p className="description">Websites and web apps.<br className="wide-break"/> From landing pages to complete platforms.</p>
           <ContactActions source={source} />
         </div>
       </main>

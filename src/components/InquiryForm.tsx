@@ -58,16 +58,15 @@ export default function InquiryForm({ source }: { source: string }) {
       <div className="success-mark" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="m6 14 5 5L22 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
       <h1 className="form-title" tabIndex={-1} ref={successHeading}>Message sent.</h1>
       <p className="form-description">Thanks for sharing your idea.<br/>I’ll reply to <strong>{email}</strong>.</p>
-      <Link className="primary-button" href={source ? `/?from=${encodeURIComponent(source)}` : "/"}>Back to home <span aria-hidden="true">↗</span></Link>
+      <Link className="primary-button" href={source ? `/?from=${encodeURIComponent(source)}` : "/"}><span aria-hidden="true">←</span> Back to home</Link>
     </div>
   );
 
   return (
     <>
       <div className="form-heading">
-        <p className="eyebrow">Let’s make it happen</p>
         <h1 className="form-title">Tell me your idea.</h1>
-        <p className="form-description">A little context is all we need to get started.</p>
+        <p className="form-description">A few sentences is plenty.</p>
       </div>
       <form className="inquiry-form" ref={formRef} method="post" action="/api/inquiry" onSubmit={submit} aria-busy={status === "sending"}>
         <fieldset disabled={!ready || status === "sending"}>
@@ -85,14 +84,14 @@ export default function InquiryForm({ source }: { source: string }) {
           </div>
           <div className="input-group">
             <label htmlFor="message">What would you like to build?</label>
-            <textarea id="message" name="message" required minLength={10} maxLength={INQUIRY_LIMITS.message} rows={5} placeholder="Tell me a little about what you have in mind." aria-invalid={!!fields.message} aria-describedby={fields.message ? "message-error" : undefined}/>
+            <textarea id="message" name="message" required minLength={10} maxLength={INQUIRY_LIMITS.message} rows={5} placeholder="What do you need, and who is it for?" aria-invalid={!!fields.message} aria-describedby={fields.message ? "message-error" : undefined}/>
             {fields.message ? <p id="message-error" className="field-error">{fields.message}</p> : null}
           </div>
           <div className="honeypot" aria-hidden="true"><label htmlFor="website">Leave this field empty</label><input id="website" name="website" tabIndex={-1} autoComplete="off"/></div>
           {error ? <p className="submission-error" role="alert">{error}</p> : null}
           <div className="submit-row">
-            <button className="primary-button" type="submit">{status === "sending" ? "Sending…" : "Send message"}<span aria-hidden="true">↗</span></button>
-            <p>I’ll reply to the email you provide.</p>
+            <button className="primary-button" type="submit">{status === "sending" ? "Sending…" : "Send message"}</button>
+            <p>I’ll reply personally.</p>
           </div>
         </fieldset>
       </form>

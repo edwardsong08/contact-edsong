@@ -1,5 +1,19 @@
 # Work log
 
+## 2026-11-13 — approved shorter copy and refinement release
+
+- Edward found the first-person description wordy and approved "Websites and web apps. From landing pages to complete platforms." He then explicitly requested the change and deployment, superseding the initial local-only review boundary.
+- The release includes the reviewed typography, wordmark, form-copy, and button refinements, with portfolio navigation still hidden. The gallery remains available through direct/legacy links. Production mail settings, API protections, and host routing are unchanged.
+- All 18 tests, TypeScript checking, and the production build passed with the final approved copy. Release is promoted to main through the existing signed deployment webhook.
+
+## 2026-11-13 — local personal-copy and typography refinement
+
+- Edward approved the proposed refinements and requested a local preview, keeping portfolio navigation hidden. Work is on codex/contact-refinements-local from cec9724; nothing in this pass is pushed or deployed.
+- Kept the existing headline and two-page structure. Added first-person homepage copy, a stronger plain-text wordmark, looser headline tracking and phone sizing, solid gray secondary headline text, and restrained hover/press feedback with reduced-motion support. Internal navigation uses right/left arrows; Send message is a plain submit action with a stable width while sending.
+- Simplified the form to Tell me your idea / A few sentences is plenty, with a useful message prompt and I'll reply personally. The three fields, POST/hydration guard, validation, draft preservation, backend protections, and hidden portfolio route remain intact. Disabled the Next dev indicator for a clean preview.
+- All 18 existing tests, TypeScript checking, and the production build passed; the preview's development configuration compiled successfully. Browser review covered desktop and observed narrow phone widths (including 390 CSS pixels), with no horizontal overflow, hidden work navigation, and referral-preserving home-to-form links. A local credential-free submission returned the expected 503, displayed the unavailable message, and retained the draft. No email was sent; generated test data was cleared afterward.
+- Preview runs on http://127.0.0.1:3096, bound only to loopback, without a mail credential. Source review used the React best-practices checklist; no dependencies, client effects, or backend behavior were added.
+
 ## 2026-11-13 — temporarily hide work navigation
 
 - Edward requested hiding My work without deleting the portfolio, leaving home and Start a project as the promoted flow. Added one shared false visibility flag around the existing home/404 links; the gallery, its assets, and direct/legacy URLs remain intact.

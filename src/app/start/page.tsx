@@ -17,7 +17,7 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
         <Link className="wordmark" href={source ? `/?from=${encodeURIComponent(source)}` : "/"}>Edward Song</Link>
-        <Link className="portfolio" href={source ? `/?from=${encodeURIComponent(source)}` : "/"} aria-label="Back to home"><span aria-hidden="true">←</span> Back</Link>
+        <Link className="portfolio back-link" href={source ? `/?from=${encodeURIComponent(source)}` : "/"} aria-label="Back to home"><span aria-hidden="true">←</span> Back</Link>
       </header>
       <main id="main" className="inquiry-main">
         <div className="inquiry-content">
