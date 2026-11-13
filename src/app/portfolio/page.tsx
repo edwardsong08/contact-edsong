@@ -77,7 +77,10 @@ export default async function Portfolio({ searchParams }: { searchParams: Promis
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
         <Link className="wordmark" href={homeHref}>Edward Song</Link>
-        <Link className={styles.contactLink} href={startHref}>Start a project <span aria-hidden="true">↗</span></Link>
+        <nav className={styles.navigation} aria-label="Portfolio navigation">
+          <Link className={styles.backLink} href={homeHref} aria-label="Back to home"><span aria-hidden="true">←</span> Back</Link>
+          <Link className={styles.contactLink} href={startHref}>Start a project <span aria-hidden="true">↗</span></Link>
+        </nav>
       </header>
       <main id="main">
         <div className={styles.intro}>

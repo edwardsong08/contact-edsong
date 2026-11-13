@@ -15,7 +15,7 @@ body {
 a { color: inherit; text-decoration: none; }
 button, input, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-a:focus-visible, button:focus-visible { outline: 3px solid #0071e380; outline-offset: 6px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--blue); outline-offset: 6px; }
 ::selection { background: #cfe7ff; }
 .page {
   min-height: 100svh;
@@ -28,8 +28,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid #0071e380; outline-of
 .skip-link { position: absolute; top: -100px; left: 24px; padding: 12px; background: white; z-index: 2; }
 .skip-link:focus { top: 15px; }
 .header { display: flex; justify-content: space-between; align-items: center; min-height: 92px; }
-.wordmark { font-weight: 600; font-size: 17px; letter-spacing: -.55px; }
-.portfolio { color: var(--secondary); font-size: 12px; }
+.wordmark { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; font-size: 17px; letter-spacing: -.55px; }
+.portfolio { display: inline-flex; align-items: center; min-height: 44px; color: var(--secondary); font-size: 12px; padding: 10px 0; }
 .portfolio span { display: inline-block; margin-left: 5px; }
 .portfolio:hover { color: var(--blue); }
 .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 65px 0 76px; }
@@ -38,7 +38,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #0071e380; outline-of
 h1 { font-size: clamp(66px, 7.8vw, 110px); font-weight: 600; line-height: 1.035; letter-spacing: -.065em; margin: 0; }
 h1 span {
   color: #7a7a80;
-  background: linear-gradient(110deg, #a3a3a9 3%, #727279 60%, #434348 100%);
+  background: linear-gradient(110deg, #86868b 3%, #727279 60%, #434348 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -52,7 +52,7 @@ h1 span {
   transition: background .18s ease, box-shadow .18s ease;
   border: 0; cursor: pointer;
 }
-.primary-button:hover { background: #0077ed; box-shadow: 0 3px 14px #0071e31a; }
+.primary-button:hover { background: #0070e0; box-shadow: 0 3px 14px #0071e31a; }
 .primary-button:active { background: #0068d1; }
 .primary-button span { font-size: 20px; font-weight: 300; line-height: 1; }
 .email-row { display: flex; align-items: center; justify-content: center; gap: 3px; margin-top: 23px; }
@@ -64,7 +64,7 @@ h1 span {
 }
 .copy-button:hover { color: var(--blue); background: #0071e308; }
 .copy-status { margin: 2px 0 0; min-height: 17px; font-size: 11px; color: var(--secondary); }
-.footer { display: flex; justify-content: space-between; align-items: center; padding: 26px 0; color: #86868b; font-size: 10px; letter-spacing: .05px; }
+.footer { display: flex; justify-content: space-between; align-items: center; padding: 26px 0; color: var(--secondary); font-size: 11px; letter-spacing: .05px; }
 .footer a:hover { color: var(--ink); }
 .footer a span { margin-left: 4px; }
 .inquiry-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 0 60px; }
@@ -78,15 +78,15 @@ h1.form-title { font-size: clamp(38px, 5vw, 56px); line-height: 1.1; letter-spac
 .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 .input-group { min-width: 0; }
 .input-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 9px; letter-spacing: -.1px; }
-.input-group input, .input-group textarea { display: block; width: 100%; min-width: 0; border: 1px solid #d2d2d7; background: #fff; border-radius: 12px; padding: 14px 15px; color: var(--ink); font-size: 16px; line-height: 1.4; transition: border-color .18s, box-shadow .18s; }
+.input-group input, .input-group textarea { display: block; width: 100%; min-width: 0; border: 1px solid #8c8c91; background: #fff; border-radius: 12px; padding: 14px 15px; color: var(--ink); font-size: 16px; line-height: 1.4; transition: border-color .18s, box-shadow .18s; }
 .input-group textarea { resize: vertical; min-height: 132px; max-height: 400px; }
-.input-group textarea::placeholder { color: #86868b; font-size: 14px; }
+.input-group textarea::placeholder { color: var(--secondary); font-size: 14px; }
 .input-group input:focus, .input-group textarea:focus { border-color: var(--blue); outline: 0; box-shadow: 0 0 0 3px #0071e326; }
 .input-group [aria-invalid=true] { border-color: #b42318; }
 .field-error, .submission-error { color: #a12720; font-size: 12px; line-height: 1.6; margin: 8px 0 0; }
 .submission-error { margin: 0; }
 .submit-row { display: flex; align-items: center; gap: 22px; }
-.submit-row p { color: var(--secondary); font-size: 11px; line-height: 1.6; margin: 0; }
+.submit-row p { color: var(--secondary); font-size: 12px; line-height: 1.6; margin: 0; }
 .inquiry-form fieldset:disabled .primary-button { cursor: wait; opacity: .65; }
 .form-email { color: var(--secondary); font-size: 12px; line-height: 1.7; text-align: center; margin: 30px 0 0; }
 .form-email a { color: var(--blue); white-space: nowrap; }
@@ -118,7 +118,7 @@ h1.form-title { font-size: clamp(38px, 5vw, 56px); line-height: 1.1; letter-spac
   .page { padding: 0 25px; }
   .header { min-height: 77px; }
   .wordmark { font-size: 16px; }
-  .portfolio { font-size: 11px; }
+  .portfolio { font-size: 12px; }
   .main { padding: 45px 0 64px; }
   .eyebrow { font-size: 11px; margin-bottom: 22px; }
   h1 { font-size: clamp(44px, 11.4vw, 58px); line-height: 1.08; letter-spacing: -.065em; }
@@ -129,7 +129,7 @@ h1.form-title { font-size: clamp(38px, 5vw, 56px); line-height: 1.1; letter-spac
   .email-row { margin-top: 22px; }
   .email { font-size: 11px; }
   .copy-button { width: 44px; height: 44px; }
-  .footer { font-size: 9px; padding: 24px 0; }
+  .footer { font-size: 11px; padding: 24px 0; }
 }
 @media (max-height: 760px) {
   .header { min-height: 76px; }

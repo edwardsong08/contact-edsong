@@ -1,5 +1,14 @@
 # Work log
 
+## 2026-11-13 — full contact-site audit and navigation repair
+
+- Edward reported the missing portfolio Back button and requested a full audit and rating. Added an explicit Back link, preserved source context in form return links, and added a matching 404 with a home action.
+- The audit found a no-JavaScript GET fallback in the form. It now declares POST to /api/inquiry and keeps controls disabled until the client is interactive. Initial HTML and hydrated browser behavior were checked.
+- Improved headline, footer, placeholder, button-hover, border, and focus contrast, plus small navigation/helper text. Added baseline CSP and production host-only HSTS. No main-profile or other project changes.
+- Public route/link, header, client-asset privacy, invalid API, dependency, source, keyboard, responsive, and local form-error checks are documented in docs/site-audit-2026-11-13.md. Overall post-fix review rating: 8.5/10, with explicit limits and remaining recommendations.
+- All 11 tests, TypeScript checking, and production build passed. Browser checks covered 320, 390, and 768 CSS-pixel layouts plus desktop. Local invalid/temporarily-unavailable submissions preserved the draft and focused validation errors. No email was sent. Production dependency scan reported zero vulnerabilities; secrets remain runtime-only by Coolify flags.
+- Release uses the existing personal GitHub main webhook and Coolify app. Raw release verification and screenshots are retained locally under ignored artifacts/.
+
 ## 2026-11-13 — separate selected-work gallery
 
 - Edward asked for a client-facing portfolio at contact.edsong.xyz/portfolio, keeping his main profile separate, then broadened the choice of work and requested a rethink from scratch.

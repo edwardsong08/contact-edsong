@@ -9,10 +9,12 @@ export default function InquiryForm({ source }: { source: string }) {
   const [error, setError] = useState("");
   const [fields, setFields] = useState<InquiryErrors>({});
   const [email, setEmail] = useState("");
+  const [ready, setReady] = useState(false);
   const attempt = useRef<{ body: string; id: string } | null>(null);
   const successHeading = useRef<HTMLHeadingElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
+  useEffect(() => { setReady(true); }, []);
   useEffect(() => { if (status === "sent") successHeading.current?.focus(); }, [status]);
   useEffect(() => {
     const invalid = Object.keys(fields)[0];
@@ -56,7 +58,7 @@ export default function InquiryForm({ source }: { source: string }) {
       <div className="success-mark" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="m6 14 5 5L22 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
       <h1 className="form-title" tabIndex={-1} ref={successHeading}>Message sent.</h1>
       <p className="form-description">Thanks for sharing your idea.<br/>I’ll reply to <strong>{email}</strong>.</p>
-      <Link className="primary-button" href="/">Back to home <span aria-hidden="true">↗</span></Link>
+      <Link className="primary-button" href={source ? `/?from=${encodeURIComponent(source)}` : "/"}>Back to home <span aria-hidden="true">↗</span></Link>
     </div>
   );
 
@@ -67,8 +69,8 @@ export default function InquiryForm({ source }: { source: string }) {
         <h1 className="form-title">Tell me your idea.</h1>
         <p className="form-description">A little context is all we need to get started.</p>
       </div>
-      <form className="inquiry-form" ref={formRef} onSubmit={submit} aria-busy={status === "sending"}>
-        <fieldset disabled={status === "sending"}>
+      <form className="inquiry-form" ref={formRef} method="post" action="/api/inquiry" onSubmit={submit} aria-busy={status === "sending"}>
+        <fieldset disabled={!ready || status === "sending"}>
           <div className="input-row">
             <div className="input-group">
               <label htmlFor="name">Your name</label>
