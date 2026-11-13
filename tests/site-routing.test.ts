@@ -10,8 +10,18 @@ test("old contact links retain their path, referring site, and fragment", () => 
   }
 });
 
-test("the www alias uses the main site and clears an upstream port", () => {
-  assert.equal(getSiteRedirect(new URL("http://www.edsong.xyz:3000/start?from=example.com"))?.href, "https://edsong.xyz/start?from=example.com");
+test("both main-site hosts serve pages without reversing the old cached apex-to-www redirect", () => {
+  for (const host of ["edsong.xyz", "www.edsong.xyz"]) {
+    for (const path of ["/", "/portfolio", "/start"]) {
+      assert.equal(getSiteRedirect(new URL(`https://${host}${path}?from=client.example`)), null);
+    }
+  }
+});
+
+test("an old cached apex-to-www redirect terminates on a served page", () => {
+  const cachedDestination = new URL("https://www.edsong.xyz/start?from=client.example");
+  assert.equal(getSiteRedirect(cachedDestination), null);
+  assert.equal(getSiteRedirect(new URL("http://www.edsong.xyz:3000/start")), null);
 });
 
 test("legacy profile case studies and resume links reach their matching new paths", () => {

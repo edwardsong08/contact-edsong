@@ -3,6 +3,7 @@
 Read CONTEXT.md and LOGS.md before making changes. This is Edward's personal inquiry site, independent of TROA and QFIN.
 
 - Canonical host is https://edsong.xyz. profile.edsong.xyz hosts the separate professional profile. Keep permanent old-contact page redirects with paths and referral parameters intact. Keep /api/deploy and /api/inquiry available on the legacy contact hostname so existing hooks and open forms continue working.
+- Serve both edsong.xyz and www.edsong.xyz without redirects between them. The previous profile sent a permanent apex-to-www redirect; reversing it causes loops for returning visitors with cached redirects. Canonical metadata remains on apex. The focused /?refresh=20261113 URL clears only this origin's HTTP cache to recover browsers that cached both directions during cutover.
 
 - Use Next.js App Router and TypeScript. Read relevant installed Next.js documentation in node_modules/next/dist/docs before changing framework behavior.
 - Keep the recipient in server-only src/lib/send-inquiry.ts. Inquiries go to edwardsong08@gmail.com; never display or bundle that personal recipient address in the public frontend. Edward explicitly requested its removal from the page.

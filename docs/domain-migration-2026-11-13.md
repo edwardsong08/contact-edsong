@@ -5,7 +5,7 @@ Edward authorized the existing inquiry site becoming the main public site, keepi
 | Address | Current behavior |
 | --- | --- |
 | https://edsong.xyz | Inquiry homepage, /portfolio, and /start |
-| https://www.edsong.xyz | Visitor pages redirect 308 to HTTPS apex |
+| https://www.edsong.xyz | Serves the same inquiry site; metadata canonical points to apex |
 | https://contact.edsong.xyz | Visitor pages redirect 308 to the matching main-site path |
 | https://profile.edsong.xyz | Existing professional profile and case studies |
 | Old main-domain /work paths and resume | Redirect 308 to the matching profile path |
@@ -16,13 +16,19 @@ Redirects preserve paths and query/referral information. Legacy API routes stay 
 
 The apex and www records use the existing Cloudflare Tunnel. Their published routes retain the same Coolify proxy service and now use the inquiry app's existing generated hostname as the HTTP Host Header override. The profile has a separate proxied A record and HTTPS domain binding on its original Coolify app. Other tunnel routes are unchanged.
 
-The existing Cloudflare redirect rule is now named **Canonical HTTPS and apex**. Its custom expression is:
+The existing Cloudflare redirect rule is now named **HTTPS for public site hosts**. Its custom expression is:
 
 ```text
-((http.host eq "www.edsong.xyz") or ((http.host eq "edsong.xyz") and not starts_with(http.request.full_uri, "https://"))) and not starts_with(http.request.uri.path, "/api/")
+(http.host in {"edsong.xyz" "www.edsong.xyz"}) and not starts_with(http.request.full_uri, "https://") and not starts_with(http.request.uri.path, "/api/")
 ```
 
-The dynamic target is `concat("https://edsong.xyz", http.request.uri.path)`, with status 308 and query preservation enabled. Application redirects in `src/proxy.ts` use the forwarded public host because standalone Next's internal request URL can contain the listener hostname.
+The dynamic target is `concat("https://", http.host, http.request.uri.path)`, with status 308 and query preservation enabled. Application redirects in `src/proxy.ts` use the forwarded public host because standalone Next's internal request URL can contain the listener hostname.
+
+### Returning-visitor compatibility correction
+
+The original profile sent a permanent apex-to-www redirect. The initial cutover reversed it; fresh requests worked, but Edward reported ERR_TOO_MANY_REDIRECTS in a browser holding the old cached direction. Both HTTPS main hosts now serve content without redirecting between them. Keep this compatibility even though canonical metadata points to apex.
+
+Browsers that cached both directions during cutover can open `https://edsong.xyz/?refresh=20261113`. This response sends `Clear-Site-Data: "cache"` and `Cache-Control: no-store`, asking supporting browsers to clear only the origin's HTTP cache. Cookies and storage are preserved. This mechanism follows the [Clear-Site-Data header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Clear-Site-Data). A browser that does not support it may require a hard refresh or clearing this site's cached files. Avoid general cookie/storage resets.
 
 ## Release evidence
 

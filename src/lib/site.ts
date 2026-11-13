@@ -1,7 +1,9 @@
 export const SITE_ORIGIN = "https://edsong.xyz";
 export const PROFILE_ORIGIN = "https://profile.edsong.xyz";
 
-const legacyHosts = new Set(["contact.edsong.xyz", "www.contact.edsong.xyz", "www.edsong.xyz"]);
+// The former profile permanently redirected apex to www. Serve both main-site
+// hosts so a browser holding that old redirect never meets a reverse redirect.
+const legacyHosts = new Set(["contact.edsong.xyz", "www.contact.edsong.xyz"]);
 
 /** Keep APIs stable for existing forms and the signed GitHub deployment hook. */
 export function getSiteRedirect(requestUrl: URL): URL | null {

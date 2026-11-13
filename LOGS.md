@@ -1,5 +1,11 @@
 # Work log
 
+## 2026-11-13 — returning-visitor redirect loop
+
+- Edward reported ERR_TOO_MANY_REDIRECTS on the main address. Fresh public requests returned 200 while the existing browser failed on bare apex/www; the referral-query URL worked. The initial cutover had reversed the previous permanent apex-to-www redirect, creating a loop in browsers holding that cached response. The original checks covered fresh requests and missed returning visitors.
+- Corrected Cloudflare's rule to upgrade HTTP on the same host and removed application www-to-apex redirects. Both HTTPS hosts now serve the site, with apex canonical metadata unchanged. Added a regression case for the cached old redirect and a focused cache-only recovery response at /?refresh=20261113; cookies, storage, and form drafts are untouched.
+- All 18 tests, TypeScript checking, and the production build passed. The corrected Cloudflare rule is enabled; release uses the existing signed main-branch webhook.
+
 ## 2026-11-13 — main-domain migration
 
 - Edward authorized moving the inquiry site to edsong.xyz and the existing professional profile to profile.edsong.xyz, preserving old contact URLs, then pushing and deploying the change.
