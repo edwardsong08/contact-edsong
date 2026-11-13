@@ -22,8 +22,7 @@ export const metadata: Metadata = {
 const projects = [
   {
     name: "Find the Next 6,000",
-    category: "Community initiative · Website",
-    description: "A bold visual identity and a clear path through a Veteran-led initiative. Mission, resources, and ways to connect, brought together in one place.",
+    description: "Connection before crisis.",
     image: "/portfolio/find-the-next-6000.jpg",
     alt: "Navy and red campaign website with an illustrated landscape and the headline Find one. Reach one. Connect one.",
     href: "https://findthenext6000.org",
@@ -31,8 +30,7 @@ const projects = [
   },
   {
     name: "Ryu Legal",
-    category: "Professional services · Website",
-    description: "A considered home for a law practice. Clear services, a distinctive presence, and a straightforward way to get in touch.",
+    description: "Counsel with clarity.",
     image: "/portfolio/ryu-legal.jpg",
     alt: "Law Office of Soomin Ryu website with navy lettering over a softly lit library.",
     href: "https://www.ryu-legal.com",
@@ -40,8 +38,7 @@ const projects = [
   },
   {
     name: "The Realms of Asgard",
-    category: "Volunteer work · Community platform",
-    description: "A connected home for a growing community, spanning its public website, learning, recruitment, and support tools.",
+    description: "Play. Connect. Belong.",
     image: "/portfolio/troa.jpg",
     alt: "TROA community website with gold typography and an illuminated city beneath a starry sky.",
     href: "https://therealmsofasgard.com",
@@ -49,8 +46,7 @@ const projects = [
   },
   {
     name: "MyWord",
-    category: "Personal product · Alpha & private pilot",
-    description: "An Android texting app with a companion web platform for selected business records and agreements. Designed as one connected experience.",
+    description: "Your word. In writing.",
     image: "/portfolio/myword.jpg",
     alt: "MyWord product website in warm white and green, with a preview of the Android inbox using fictional conversations.",
     href: "https://myword.edsong.xyz",
@@ -58,8 +54,7 @@ const projects = [
   },
   {
     name: "QFin Games",
-    category: "Independent studio · Website",
-    description: "A playful studio website that gives its first game a world of its own, with a closer look at the work in development.",
+    description: "Curiosity, turned up.",
     image: "/portfolio/qfin-games.jpg",
     alt: "QFin Games studio website with cream typography and colorful pirate card-game artwork.",
     href: "https://qfingames.com",
@@ -84,9 +79,7 @@ export default async function Portfolio({ searchParams }: { searchParams: Promis
       </header>
       <main id="main">
         <div className={styles.intro}>
-          <p className="eyebrow">Selected work</p>
-          <h1 className={styles.title}>Built with purpose.</h1>
-          <p className={styles.description}>A selection of websites and products<br className="wide-break" /> I’ve designed and built.</p>
+          <h1 className={styles.title}>Selected work.</h1>
         </div>
 
         <div className={styles.projects}>
@@ -104,13 +97,11 @@ export default async function Portfolio({ searchParams }: { searchParams: Promis
                 />
               </div>
               <div className={styles.projectInfo}>
-                <p className={styles.category}>{project.category}</p>
                 <div className={styles.projectHeading}>
                   <h2><a className={styles.projectLink} href={project.href} target="_blank" rel="noopener noreferrer">{project.name}<span className={styles.newTab}> (opens in a new tab)</span></a></h2>
                   <span className={styles.projectArrow} aria-hidden="true">↗</span>
                 </div>
                 <p className={styles.projectDescription}>{project.description}</p>
-                <span className={styles.viewLink} aria-hidden="true">View website <span>↗</span></span>
               </div>
             </article>
           ))}
@@ -118,7 +109,6 @@ export default async function Portfolio({ searchParams }: { searchParams: Promis
 
         <section className={styles.invitation} aria-labelledby="project-heading">
           <h2 id="project-heading">What are you thinking?</h2>
-          <p>A new website. A useful app. Something of your own.</p>
           <ContactActions source={source} />
         </section>
       </main>

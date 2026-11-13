@@ -1,5 +1,12 @@
 # Work log
 
+## 2026-11-13 — reduce portfolio copy
+
+- Edward requested only each site/business name and a few words, explicitly removing category labels such as community initiative, professional services, website, and volunteer work.
+- Replaced all five long descriptions with brief phrases, removed all category/status labels and repeated View website copy, shortened the intro to Selected work, and removed the supporting CTA sentence. Kept real previews, linked names/arrows, Back, and Start a project.
+- Updated repository guidance so the earlier audit recommendation for more project copy does not override Edward's preference for brevity.
+- All 11 tests, TypeScript checking, and the optimized production build passed. Release uses the existing main-branch webhook to personal Coolify.
+
 ## 2026-11-13 — full contact-site audit and navigation repair
 
 - Edward reported the missing portfolio Back button and requested a full audit and rating. Added an explicit Back link, preserved source context in form return links, and added a matching 404 with a home action.
