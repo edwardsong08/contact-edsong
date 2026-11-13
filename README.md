@@ -2,7 +2,7 @@
 
 The personal website and web application inquiry site for [contact.edsong.xyz](https://contact.edsong.xyz).
 
-A minimal, single-screen introduction with a direct email CTA to **edwardsong08@gmail.com**, copy-email fallback, and links to Edward's work. The site does not submit or save inquiry content, and it requires no email API keys or database.
+A minimal introduction with a **Start a project** CTA leading to a three-field inquiry form, plus a direct-email fallback. Inquiries are sent through Resend to **edwardsong08@gmail.com**. No inquiry database is used.
 
 ## Develop
 
@@ -28,5 +28,9 @@ Deploy `main` in personal Coolify → Edward Song → production, with the repos
 Next.js standalone output is packaged in a multi-stage Docker build. The page uses system fonts and has no third-party runtime assets or analytics.
 
 The push-only GitHub webhook targets `https://contact.edsong.xyz/api/deploy`. Configure `DEPLOY_WEBHOOK_SECRET` and `COOLIFY_WEBHOOK_URL` as **runtime-only** environment variables in Coolify. The secret must also match Coolify's manual GitHub webhook secret for this application. This narrowly scoped relay verifies GitHub signatures and accepts only this repository's main branch, keeping the Coolify admin interface private. Never commit the target or secret.
+
+For inquiry delivery, configure `RESEND_API_KEY` as a runtime-only secret. `INQUIRY_FROM` optionally overrides the default verified sender `Edward Song <noreply@edsong.xyz>`. The recipient is fixed in source; the visitor's email is used as Reply-To. Delivery failure keeps the message on screen and provides a direct-email alternative. Local preview uses port 3096; it can show the form and unavailable-delivery state without credentials.
+
+Client-site footer links can use `https://contact.edsong.xyz/?from=client.example` to include the referring hostname in the inquiry. Only the hostname is kept, and this does not install analytics or change any client website.
 
 Read [CONTEXT.md](CONTEXT.md), [AGENTS.md](AGENTS.md), and [LOGS.md](LOGS.md) for ongoing project context and verified release information.

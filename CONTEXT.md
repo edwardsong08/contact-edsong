@@ -2,7 +2,11 @@
 
 Personal website and web application inquiries for Edward Song at https://contact.edsong.xyz.
 
-Edward requested an Apple-like experience and rejected the initial longer landing page as bloated. The current design is one focused screen: large system typography, restrained grayscale, a blue email button, copyable address, and links to his portfolio and LinkedIn. No inquiry content is submitted to this server or stored in a database.
+Edward requested an Apple-like experience and rejected the initial longer landing page as bloated. The homepage remains one focused screen: large system typography, restrained grayscale, a blue Start a project button, copyable email, and a portfolio link. LinkedIn was removed at his request.
+
+/start contains only name, email, and message. POST /api/inquiry validates and rate limits submissions, then sends plain-text email through Resend to edwardsong08@gmail.com with the visitor as Reply-To. RESEND_API_KEY and optional INQUIRY_FROM are runtime-only settings. No inquiry database or content logging is used; inquiries are processed by Resend and retained in the recipient mailbox. Abuse counters contain only process-local salted hashes and expire after 15 minutes; the global cap is 60 attempts per hour. Provider acceptance is required before showing success, and provider idempotency keys prevent duplicate emails on retries.
+
+Footer referrals can use https://contact.edsong.xyz/?from=client.example. The homepage carries that context to the form; only the hostname is included in the email, with paths, query strings, and fragments removed. No client sites are edited as part of this change.
 
 Stack: Next.js App Router, React, TypeScript, system fonts, plain CSS, standalone Docker image on port 3000. GET /api/health provides a minimal health endpoint.
 

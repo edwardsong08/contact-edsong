@@ -1,5 +1,13 @@
 # Work log
 
+## 2026-11-13 — short inquiry form
+
+- Edward authorized a short form, LinkedIn removal, delivery to edwardsong08@gmail.com, and a production push/deploy while keeping the minimal Apple-like design.
+- Added /start with name, email, and message, plus real server-side mail delivery through Resend. Added validation, honeypot, bounded request bodies, process-local abuse limits, safe retry keys, and clear failure/success states.
+- Changed the homepage CTA to Start a project; removed LinkedIn. Footer referral context is optional and limited to a hostname.
+- Production mail configuration and live delivery verification remain pending. Automatic approval review requires explicit authorization before reusing the credential from the separate personal portfolio project; no credential value is stored in this repository.
+- All 11 tests, TypeScript checks, and the production build pass. Browser checks confirm the three-field design, referral context, removed LinkedIn link, and a truthful unavailable-delivery response that preserves the message when no mail credential is configured.
+
 ## 2026-11-13
 
 - Created the personal contact site at Edward's request, with GitHub, a deployment webhook, and personal Coolify hosting as the intended release workflow.

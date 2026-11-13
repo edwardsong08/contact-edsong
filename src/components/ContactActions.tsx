@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { CONTACT_EMAIL } from "@/lib/inquiry";
 
-export default function ContactActions() {
+export default function ContactActions({ source = "" }: { source?: string }) {
   const [status, setStatus] = useState("");
   async function copyEmail() {
     try {
@@ -15,9 +16,9 @@ export default function ContactActions() {
   }
   return (
     <div className="contact-actions">
-      <a className="primary-button" href={`mailto:${CONTACT_EMAIL}?subject=Let%27s%20build%20something`}>
-        Let’s talk <span aria-hidden="true">↗</span>
-      </a>
+      <Link className="primary-button" href={source ? `/start?from=${encodeURIComponent(source)}` : "/start"}>
+        Start a project <span aria-hidden="true">↗</span>
+      </Link>
       <div className="email-row">
         <a className="email" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         <button type="button" className="copy-button" aria-label="Copy email address" onClick={copyEmail}>

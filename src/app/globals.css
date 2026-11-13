@@ -13,7 +13,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; text-decoration: none; }
-button { font: inherit; }
+button, input, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 a:focus-visible, button:focus-visible { outline: 3px solid #0071e380; outline-offset: 6px; }
 ::selection { background: #cfe7ff; }
@@ -50,6 +50,7 @@ h1 span {
   min-height: 50px; padding: 13px 24px; border-radius: 999px;
   color: white; background: var(--blue); font-size: 15px; font-weight: 400; letter-spacing: -.15px;
   transition: background .18s ease, box-shadow .18s ease;
+  border: 0; cursor: pointer;
 }
 .primary-button:hover { background: #0077ed; box-shadow: 0 3px 14px #0071e31a; }
 .primary-button:active { background: #0068d1; }
@@ -66,6 +67,45 @@ h1 span {
 .footer { display: flex; justify-content: space-between; align-items: center; padding: 26px 0; color: #86868b; font-size: 10px; letter-spacing: .05px; }
 .footer a:hover { color: var(--ink); }
 .footer a span { margin-left: 4px; }
+.inquiry-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 0 60px; }
+.inquiry-content { width: 100%; max-width: 580px; }
+.form-heading { text-align: center; }
+.form-heading .eyebrow { margin-bottom: 16px; }
+h1.form-title { font-size: clamp(38px, 5vw, 56px); line-height: 1.1; letter-spacing: -.05em; font-weight: 600; }
+.form-description { color: var(--secondary); font-size: 16px; line-height: 1.6; letter-spacing: -.2px; margin: 18px 0 0; }
+.inquiry-form { margin-top: 36px; }
+.inquiry-form fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 24px; }
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.input-group { min-width: 0; }
+.input-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 9px; letter-spacing: -.1px; }
+.input-group input, .input-group textarea { display: block; width: 100%; min-width: 0; border: 1px solid #d2d2d7; background: #fff; border-radius: 12px; padding: 14px 15px; color: var(--ink); font-size: 16px; line-height: 1.4; transition: border-color .18s, box-shadow .18s; }
+.input-group textarea { resize: vertical; min-height: 132px; max-height: 400px; }
+.input-group textarea::placeholder { color: #86868b; font-size: 14px; }
+.input-group input:focus, .input-group textarea:focus { border-color: var(--blue); outline: 0; box-shadow: 0 0 0 3px #0071e326; }
+.input-group [aria-invalid=true] { border-color: #b42318; }
+.field-error, .submission-error { color: #a12720; font-size: 12px; line-height: 1.6; margin: 8px 0 0; }
+.submission-error { margin: 0; }
+.submit-row { display: flex; align-items: center; gap: 22px; }
+.submit-row p { color: var(--secondary); font-size: 11px; line-height: 1.6; margin: 0; }
+.inquiry-form fieldset:disabled .primary-button { cursor: wait; opacity: .65; }
+.form-email { color: var(--secondary); font-size: 12px; line-height: 1.7; text-align: center; margin: 30px 0 0; }
+.form-email a { color: var(--blue); white-space: nowrap; }
+.form-email a:hover { text-decoration: underline; }
+.honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.inquiry-success { text-align: center; padding: 48px 0; }
+.success-mark { display: inline-flex; align-items: center; justify-content: center; width: 62px; height: 62px; border-radius: 50%; color: var(--blue); background: #0071e30d; margin-bottom: 28px; }
+.inquiry-success h1:focus { outline: 0; }
+.inquiry-success strong { font-weight: 500; overflow-wrap: anywhere; }
+.inquiry-success .primary-button { margin-top: 32px; }
+@media (max-width: 600px) {
+  .inquiry-main { padding: 36px 0 42px; }
+  .input-row { grid-template-columns: 1fr; gap: 22px; }
+  .inquiry-form { margin-top: 30px; }
+  .submit-row { flex-direction: column; align-items: stretch; gap: 13px; }
+  .submit-row p { text-align: center; }
+  .form-description { font-size: 15px; }
+  .form-email { font-size: 11px; }
+}
 @media (min-height: 950px) { .main { padding-bottom: 120px; } }
 @media (max-width: 800px) {
   .page { padding: 0 32px; }
@@ -105,3 +145,4 @@ h1 span {
   h1 { font-size: clamp(40px, 11.4vw, 54px); }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (forced-colors: active) { h1 span { background: none; -webkit-text-fill-color: CanvasText; color: CanvasText; } }

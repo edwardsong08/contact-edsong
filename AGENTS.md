@@ -4,8 +4,9 @@ Read CONTEXT.md and LOGS.md before making changes. This is Edward's personal inq
 
 - Use Next.js App Router and TypeScript. Read relevant installed Next.js documentation in node_modules/next/dist/docs before changing framework behavior.
 - Keep contact details in src/lib/inquiry.ts. Inquiries go to edwardsong08@gmail.com.
-- Preserve the deliberately minimal single-screen design: system typography, generous space, short copy, one blue email CTA, and a copy-email fallback. Edward explicitly rejected the longer page, mockups, service sections, FAQ, and brief builder as bloated.
-- The contact CTA opens the visitor's email app. Never claim that this site sends or stores inquiries.
+- Preserve the deliberately minimal homepage: system typography, generous space, short copy, one blue Start a project CTA, and a copy-email fallback. Edward explicitly rejected the longer page, mockups, service sections, FAQ, and brief builder as bloated.
+- The main CTA leads to /start, a matching short form with name, email, and message. LinkedIn was deliberately removed. Success may be shown only after the mail provider accepts delivery.
+- Inquiries go only to edwardsong08@gmail.com. Keep RESEND_API_KEY runtime-only and server-only; use the visitor email as Reply-To, never as From. Preserve validation, payload limits, rate limits, honeypot, and idempotent retries.
 - The deployment webhook is server-only. Keep signature validation, repository/branch restrictions, size limits, and generic errors. Never expose the private Coolify target or secret to client code.
 - Do not invent clients, testimonials, prices, delivery guarantees, or availability.
 - Preserve keyboard access, visible focus, responsive layouts, and reduced motion support.
