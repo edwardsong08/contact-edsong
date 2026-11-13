@@ -2,7 +2,7 @@
 
 The personal website and web application inquiry site for [contact.edsong.xyz](https://contact.edsong.xyz).
 
-A minimal introduction with a **Start a project** CTA leading to a three-field inquiry form, plus a direct-email fallback. Inquiries are sent through Resend to **edwardsong08@gmail.com**. No inquiry database is used.
+A minimal introduction with a **Start a project** CTA leading to a three-field inquiry form. The personal recipient is configured only in the server mail module and is not displayed or bundled in the public frontend. No inquiry database is used.
 
 ## Develop
 
@@ -29,7 +29,7 @@ Next.js standalone output is packaged in a multi-stage Docker build. The page us
 
 The push-only GitHub webhook targets `https://contact.edsong.xyz/api/deploy`. Configure `DEPLOY_WEBHOOK_SECRET` and `COOLIFY_WEBHOOK_URL` as **runtime-only** environment variables in Coolify. The secret must also match Coolify's manual GitHub webhook secret for this application. This narrowly scoped relay verifies GitHub signatures and accepts only this repository's main branch, keeping the Coolify admin interface private. Never commit the target or secret.
 
-For inquiry delivery, configure `RESEND_API_KEY` as a runtime-only secret. `INQUIRY_FROM` optionally overrides the default verified sender `Edward Song <noreply@edsong.xyz>`. The recipient is fixed in source; the visitor's email is used as Reply-To. Delivery failure keeps the message on screen and provides a direct-email alternative. Local preview uses port 3096; it can show the form and unavailable-delivery state without credentials.
+For inquiry delivery, configure `RESEND_API_KEY` as a runtime-only secret. `INQUIRY_FROM` optionally overrides the default verified sender `Edward Song <noreply@edsong.xyz>`. The recipient is fixed in the server mail module; the visitor's email is used as Reply-To. Delivery failure keeps the message on screen for retry. Local preview uses port 3096; it can show the form and unavailable-delivery state without credentials.
 
 Client-site footer links can use `https://contact.edsong.xyz/?from=client.example` to include the referring hostname in the inquiry. Only the hostname is kept, and this does not install analytics or change any client website.
 

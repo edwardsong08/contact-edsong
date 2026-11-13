@@ -1,5 +1,7 @@
 import { createHmac, randomBytes } from "node:crypto";
-import { CONTACT_EMAIL, validateInquiry } from "./inquiry.ts";
+import { validateInquiry } from "./inquiry.ts";
+
+export const CONTACT_EMAIL = "edwardsong08@gmail.com";
 
 type Configuration = { apiKey?: string; from?: string; allowedOrigins: string[] };
 type RateEntry = { count: number; expires: number };
@@ -47,7 +49,7 @@ export function createInquiryHandler(config: () => Configuration, send: typeof f
     if (input && typeof input === "object" && "website" in input && input.website) return reply({ error: "Unable to submit this message." }, 400);
     const validation = validateInquiry(input);
     if (validation.errors) return reply({ error: "Please check the highlighted fields.", fields: validation.errors }, 400);
-    if (!settings.apiKey) return reply({ error: "Sending is temporarily unavailable. Please use the email address below." }, 503);
+    if (!settings.apiKey) return reply({ error: "Sending is temporarily unavailable. Please try again shortly." }, 503);
 
     const time = now();
     for (const [key, value] of clients) if (value.expires <= time) clients.delete(key);
@@ -58,7 +60,7 @@ export function createInquiryHandler(config: () => Configuration, send: typeof f
     if (globalLimit.expires <= time) globalLimit = { count: 0, expires: time + 60 * 60_000 };
     if (client.count >= 5 || globalLimit.count >= 60 || (!current && clients.size >= 2000)) {
       const retry = Math.max(1, Math.ceil(((client.count >= 5 ? client.expires : globalLimit.expires) - time) / 1000));
-      return reply({ error: "Please wait a little before sending again, or email me directly." }, 429, { "Retry-After": String(retry) });
+      return reply({ error: "Please wait a little before sending again." }, 429, { "Retry-After": String(retry) });
     }
     client.count++;
     globalLimit.count++;
@@ -75,10 +77,10 @@ export function createInquiryHandler(config: () => Configuration, send: typeof f
         signal: AbortSignal.timeout(15_000),
       });
       const result = await response.json().catch(() => null);
-      if (!response.ok || typeof result?.id !== "string" || !result.id) return reply({ error: "Your message couldn’t be sent. Please try again or email me directly." }, 502);
+      if (!response.ok || typeof result?.id !== "string" || !result.id) return reply({ error: "Your message couldn’t be sent. Please try again in a moment." }, 502);
       return reply({ success: true }, 200);
     } catch {
-      return reply({ error: "Your message couldn’t be sent. Please try again or email me directly." }, 502);
+      return reply({ error: "Your message couldn’t be sent. Please try again in a moment." }, 502);
     }
   };
 }

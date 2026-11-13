@@ -1,5 +1,3 @@
-export const CONTACT_EMAIL = "edwardsong08@gmail.com";
-
 export const INQUIRY_LIMITS = { name: 100, email: 254, message: 3000 } as const;
 export type Inquiry = { name: string; email: string; message: string; source: string };
 export type InquiryErrors = Partial<Record<"name" | "email" | "message", string>>;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { CONTACT_EMAIL, INQUIRY_LIMITS, type InquiryErrors } from "@/lib/inquiry";
+import { INQUIRY_LIMITS, type InquiryErrors } from "@/lib/inquiry";
 
 export default function InquiryForm({ source }: { source: string }) {
   const [status, setStatus] = useState<"ready" | "sending" | "sent">("ready");
@@ -38,7 +38,7 @@ export default function InquiryForm({ source }: { source: string }) {
       });
       const result = await response.json().catch(() => null);
       if (!response.ok || result?.success !== true) {
-        setError(result?.error || "Your message couldn’t be sent. Please try again or email me directly.");
+        setError(result?.error || "Your message couldn’t be sent. Please try again in a moment.");
         setFields(result?.fields || {});
         setStatus("ready");
         return;
@@ -46,7 +46,7 @@ export default function InquiryForm({ source }: { source: string }) {
       setEmail(String(data.get("email") || "").trim());
       setStatus("sent");
     } catch {
-      setError("Your message couldn’t be sent. Please try again or email me directly.");
+      setError("Your message couldn’t be sent. Please try again in a moment.");
       setStatus("ready");
     }
   }
@@ -94,8 +94,7 @@ export default function InquiryForm({ source }: { source: string }) {
           </div>
         </fieldset>
       </form>
-      <p className="form-email">Prefer email? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
-      <noscript><p>Please email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> directly. The form requires JavaScript.</p></noscript>
+      <noscript><p>Please enable JavaScript to use the contact form.</p></noscript>
     </>
   );
 }
