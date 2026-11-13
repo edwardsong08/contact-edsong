@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const projects = [
   {
     name: "Find the Next 6,000",
-    description: "Connection before crisis.",
+    type: "Nonprofit",
     image: "/portfolio/find-the-next-6000.jpg",
     alt: "Navy and red campaign website with an illustrated landscape and the headline Find one. Reach one. Connect one.",
     href: "https://findthenext6000.org",
@@ -30,7 +30,7 @@ const projects = [
   },
   {
     name: "Ryu Legal",
-    description: "Counsel with clarity.",
+    type: "Law firm",
     image: "/portfolio/ryu-legal.jpg",
     alt: "Law Office of Soomin Ryu website with navy lettering over a softly lit library.",
     href: "https://www.ryu-legal.com",
@@ -38,7 +38,7 @@ const projects = [
   },
   {
     name: "The Realms of Asgard",
-    description: "Play. Connect. Belong.",
+    type: "Nonprofit",
     image: "/portfolio/troa.jpg",
     alt: "TROA community website with gold typography and an illuminated city beneath a starry sky.",
     href: "https://therealmsofasgard.com",
@@ -46,7 +46,7 @@ const projects = [
   },
   {
     name: "MyWord",
-    description: "Your word. In writing.",
+    type: "Open source",
     image: "/portfolio/myword.jpg",
     alt: "MyWord product website in warm white and green, with a preview of the Android inbox using fictional conversations.",
     href: "https://myword.edsong.xyz",
@@ -54,7 +54,7 @@ const projects = [
   },
   {
     name: "QFin Games",
-    description: "Curiosity, turned up.",
+    type: "Independent game studio",
     image: "/portfolio/qfin-games.jpg",
     alt: "QFin Games studio website with cream typography and colorful pirate card-game artwork.",
     href: "https://qfingames.com",
@@ -98,10 +98,9 @@ export default async function Portfolio({ searchParams }: { searchParams: Promis
               </div>
               <div className={styles.projectInfo}>
                 <div className={styles.projectHeading}>
-                  <h2><a className={styles.projectLink} href={project.href} target="_blank" rel="noopener noreferrer">{project.name}<span className={styles.newTab}> (opens in a new tab)</span></a></h2>
+                  <h2><a className={styles.projectLink} href={project.href} target="_blank" rel="noopener noreferrer">{project.name}<span className={styles.projectType}> | {project.type}</span><span className={styles.newTab}> (opens in a new tab)</span></a></h2>
                   <span className={styles.projectArrow} aria-hidden="true">↗</span>
                 </div>
-                <p className={styles.projectDescription}>{project.description}</p>
               </div>
             </article>
           ))}

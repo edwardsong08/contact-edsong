@@ -1,5 +1,11 @@
 # Work log
 
+## 2026-11-13 — identify each project inline
+
+- Edward clarified that the few words should identify what each project is, directly after its name with a vertical separator. Replaced taglines with his supplied types: Nonprofit for Find the Next 6,000 and TROA; Law firm for Ryu Legal; Open source for MyWord; Independent game studio for QFin Games.
+- Removed the separate caption paragraphs and used a smaller inline type that can wrap as a unit on narrow layouts. Project previews, links, Back, and inquiry navigation remain.
+- All 11 tests, TypeScript checking, and the optimized production build passed. Release uses the existing main-branch webhook to personal Coolify.
+
 ## 2026-11-13 — reduce portfolio copy
 
 - Edward requested only each site/business name and a few words, explicitly removing category labels such as community initiative, professional services, website, and volunteer work.

@@ -22,10 +22,9 @@
 .projectHeading h2 { margin: 0; font-size: 26px; line-height: 1.2; letter-spacing: -.9px; font-weight: 600; }
 .projectArrow { font-size: 24px; color: #86868b; transition: color .18s; }
 .project:hover .projectArrow { color: var(--blue); }
-.projectDescription { max-width: 570px; margin: 13px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.65; letter-spacing: -.15px; text-wrap: pretty; }
+.projectType { display: inline-block; margin-inline-start: 8px; color: var(--secondary); font-size: 15px; line-height: 1.5; font-weight: 400; letter-spacing: -.15px; white-space: nowrap; }
 .featured .projectInfo { padding-top: 27px; }
 .featured .projectHeading h2 { font-size: 32px; letter-spacing: -1.1px; }
-.featured .projectDescription { max-width: 620px; font-size: 16px; }
 .invitation { margin-top: 100px; border-top: 1px solid #d2d2d7; padding: 88px 0 96px; text-align: center; }
 .invitation h2 { margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.12; letter-spacing: -.05em; font-weight: 600; }
 .invitation :global(.contact-actions) { margin-top: 27px; }
@@ -33,7 +32,6 @@
   .intro { padding: 58px 0 48px; }
   .projects { column-gap: 25px; row-gap: 48px; }
   .projectHeading h2 { font-size: 23px; }
-  .projectDescription { font-size: 14px; }
 }
 @media (max-width: 700px) {
   .navigation { gap: 14px; }
@@ -42,6 +40,5 @@
   .preview { border-radius: 12px; }
   .projectInfo, .featured .projectInfo { padding-top: 19px; }
   .projectHeading h2, .featured .projectHeading h2 { font-size: 25px; letter-spacing: -.8px; }
-  .projectDescription, .featured .projectDescription { font-size: 15px; }
   .invitation { margin-top: 64px; padding: 58px 0 64px; }
 }
