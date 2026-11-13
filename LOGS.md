@@ -1,5 +1,11 @@
 # Work log
 
+## 2026-11-13 — temporarily hide work navigation
+
+- Edward requested hiding My work without deleting the portfolio, leaving home and Start a project as the promoted flow. Added one shared false visibility flag around the existing home/404 links; the gallery, its assets, and direct/legacy URLs remain intact.
+- All 18 tests, TypeScript checking, and the production build passed. React review confirmed server-rendered conditional links, no new client state/dependencies, and preserved keyboard navigation and form referral flow. Release uses the existing main-branch deployment webhook.
+- The separate FTN6k footer/credit question is pending discussion; no FTN6k source was changed in this work.
+
 ## 2026-11-13 — returning-visitor redirect loop
 
 - Edward reported ERR_TOO_MANY_REDIRECTS on the main address. Fresh public requests returned 200 while the existing browser failed on bare apex/www; the referral-query URL worked. The initial cutover had reversed the previous permanent apex-to-www redirect, creating a loop in browsers holding that cached response. The original checks covered fresh requests and missed returning visitors.

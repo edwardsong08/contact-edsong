@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ContactActions from "@/components/ContactActions";
 import { normalizeSource } from "@/lib/inquiry";
+import { SHOW_PORTFOLIO_LINK } from "@/lib/site";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ from?: string | string[] }> }) {
   const source = normalizeSource((await searchParams).from);
@@ -9,7 +10,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ f
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
         <Link className="wordmark" href={source ? `/?from=${encodeURIComponent(source)}` : "/"}>Edward Song</Link>
-        <Link className="portfolio" href={source ? `/portfolio?from=${encodeURIComponent(source)}` : "/portfolio"}>My work <span aria-hidden="true">↗</span></Link>
+        {SHOW_PORTFOLIO_LINK ? <Link className="portfolio" href={source ? `/portfolio?from=${encodeURIComponent(source)}` : "/portfolio"}>My work <span aria-hidden="true">↗</span></Link> : null}
       </header>
       <main id="main" className="main">
         <div className="intro">

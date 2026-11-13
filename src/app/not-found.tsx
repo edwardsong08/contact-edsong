@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SHOW_PORTFOLIO_LINK } from "@/lib/site";
 
 export default function NotFound() {
   return (
@@ -6,7 +7,7 @@ export default function NotFound() {
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
         <Link className="wordmark" href="/">Edward Song</Link>
-        <Link className="portfolio" href="/portfolio">My work <span aria-hidden="true">↗</span></Link>
+        {SHOW_PORTFOLIO_LINK ? <Link className="portfolio" href="/portfolio">My work <span aria-hidden="true">↗</span></Link> : null}
       </header>
       <main id="main" className="inquiry-main">
         <div className="inquiry-content form-heading">

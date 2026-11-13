@@ -1,5 +1,7 @@
 export const SITE_ORIGIN = "https://edsong.xyz";
 export const PROFILE_ORIGIN = "https://profile.edsong.xyz";
+// Keep the portfolio available for direct visits while its navigation is paused.
+export const SHOW_PORTFOLIO_LINK = false;
 
 // The former profile permanently redirected apex to www. Serve both main-site
 // hosts so a browser holding that old redirect never meets a reverse redirect.
