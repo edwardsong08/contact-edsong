@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Selected work — Edward Song",
     description: "Websites and products, built with purpose.",
-    url: "https://contact.edsong.xyz/portfolio",
+    url: "https://edsong.xyz/portfolio",
     siteName: "Edward Song",
     type: "website",
     images: [{ url: "/social.png", width: 1200, height: 630, alt: "Edward Song — Your next idea. Beautifully built." }],

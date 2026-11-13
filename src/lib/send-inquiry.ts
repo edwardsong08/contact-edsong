@@ -67,7 +67,7 @@ export function createInquiryHandler(config: () => Configuration, send: typeof f
     clients.set(identifier, client);
 
     const inquiry = validation.value;
-    const text = ["New project inquiry from contact.edsong.xyz", "", `Name: ${inquiry.name}`, `Email: ${inquiry.email}`, ...(inquiry.source ? [`Referring site (provided by link): ${inquiry.source}`] : []), "", inquiry.message].join("\n");
+    const text = ["New project inquiry from edsong.xyz", "", `Name: ${inquiry.name}`, `Email: ${inquiry.email}`, ...(inquiry.source ? [`Referring site (provided by link): ${inquiry.source}`] : []), "", inquiry.message].join("\n");
     try {
       const response = await send("https://api.resend.com/emails", {
         method: "POST",

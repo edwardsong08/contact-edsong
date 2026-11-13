@@ -4,7 +4,7 @@ import test from "node:test";
 import { normalizeSource, validateInquiry } from "../src/lib/inquiry.ts";
 import { CONTACT_EMAIL, createInquiryHandler } from "../src/lib/send-inquiry.ts";
 
-const origin = "https://contact.edsong.xyz";
+const origin = "https://edsong.xyz";
 const inquiry = { name: " Alex & Lee ", email: " alex@example.com ", message: "We would like a website for our independent design studio.", source: "https://client.example/work?private=value#section", website: "" };
 const settings = { apiKey: "test-key-never-used-outside-tests", allowedOrigins: [origin] };
 function request(body: unknown = inquiry, headers: Record<string, string> = {}) {
