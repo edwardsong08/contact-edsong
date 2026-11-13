@@ -6,6 +6,8 @@
 - Updated canonical/social/sitemap/robots URLs and accepted form origins. Added permanent host redirects preserving paths/query information, with API/static-runtime exceptions for existing signed hooks and open forms. Known old profile case-study and resume paths redirect to the moved profile.
 - Added regression tests for path/referral preservation, API exceptions, alias canonicalization, old profile links, and safe fixed redirect origins. No mail secret or recipient change is needed.
 - All 17 tests, TypeScript checking, and the production build passed. Live verification identified standalone Next's internal nextUrl hostname; the proxy now uses Caddy's forwarded public hostname for redirects. Legacy APIs remain excluded.
+- Completed the Cloudflare Tunnel handoff, HTTPS/apex redirect rule, and profile DNS/binding. Contact release fcc1a64 and profile release 1a505d1 deployed successfully; the original signed contact webhook triggered a successful deployment after cutover. Map release 8dcd002 and Hub release 0a09492 updated their profile integrations and are live.
+- All 23 live migration checks passed: canonical pages, old contact paths/referrals, profile case studies and resume, API origin validation, unsigned-hook rejection, map framing policy, and the Hub client link. Browser checks confirmed the new profile and old-contact-to-main-to-form navigation. No inquiry email was sent during the migration. Screenshots and machine-readable verification are retained under ignored artifacts/.
 
 ## 2026-11-13 — identify each project inline
 
