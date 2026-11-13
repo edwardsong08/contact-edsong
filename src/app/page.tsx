@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ContactActions from "@/components/ContactActions";
 import { normalizeSource } from "@/lib/inquiry";
 
@@ -7,8 +8,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ f
     <div className="page">
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
-        <a className="wordmark" href="https://edsong.xyz" aria-label="Edward Song portfolio">Edward Song</a>
-        <a className="portfolio" href="https://edsong.xyz">My work <span aria-hidden="true">↗</span></a>
+        <Link className="wordmark" href={source ? `/?from=${encodeURIComponent(source)}` : "/"}>Edward Song</Link>
+        <Link className="portfolio" href={source ? `/portfolio?from=${encodeURIComponent(source)}` : "/portfolio"}>My work <span aria-hidden="true">↗</span></Link>
       </header>
       <main id="main" className="main">
         <div className="intro">
