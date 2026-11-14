@@ -49,23 +49,36 @@ export default function PersonalSettings() {
     return () => { document.removeEventListener("keydown", dismiss); document.removeEventListener("pointerdown", outside); };
   }, [open, mode]);
   useEffect(() => {
-    if (open) panel.current?.querySelector<HTMLButtonElement>('[aria-pressed="true"]')?.focus();
+    if (open) panel.current?.querySelector<HTMLButtonElement>('[aria-checked="true"]')?.focus();
   }, [open]);
   function selectTheme(id: string) {
     setTheme(id); document.documentElement.dataset.theme = id;
     try { localStorage.setItem("edsong-theme", id); } catch { /* Themes work without storage. */ }
   }
+  function navigateThemes(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next: number;
+    switch (event.key) {
+      case "ArrowDown": case "ArrowRight": next = (index + 1) % themes.length; break;
+      case "ArrowUp": case "ArrowLeft": next = (index + themes.length - 1) % themes.length; break;
+      case "Home": next = 0; break;
+      case "End": next = themes.length - 1; break;
+      default: return;
+    }
+    event.preventDefault();
+    selectTheme(themes[next][0]);
+    panel.current?.querySelectorAll<HTMLButtonElement>("[role=radio]")[next]?.focus();
+  }
   return <>
-    <div className="settings-anchor">
+    <div className="settings-anchor" onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}>
       <button ref={trigger} className={"settings-trigger " + (open ? "is-open" : "")} aria-label={open ? "Close settings" : "Settings"} aria-expanded={open} aria-controls="personal-settings" onClick={() => setOpen(!open)} disabled={!ready}>
-        <svg viewBox="2.5 2.5 19 19" width="44" height="44" fill="none" stroke="currentColor" strokeWidth="1.1" aria-hidden="true"><path strokeLinejoin="round" d="m10 3-.6 2.4-1.6.9-2.4-.7-2 3.5 1.8 1.7v1.9l-1.8 1.7 2 3.5 2.4-.7 1.6.9L10 21h4l.6-2.4 1.6-.9 2.4.7 2-3.5-1.8-1.7v-1.9l1.8-1.7-2-3.5-2.4.7-1.6-.9L14 3Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true"><path strokeLinejoin="round" d="M17.960,5.796 L19.784,0.916 L24.216,0.916 L26.040,5.796 L30.601,7.685 L35.342,5.525 L38.475,8.658 L36.315,13.399 L38.204,17.960 L43.084,19.784 L43.084,24.216 L38.204,26.040 L36.315,30.601 L38.475,35.342 L35.342,38.475 L30.601,36.315 L26.040,38.204 L24.216,43.084 L19.784,43.084 L17.960,38.204 L13.399,36.315 L8.658,38.475 L5.525,35.342 L7.685,30.601 L5.796,26.040 L0.916,24.216 L0.916,19.784 L5.796,17.960 L7.685,13.399 L5.525,8.658 L8.658,5.525 L13.399,7.685Z"/><circle cx="22" cy="22" r="6.5"/></svg>
       </button>
       <div id="personal-settings" ref={panel} className="settings-panel" hidden={!open} role="region" aria-label="Settings">
-        <div className="theme-options" aria-label="Color theme">
-          {themes.map(([id, name]) => <button key={id} aria-pressed={theme === id} onClick={() => selectTheme(id)} className="theme-option">
+        <div className="theme-options" role="radiogroup" aria-label="Theme">
+          {themes.map(([id, name], index) => <button key={id} role="radio" aria-checked={theme === id} tabIndex={theme === id ? 0 : -1} onKeyDown={event => navigateThemes(event, index)} onClick={() => selectTheme(id)} className="theme-option">
             <span className={"theme-swatch swatch-" + id} aria-hidden="true" />
             <span className="theme-name">{name}</span>
-            <span className="theme-check" aria-hidden="true">{theme === id ? "✓" : ""}</span>
+            <span className="theme-check" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="m3 8 3 3 7-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
           </button>)}
         </div>
         {pathname === "/" ? <button className="doodle-toggle" role="switch" aria-checked={mode === "draw"} onClick={() => setMode(mode ? null : "draw")}>
@@ -76,4 +89,3 @@ export default function PersonalSettings() {
     {mode && pathname === "/" ? <DrawingCanvas onDone={() => { setMode(null); trigger.current?.focus(); }} /> : null}
   </>;
 }
-

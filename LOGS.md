@@ -114,3 +114,12 @@
 - Restored Default's deployed grey second headline line; type scale remains the main-branch style.
 - Reduced the menu to five names/visual samples and Doodle, with an animated accessible switch. Toggle on/off verified to mount/unmount drawing; focus remains on the switch.
 - Local-only refinement. No push or deploy.
+
+## 2026-11-14 — Local refinement with rollback
+- Saved the exact prior local state as commit 1d813cf on rollback/local-before-refinement-20261114 before editing. Continued on codex/theme-refinement-20261114.
+- Consolidated obsolete and repeated control styles into appearance.css; shared settings/drawing surfaces, radii, focus, and motion.
+- Refined the bare 44px gear geometry and rotation, removed duplicate selection marks, improved label size, and added semantic radio-group keyboard behavior and focus-leave dismissal.
+- Reduced Doodle toolbar to three inks, accessible Undo/Clear icons, and Done; normalized coordinates for resizing and retained bounded, local-only strokes.
+- Softened theme scenery while preserving each theme's identity and Default's deployed headline style.
+- Browser verification: arrow/End theme selection, Space toggle, drawing/Undo/Escape focus return, all five themes on homepage/form at 364px measured CSS width with no horizontal overflow, three form fields, drawing absent on form, and transparent 44px gear in each theme. Real touch-device and OS reduced-motion emulation are not part of this browser check; touch pointer capture and reduced-motion rules remain implemented.
+- Typecheck, 18 existing regression tests, and production build passed. Nothing pushed or deployed.

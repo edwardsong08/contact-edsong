@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import PersonalSettings from "@/components/PersonalSettings";
 import ThemeAtmosphere from "@/components/ThemeAtmosphere";
+import "./appearance.css";
 import "./themes.css";
 
 export const metadata: Metadata = {
