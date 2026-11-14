@@ -92,3 +92,25 @@
 - Switched the GitHub webhook to https://contact.edsong.xyz/api/deploy. Auto deploy is enabled in Coolify; both relay settings are runtime-only.
 - Adjusted vertical spacing for shorter displays. GitHub push 892e768 triggered deployment old2pt5vka6w2ri3jny3fhd6 automatically; it finished successfully with is_webhook=true. Application status is running:healthy and the Docker healthcheck is detected.
 - Verified the simplified public page, direct mailto destination, working copy-email button, and zero browser warnings/errors. No email was sent. Exact mobile viewport emulation was unavailable in the connected browser; responsive CSS is implemented but that device-size visual check is unverified.
+
+## 2026-11-13 — Local personality preview
+- Added the supplied portrait as a circular home link; kept the portfolio hidden.
+- Added Light, Tokyo Midnight, Neon Dark, Silver/Noir, and Matcha Garden, stored only in browser localStorage. Pre-paint theme restoration prevents a light flash on reload.
+- Added on-demand blob physics and drawing modes, with cleanup on route changes, keyboard controls, reduced-motion behavior, pause/reset, Escape/Done, and bounded drawing history.
+- Browser verified drag merge (5 to 4), tap split (4 to 5), drawing and Undo, theme persistence into the form and after reload, and narrow layout without horizontal overflow. No real inquiry sent.
+- 18 existing tests and typecheck passed. Production build passed outside sandbox after Windows blocked standalone output creation in sandbox.
+- Local preview only, loopback port 3096. Nothing pushed or deployed.
+
+## 2026-11-13 — Stronger themes, local review
+- Removed the blob toy entirely; split the retained drawing into DrawingCanvas with pointer capture, bounded history, tap dots, Undo/Clear/Done, and Escape exit.
+- Renamed themes Default / Tokyo Midnight / TRON / Silver Noir / Matcha Garden. Preserved existing local preference IDs.
+- Removed the introductory eyebrow; kept the exact headline and accented Beautifully in blue on Default.
+- Added theme-specific scenery, surfaces, typography, pointer light/metal effects, TRON focus/hover light trace, and Matcha leaf unfolding. All scenery is decorative; no continuous animation loop.
+- Verified all five mobile themes at measured 364px CSS width: no horizontal overflow, settings fit. Checked desktop visuals, themed mobile form, drawing/Undo, and Escape focus restoration. Secondary text palette contrast exceeds 4.5:1; darkened Matcha further to allow for its paper/background treatment.
+- Typecheck, all 18 regression tests, and production build pass. Local-only changes on codex/personal-play-local; no push, deploy, or real email.
+
+## 2026-11-13 — Compact palette and bare gear
+- Matched gear SVG to the 44px portrait and removed background, border, shadow, and circular focus decoration in all themes. Browser measurements confirm equal size and transparent styling for each theme.
+- Restored Default's deployed grey second headline line; type scale remains the main-branch style.
+- Reduced the menu to five names/visual samples and Doodle, with an animated accessible switch. Toggle on/off verified to mount/unmount drawing; focus remains on the switch.
+- Local-only refinement. No push or deploy.

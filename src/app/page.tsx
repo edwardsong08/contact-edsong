@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Portrait from "@/components/Portrait";
 import ContactActions from "@/components/ContactActions";
 import { normalizeSource } from "@/lib/inquiry";
 import { SHOW_PORTFOLIO_LINK } from "@/lib/site";
@@ -9,13 +10,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ f
     <div className="page">
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
-        <Link className="wordmark" href={source ? `/?from=${encodeURIComponent(source)}` : "/"}>Edward Song</Link>
+        <Portrait href={source ? `/?from=${encodeURIComponent(source)}` : "/"} />
         {SHOW_PORTFOLIO_LINK ? <Link className="portfolio" href={source ? `/portfolio?from=${encodeURIComponent(source)}` : "/portfolio"}>My work <span aria-hidden="true">↗</span></Link> : null}
       </header>
       <main id="main" className="main">
         <div className="intro">
-          <p className="eyebrow">Independent design & development</p>
-          <h1>Your next idea.<br/><span>Beautifully built.</span></h1>
+          <h1>Your next idea.<br/><span className="headline-second"><em className="headline-accent">Beautifully</em> built.</span></h1>
           <p className="description">Websites and web apps.<br className="wide-break"/> From landing pages to complete platforms.</p>
           <ContactActions source={source} />
         </div>

@@ -17,6 +17,7 @@ Read CONTEXT.md and LOGS.md before making changes. This is Edward's personal inq
 - The deployment webhook is server-only. Keep signature validation, repository/branch restrictions, size limits, and generic errors. Never expose the private Coolify target or secret to client code.
 - Do not invent clients, testimonials, prices, delivery guarantees, or availability.
 - Preserve keyboard access, visible focus, responsive layouts, and reduced motion support.
+- Current local direction: Default, Tokyo Midnight, TRON, Silver Noir, and Matcha Garden have distinct art direction and restrained theme-specific interaction. Keep drawing; the blob toy was explicitly rejected and removed. Keep the current headline and omit the Independent design & development eyebrow. Default uses the deployed grey second headline line (superseding the blue accent); alternate themes retain their accents. Settings has a bare 44px gear matching the portrait, only theme names/previews, and an animated Doodle switch. These changes are local review only until Edward authorizes deployment.
 - Run npm test, npm run typecheck, and npm run build for functional changes.
 - Deploy production from main through personal Coolify in Edward Song / production. Never store credentials or webhook secrets in the repository.
 - Update CONTEXT.md and LOGS.md when architecture, deployments, or pending work change.
