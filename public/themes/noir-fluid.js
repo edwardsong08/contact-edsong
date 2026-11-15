@@ -38,11 +38,11 @@ let config = {
     DYE_RESOLUTION: 1024,
     CAPTURE_RESOLUTION: 512,
     DENSITY_DISSIPATION: 0,
-    VELOCITY_DISSIPATION: 4.8,
+    VELOCITY_DISSIPATION: 5.4,
     PRESSURE: 0.8,
     PRESSURE_ITERATIONS: 20,
     CURL: new URLSearchParams(location.search).has('water') ? 5 : 9,
-    SPLAT_RADIUS: 0.27,
+    SPLAT_RADIUS: 0.23,
     SPLAT_FORCE: 950,
     SHADING: false,
     COLORFUL: false,
@@ -1803,9 +1803,9 @@ const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_S
    float recoveryPattern=noise(q*24.+vec2(3.,7.));
    float spatialElapsed=(1.-texture2D(activity,vUv).r)*3.2;
    float localAge=mix(max(0.,recoveryAge-recoveryPattern*.22),
-     max(0.,spatialElapsed-.75-recoveryPattern*.22),hybrid);
-   float gathering=smoothstep(0.,.85,localAge);
-   float detail=smoothstep(.3,1.55,localAge);
+     max(0.,spatialElapsed-.58-recoveryPattern*.16),hybrid);
+   float gathering=smoothstep(0.,1.05,localAge);
+   float detail=smoothstep(.25,1.35,localAge);
    vec2 motion=texture2D(flow,vUv).xy;
    // Recovery is local: areas the pointer has already passed may settle while
    // the active stroke continues, but moving pigment stays out of the way.
@@ -1815,7 +1815,7 @@ const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_S
    float resilience=1.-pow(1.-amount,gathering*mix(.9,1.3,structure));
    // Rebuild only disturbed pigment; intact areas retain their crispness.
    float disturbed=smoothstep(.008,.09,length(texture2D(current,vUv).rgb-target));
-   vec2 softRadius=vec2(.004/aspect,.004)*(1.-detail)*disturbed;
+   vec2 softRadius=vec2(.0018/aspect,.0018)*(1.-detail)*disturbed;
    vec3 broad=(target*4.
      +originalPigment(vUv+vec2(softRadius.x,0.))
      +originalPigment(vUv-vec2(softRadius.x,0.))
@@ -1832,10 +1832,10 @@ const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_S
                +texture2D(current,vUv-vec2(spread.x,0.)).rgb
                +texture2D(current,vUv+vec2(0.,spread.y)).rgb
                +texture2D(current,vUv-vec2(0.,spread.y)).rgb)*.25;
-   pigment=mix(pigment,nearby,1.-exp(-stepTime*stirred*mix(9.,6.75,lighterMotion)));
+   pigment=mix(pigment,nearby,1.-exp(-stepTime*stirred*mix(3.5,2.8,lighterMotion)));
    // Keep moving pigment legible long enough to form currents instead of
    // washing the whole territory out in one pass.
-   float thinning=stirred*mix(1.2,5.5,smoothstep(.25,.7,billow))*(1.-gathering);
+   float thinning=stirred*mix(.9,4.2,smoothstep(.25,.7,billow))*(1.-gathering);
    pigment*=exp(-stepTime*thinning*mix(1.,.65,water));
    float materialHandoff=smoothstep(.85,1.45,localAge);
    if(guided>.5 && gathering>0. && disturbed>.001){
@@ -2135,8 +2135,8 @@ function createMaterialEngine(coupled=false) {
         if(fresh>.5)released=min(1.,released+fraction*lossScale);
       }else if(brush>0.)released=mix(released,max(released,brush),1.-exp(-dt*22.));
       float seed=noise(vUv*vec2(18.,12.));
-      float gather=smoothstep(.75+seed*.18,1.75+seed*.3,age);
-      float detail=smoothstep(1.9,3.8,age);
+      float gather=smoothstep(.55+seed*.12,1.65+seed*.2,age);
+      float detail=smoothstep(1.3,2.9,age);
       vec2 offset=old.xy;
       vec2 motion=texture2D(flow,clamp(pos,vec2(.001),vec2(.999))).xy*flowPixel;
       // Bounded curl advection keeps samples close enough to gather legibly.
@@ -2157,11 +2157,11 @@ function createMaterialEngine(coupled=false) {
       offset+=dt*air*released*(1.-gather);
       // First collect into coarse home territories, then resolve within them.
       // A first-order, bounded arrival avoids spring oscillation/rubber bands.
-      vec2 territory=(vec2(noise(vUv*22.),noise(vUv*22.+7.))-.5)*vec2(.017/aspect,.017);
+      vec2 territory=(vec2(noise(vUv*22.),noise(vUv*22.+7.))-.5)*vec2(.008/aspect,.008);
       vec2 target=territory*(1.-detail);
       vec2 toward=target-offset;
       float distance=length(toward*vec2(aspect,1.));
-      float arrival=min(1.-exp(-dt*mix(2.8,5.,detail)),dt*.105/max(distance,.0001));
+      float arrival=min(1.-exp(-dt*mix(3.2,5.5,detail)),dt*.105/max(distance,.0001));
       offset+=toward*arrival*gather;
       // A small shared tangential flow bends arrival without spring inertia.
       offset+=vec2(-toward.y/aspect,toward.x*aspect)*dt*.55*gather*(1.-detail);

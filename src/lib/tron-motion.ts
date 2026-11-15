@@ -47,11 +47,23 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
       const at=t-direction*i*.007,to=at-direction*.008;
       if(at<=0||at>=1||to<=0||to>=1)continue;
       const a=atPoint(at),b=atPoint(to);
-      const alpha=(1-i/12)**1.7*fade*power;
+      // Quiet the overhead framing; the light walls carry the main motion.
+      const sceneWeight=.38+.62*Math.min(1,a.y/(height*.62));
+      const alpha=(1-i/12)**1.7*fade*power*sceneWeight;
       ctx.globalAlpha=alpha;ctx.strokeStyle=path.color;
-      ctx.lineWidth=path.weight>1?2:1.15;ctx.shadowColor=path.color;ctx.shadowBlur=i<3?10:0;
+      ctx.lineWidth=path.weight>1?2:1;ctx.shadowColor=path.color;ctx.shadowBlur=i<3?7:0;
       ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-      if(path.reflection){ctx.globalAlpha=alpha*.15;ctx.lineWidth=4;ctx.shadowBlur=9;ctx.beginPath();ctx.moveTo(a.x,a.y+height*.014);ctx.lineTo(b.x,b.y+height*.014);ctx.stroke();}
+      if(path.reflection){
+        // Mirror elevated walls about their floor intersection. The previous
+        // constant offset made the reflection look like a second floating rail.
+        const horizon=height*(width<=600?1343/1672:741/941);
+        const ay=horizon+(horizon-a.y)*.86,by=horizon+(horizon-b.y)*.86;
+        const distance=Math.max(0,(ay-horizon)/(height-horizon));
+        const broken=.55+.45*Math.sin(a.x*.09+ay*.14)**2;
+        ctx.globalAlpha=alpha*.19*(1-Math.min(1,distance)*.65)*broken;
+        ctx.lineWidth=2.8+distance*3;ctx.shadowBlur=6;
+        ctx.beginPath();ctx.moveTo(a.x,ay);ctx.lineTo(b.x,by);ctx.stroke();
+      }
     }
   };
   const draw=(dt:number)=>{

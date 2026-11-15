@@ -170,3 +170,13 @@
 - Normal preview tooling became unavailable; unrelated HR browser inspection was auto-review rejected. Used a fresh headless Edge profile only against localhost instead, without accessing existing user tabs.
 - 18 tests and typecheck passed. Local-only preview restarted on 127.0.0.1:3096. No push or deployment.
 - Final production build passed after the mobile framing correction.
+
+
+## 2026-11-14 — Local finish refinement after five-theme audit
+- Saved exact rollback/before-finish-refinement-20261114 at 22a27b4 before editing. Artwork, headline, inquiry backend and hidden portfolio retained.
+- Refined palette/thumb/switch materials, mobile spacing, theme buttons and forms; retained the portrait-sized bare gear and keyboard focus.
+- Tokyo light/weather coupling, TRON floor-plane reflections and quieter upper framing, cached painted Matcha leaves/shoreline-clipped ripples, and less diffuse Noir recovery.
+- Doodle smoothing/coalesced events now update one live path per frame, with bounded completed strokes and no React state update per pointer sample.
+- Typecheck, JS syntax and 18 tests passed. Build initially hit sandbox EPERM writing existing standalone output; the authorized native rerun passed.
+- Fresh isolated headless Edge on localhost passed five-theme responsive checks (320/390/768/1440), desktop/mobile forms, keyboard focus restoration, Doodle drawing/Clear/Done, motion output and OS reduced-motion. No page errors. Noir rest/interactive title edges identical from Default and Matcha; crisp DOM text restored after settling. Saved review screenshots/report under artifacts/finish-refinement. Physical touch hardware not exercised; no actual inquiry sent.
+- Changes remain local and uncommitted for review. No push or deployment; rollback branch preserved.
