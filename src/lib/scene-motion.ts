@@ -1,7 +1,6 @@
 import { createTronMotion } from "./tron-motion";
 import { createGardenMotion } from "./garden-motion";
-type Point = { x: number; y: number };
-const point = (x: number, y: number): Point => ({ x, y });
+import { sceneLayout } from "./scene-layout";
 
 /** One bounded decorative renderer. No React updates in the animation loop. */
 export function startSceneMotion(canvas: HTMLCanvasElement) {
@@ -12,6 +11,7 @@ export function startSceneMotion(canvas: HTMLCanvasElement) {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
   let width = 0, height = 0, frame = 0, previous = 0, clock = 0;
   let theme = "";
+  let layout = sceneLayout(1,1);
   const tron = createTronMotion(ctx);
   const garden = createGardenMotion(ctx);
   const rain = Array.from({length:110}, (_, i) => ({
@@ -19,19 +19,16 @@ export function startSceneMotion(canvas: HTMLCanvasElement) {
     depth: .25 + (i % 7) / 9,
   }));
   const resize = () => {
-    width = innerWidth; height = innerHeight;
+    const bounds = canvas.getBoundingClientRect();
+    width = bounds.width; height = bounds.height;
+    layout = sceneLayout(width,height);
     tron.resize(width,height);
     garden.resize(width,height);
     const dpr = Math.min(devicePixelRatio || 1, 1.5);
     canvas.width = Math.round(width*dpr); canvas.height = Math.round(height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
   };
-  // Desktop art fills the frame. Portrait art uses the same cover mapping as CSS.
-  const map = (x: number, y: number): Point => {
-    if (width > 600) return point(x / 1672 * width, y / 941 * height);
-    const scale = Math.max(width / 941, height / 1672);
-    return point(x*scale+(width-941*scale)/2, y*scale+(height-1672*scale)/2);
-  };
+  const map = (x:number,y:number) => layout.toScreen(x,y);
   function glow(x: number, y: number, rx: number, ry: number, color: string, opacity: number) {
     ctx.save(); ctx.translate(x,y); ctx.scale(rx,ry);
     const gradient = ctx.createRadialGradient(0,0,0,0,0,1);
@@ -40,7 +37,7 @@ export function startSceneMotion(canvas: HTMLCanvasElement) {
   }
   function tokyo(dt: number) {
     ctx.save(); ctx.globalCompositeOperation="screen";
-    const mobile=width<=600;
+    const mobile=layout.portrait;
     // One electrical rhythm drives each sign, its reflected wash and lit rain.
     const pink=.065+.026*Math.sin(clock*.57)+.009*Math.sin(clock*1.83);
     const amber=.045+.018*Math.sin(clock*.41+2);

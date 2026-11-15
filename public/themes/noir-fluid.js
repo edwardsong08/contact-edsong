@@ -1168,6 +1168,11 @@ function update () {
       if(materialRecovery && materialEngine) materialEngine.withdrawDeposit(wisps);
     }
     renderPainting();
+    if(notifyPaint){
+      notifyPaint=false;
+      // The parent keeps the semantic title visible until the canvas has painted.
+      requestAnimationFrame(()=>{if(embedVisible)parent.postMessage({type:'fluid-painted'},location.origin);});
+    }
     requestAnimationFrame(update);
 }
 
@@ -1644,6 +1649,7 @@ function noteGesture(now,x,y){
  lastGesture=gestureStart;
 }
 let embedVisible=true;
+let notifyPaint=false;
 let lastEmbeddedPointer=0;
 let paintCoverage=null;
 let paintCoverageSums=null;
@@ -1685,7 +1691,10 @@ function hitsPaint(x,y){
 window.addEventListener('message',event=>{
  if(event.origin!==location.origin||event.source!==parent||parent===window)return;
  const data=event.data;
- if(data?.type==='fluid-visible'){embedVisible=data.visible===true;return;}
+ if(data?.type==='fluid-visible'){
+   if(data.visible===true&&(!embedVisible||data.needsPaint))notifyPaint=true;
+   embedVisible=data.visible===true;return;
+ }
  if(data?.type!=='fluid-pointer'||!Number.isFinite(data.x)||!Number.isFinite(data.y)||data.x<0||data.x>1||data.y<0||data.y>1)return;
  const pointer=pointers[0],now=performance.now();
  const x=data.x*canvas.width,y=data.y*canvas.height;

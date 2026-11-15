@@ -11,9 +11,15 @@ h1 .headline-ending { color:inherit; }
 .theme-atmosphere > div { display:none; position:absolute; inset:0; overflow:hidden; }
 .primary-button { position:relative; overflow:hidden; isolation:isolate; }
 .noir-title-smoke { display:none; position:absolute; inset:-80px -40px; pointer-events:none; }
+/* WebKit can hit-test a decorative iframe despite pointer-events:none.
+   A transparent surface above it keeps touch in this document; native scrolling
+   remains enabled and the shared pointer handler receives the gesture. */
+@media(pointer:coarse) {
+ .noir-title-smoke::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:auto; }
+}
 .noir-title-smoke iframe { display:block; width:100%; height:100%; border:0; opacity:0; transition:opacity .35s ease; }
 [data-theme=noir] [data-smoke-source] { transition:opacity .35s ease; }
-[data-fluid-ready=true] .noir-title-smoke iframe { opacity:1; transition:none; }
+[data-fluid-warming=true] .noir-title-smoke iframe,[data-fluid-ready=true] .noir-title-smoke iframe { opacity:1; transition:none; }
 [data-fluid-ready=true] [data-smoke-source] { opacity:0; transition:none; }
 
 :root[data-theme=tokyo] { --background:#061018; --surface:#111c25; --ink:#f7f1ed; --secondary:#c7c7cc; --blue:#f4a0b7; --button-ink:#221018; --border:#4e424b; --hover:#29232d; --play-1:#edb0b6; --play-2:#ffc07a; --play-3:#a2dce8; --control-radius:10px; --palette-surface:linear-gradient(145deg,#192a36f2,#0b1823f7); --palette-shadow:0 20px 60px #0007,inset 0 1px 0 #ffa7c52b; }
@@ -57,10 +63,8 @@ body:has(.form-page) .theme-atmosphere::after { content:""; position:absolute; i
 [data-theme=noir] body:has(.form-page) .theme-atmosphere::after { display:none; }
 body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * { animation-play-state:paused!important; }
 [data-theme] .input-group input:focus,[data-theme] .input-group textarea:focus { box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 20%,transparent); }
-@media(max-width:800px) { .tokyo-art { background-position:62% center; } .garden-art { background-position:62% center; } }
+
 @media(max-width:480px) {
- .tokyo-art { background-position:65% center; } .tokyo-vignette { background:#030c1455; }
- .garden-art { background-position:60% center; opacity:.8; } .garden-scene::after { background:linear-gradient(90deg,#f3ead6bb,transparent)!important; }
  [data-theme=noir] .intro h1,[data-theme=matcha] .intro h1 { font-size:clamp(35px,10.9vw,54px); }
 
 }
@@ -69,31 +73,33 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 .noir-title-smoke iframe { color-scheme:normal; }
 [data-fluid-ready=true] { user-select:none; }
 
-@media(min-width:801px) { .garden-art { background-position:left center; } }
+
 [data-theme=matcha] .garden-scene::after { background:linear-gradient(180deg,#f3ead6b3,transparent 15%),linear-gradient(0deg,#f3ead6cc,transparent 16%); }
 
 /* Cinematic artwork, kept separate from the moving light and weather layers. */
-.tron-art { position:absolute; inset:0; background:url('/themes/tron-original-world.webp') center/100% 100% no-repeat; }
+.tron-art { position:absolute; inset:0; background:url('/themes/tron-original-world.webp') center bottom/cover no-repeat; }
 [data-theme=neon] .headline-accent { color:#b9f5ff; }
 [data-theme=neon] .intro h1 { font-weight:400; letter-spacing:-.025em; }
-.tokyo-art { background-size:100% 100%; background-position:center; }
+.tokyo-art { background-size:cover; background-position:center bottom; }
 .tokyo-vignette { background:radial-gradient(ellipse at center,#020b142e,transparent 70%),linear-gradient(0deg,#020b14aa,transparent 18%); }
 [data-theme=tokyo] .headline-accent { color:#f6a8bf; text-shadow:0 0 38px #e64f8020; }
-.garden-art { background-position:center!important; background-size:100% 100%; opacity:1; }
+.garden-art { background-position:center bottom; background-size:cover; opacity:1; }
 [data-theme=matcha] { --background:#e5e9c6; --surface:#f3f4df; --ink:#244333; --secondary:#405941; --blue:#406343; --control-radius:12px; --palette-surface:linear-gradient(145deg,#faf7eaf5,#e8edd8f7); --palette-shadow:0 18px 45px #293d2924,inset 0 1px 0 #fffbeb; }
 [data-theme=matcha] .garden-scene { background:#e5e9c6; }
 [data-theme=matcha] .garden-scene::after { background:linear-gradient(0deg,#e5e9c6bb,transparent 16%); }
 @media(max-width:600px) {
- .tokyo-art { background-size:100% 100%; background-position:center; }
- .garden-art { background-size:auto 100%; background-position:57% center!important; }
  [data-theme=matcha] .garden-scene::after { background:linear-gradient(0deg,#e5e9c6b3,transparent 20%),linear-gradient(90deg,#e5e9c644,transparent)!important; }
 }
 
 [data-theme=neon] .settings-trigger svg,[data-theme=tokyo] .settings-trigger svg { filter:drop-shadow(0 1px 2px #000) drop-shadow(0 0 4px #000); }
 [data-theme=neon] .footer,[data-theme=tokyo] .footer,[data-theme=neon] .wordmark,[data-theme=tokyo] .wordmark { text-shadow:0 1px 4px #000; }
 
-@media(max-width:600px) { .tokyo-art { background-image:url('/themes/tokyo-mobile.webp'); background-size:cover; } }
-@media(max-width:600px) { .tron-art { background-image:url('/themes/tron-original-world-mobile.webp'); background-size:100% 100%; } }
+/* Keep this aspect-ratio breakpoint and crop in sync with scene-layout.ts. */
+@media(max-aspect-ratio:1/1) {
+ .tokyo-art { background-image:url('/themes/tokyo-mobile.webp'); }
+ .tron-art { background-image:url('/themes/tron-original-world-mobile.webp'); }
+ .garden-art { background-position:57% 100%; }
+}
 /* Motion now follows the artwork coordinates, not a separate decorative grid. */
 .scene-motion { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 .tokyo-rain,.tokyo-wetlight,.tron-distance,.tron-arena,.tron-horizon,.garden-light { display:none; }

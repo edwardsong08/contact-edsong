@@ -1,3 +1,4 @@
+import { sceneLayout } from "./scene-layout";
 import { TRON_DESKTOP, TRON_MOBILE, sampleLightPath } from "./tron-paths";
 
 type Pulse = { lane:number; t:number; direction:number; age:number };
@@ -6,13 +7,14 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
   let pointerX=-1000,pointerY=-1000;
   let pulses:Pulse[]=[];
   let paths=TRON_DESKTOP;
+  let horizon=0;
   let samples:{x:number;y:number}[][]=[];
   const resize=(w:number,h:number)=>{
     width=w;height=h;pulses=[];
-    paths=w<=600?TRON_MOBILE:TRON_DESKTOP;
-    samples=paths.map(path=>sampleLightPath(path).map(p=>w<=600
-      ?{x:p.x*w/941,y:p.y*h/1672}
-      :{x:p.x*w/1672,y:p.y*h/941}));
+    const layout=sceneLayout(w,h);
+    paths=layout.portrait?TRON_MOBILE:TRON_DESKTOP;
+    horizon=layout.toScreen(0,layout.portrait?1343:741).y;
+    samples=paths.map(path=>sampleLightPath(path).map(p=>layout.toScreen(p.x,p.y)));
   };
   const closest=(x:number,y:number)=>{
     let distance=Infinity,lane=0,t=0;
@@ -56,7 +58,6 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
       if(path.reflection){
         // Mirror elevated walls about their floor intersection. The previous
         // constant offset made the reflection look like a second floating rail.
-        const horizon=height*(width<=600?1343/1672:741/941);
         const ay=horizon+(horizon-a.y)*.86,by=horizon+(horizon-b.y)*.86;
         const distance=Math.max(0,(ay-horizon)/(height-horizon));
         const broken=.55+.45*Math.sin(a.x*.09+ay*.14)**2;

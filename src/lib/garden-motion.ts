@@ -1,3 +1,4 @@
+import { sceneLayout } from "./scene-layout";
 type Leaf = { x:number; y:number; targetX:number; targetY:number; age:number; duration:number; size:number; phase:number; ink:number };
 type Ripple = { x:number; y:number; age:number; scale:number; phase:number };
 
@@ -27,9 +28,13 @@ function paintedLeaf(tone:number) {
 export function createGardenMotion(ctx:CanvasRenderingContext2D) {
   let width=0,height=0,time=0,nextLeaf=4,lastCanopy=-10,lastPond=-10;
   let leaves:Leaf[]=[],ripples:Ripple[]=[];
+  let layout=sceneLayout(1,1,"garden");
   const brushes=[paintedLeaf(0),paintedLeaf(1)];
   // Shoreline follows the right-hand rocks, including the narrow-screen crop.
-  const shoreline=(x:number)=>height*(width<=600?.87+.025*(x/width):.845+.065*(x/width)**3);
+  const shoreline=(x:number)=>{
+    const sourceX=layout.toImage(x,0).x/1672;
+    return layout.toScreen(0,941*(.845+.065*Math.max(0,Math.min(1,sourceX))**3)).y;
+  };
   const ripple=(x:number,y:number)=>{
     if(y<shoreline(x)||y>height*.975)return;
     if(ripples.length>=6)ripples.shift();
@@ -37,12 +42,12 @@ export function createGardenMotion(ctx:CanvasRenderingContext2D) {
   };
   const release=()=>{
     if(leaves.length>=3)return;
-    const edge=width<=600?.92:.84, targetX=width*(edge-.04-Math.random()*.035);
-    leaves.push({x:width*(edge+Math.random()*.02),y:height*(.12+Math.random()*.07),targetX,targetY:Math.min(height*.955,shoreline(targetX)+height*.035),age:0,duration:8+Math.random()*2,size:10+Math.random()*3,phase:Math.random()*6.28,ink:Math.random()>.5?1:0});
+    const edge=layout.portrait?.92:.84, targetX=width*(edge-.04-Math.random()*.035);
+    leaves.push({x:width*(edge+Math.random()*.02),y:Math.max(75,layout.toScreen(0,941*(.12+Math.random()*.07)).y),targetX,targetY:Math.min(height*.955,shoreline(targetX)+height*.035),age:0,duration:8+Math.random()*2,size:10+Math.random()*3,phase:Math.random()*6.28,ink:Math.random()>.5?1:0});
   };
   const pointer=(x:number,y:number,down:boolean)=>{
     if(down&&y>shoreline(x)&&time-lastPond>.3){ripple(x,y);lastPond=time;}
-    else if(y>75&&y<height*.28&&x>width*.62&&time-lastCanopy>2.5){release();lastCanopy=time;}
+    else if(y>75&&layout.toImage(x,y).y<285&&layout.toImage(x,y).x>900&&time-lastCanopy>2.5){release();lastCanopy=time;}
   };
   const draw=(dt:number)=>{
     time+=dt;
@@ -87,5 +92,5 @@ export function createGardenMotion(ctx:CanvasRenderingContext2D) {
     ripples=ripples.filter(r=>r.age<4.2);ctx.restore();
   };
   const reset=()=>{leaves=[];ripples=[];time=0;nextLeaf=4;lastCanopy=-10;lastPond=-10;};
-  return {draw,pointer,reset,resize:(w:number,h:number)=>{width=w;height=h;reset();}};
+  return {draw,pointer,reset,resize:(w:number,h:number)=>{width=w;height=h;layout=sceneLayout(w,h,"garden");reset();}};
 }

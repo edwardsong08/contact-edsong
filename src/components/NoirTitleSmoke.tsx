@@ -15,13 +15,14 @@ export default function NoirTitleSmoke() {
     let timer: ReturnType<typeof setTimeout>;
     let source = "";
     let loaded = false;
+    let wantsVisible = false;
     let settle: ReturnType<typeof setTimeout>;
     let pause: ReturnType<typeof setTimeout>;
     let generation = 0;
     const clear = () => {
       generation++;
-      clearTimeout(settle); clearTimeout(pause); loaded = false;
-      delete title.dataset.fluidReady;
+      clearTimeout(settle); clearTimeout(pause); loaded = false; wantsVisible = false;
+      delete title.dataset.fluidReady; delete title.dataset.fluidWarming;
       frame?.remove(); frame = null;
     };
     const setup = () => {
@@ -75,6 +76,9 @@ export default function NoirTitleSmoke() {
       if (event.origin !== location.origin || event.source !== frame?.contentWindow) return;
       if (event.data?.type === "headline-source-request") frame?.contentWindow?.postMessage({type:"headline-source", image:source}, location.origin);
       if (event.data?.type === "fluid-ready") { loaded = true; frame?.contentWindow?.postMessage({type:"fluid-visible", visible:false}, location.origin); }
+      if (event.data?.type === "fluid-painted" && loaded && wantsVisible) {
+        title.dataset.fluidReady = "true"; delete title.dataset.fluidWarming;
+      }
       if (event.data?.type === "fluid-failed") clear();
     };
     const move = (event: PointerEvent) => {
@@ -82,15 +86,17 @@ export default function NoirTitleSmoke() {
       const box = element.getBoundingClientRect();
       const x = (event.clientX - box.left) / box.width, y = (event.clientY - box.top) / box.height;
       if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
-        title.dataset.fluidReady = "true";
+        wantsVisible = true;
+        if (title.dataset.fluidReady !== "true") title.dataset.fluidWarming = "true";
         clearTimeout(settle); clearTimeout(pause);
         settle = setTimeout(() => {
-          delete title.dataset.fluidReady;
+          wantsVisible = false;
+          delete title.dataset.fluidReady; delete title.dataset.fluidWarming;
           // Let the final fluid detail dissolve into the identically aligned DOM
           // text before suspending the solver. A new gesture cancels this pause.
           pause = setTimeout(() => frame?.contentWindow?.postMessage({type:"fluid-visible",visible:false}, location.origin), 350);
         }, 3800);
-        frame.contentWindow?.postMessage({type:"fluid-visible",visible:true}, location.origin);
+        frame.contentWindow?.postMessage({type:"fluid-visible",visible:true,needsPaint:title.dataset.fluidReady !== "true"}, location.origin);
         frame.contentWindow?.postMessage({type:"fluid-pointer",x,y}, location.origin);
       }
     };

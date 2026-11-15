@@ -180,3 +180,10 @@
 - Typecheck, JS syntax and 18 tests passed. Build initially hit sandbox EPERM writing existing standalone output; the authorized native rerun passed.
 - Fresh isolated headless Edge on localhost passed five-theme responsive checks (320/390/768/1440), desktop/mobile forms, keyboard focus restoration, Doodle drawing/Clear/Done, motion output and OS reduced-motion. No page errors. Noir rest/interactive title edges identical from Default and Matcha; crisp DOM text restored after settling. Saved review screenshots/report under artifacts/finish-refinement. Physical touch hardware not exercised; no actual inquiry sent.
 - Changes remain local and uncommitted for review. No push or deployment; rollback branch preserved.
+
+
+## 2026-11-14 - Responsive sizing and mobile release checks
+- User authorized deploying after proportional background correction and mobile checks. Checkpointed approved refinements at c91c087; rollback/before-responsive-scaling-20261114 preserves them.
+- Replaced distorted frame-filling image sizes with cover crops, aspect-based portrait artwork, and shared image/screen coordinate mapping for motion. Added two geometry regressions.
+- Chromium and WebKit mobile checks passed all five themes, forms, viewport contraction, Doodle and reduced motion, plus portrait tablet/landscape/wide layouts. WebKit testing found and resolved decorative iframe touch interception and a blank first-frame handoff. Targeted touch activation, visible text, recovery and CTA checks passed both engines.
+- No physical touch device was connected; hardware keyboard/scroll performance remains unmeasured. No inquiry submitted. Production build initially hit a Windows lock from the temporary standalone preview; stopped the owned preview before rebuilding.
