@@ -11,7 +11,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ f
     <div className="page">
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
-        <Portrait href={source ? `/?from=${encodeURIComponent(source)}` : "/"} />
+        <Portrait source={source} />
         {SHOW_PORTFOLIO_LINK ? <Link className="portfolio" href={source ? `/portfolio?from=${encodeURIComponent(source)}` : "/portfolio"}>My work <span aria-hidden="true">↗</span></Link> : null}
       </header>
       <main id="main" className="main">

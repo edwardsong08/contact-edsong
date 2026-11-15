@@ -1,0 +1,122 @@
+/* Original implementation informed by the four circle-menu studies in CONTEXT.md.
+   Only the small SVG silhouette is filtered; photo, icons and labels stay crisp. */
+.portrait-navigation { --orbit-fill:#303237; --orbit-ink:#fff; position:relative; z-index:40; display:block; width:44px; height:44px; flex:0 0 44px; isolation:isolate; }
+.portrait-trigger { position:relative; z-index:3; display:grid; place-items:center; width:44px; height:44px; flex:0 0 44px; padding:0; border:0; border-radius:50%; color:var(--control-ink); background:transparent; cursor:pointer; }
+.portrait-trigger .portrait { display:block; pointer-events:none; transition:transform .24s cubic-bezier(.22,1,.36,1); }
+.portrait-trigger:focus-visible { outline:2px solid var(--blue); outline-offset:5px; }
+.portrait-close { pointer-events:none; position:absolute; right:-3px; bottom:-2px; display:grid; place-items:center; width:17px; height:17px; border:1px solid var(--border); border-radius:50%; color:var(--ink); background:var(--surface); box-shadow:0 1px 4px #0002; opacity:0; transform:scale(.3) rotate(-90deg); transition:opacity .18s,transform .35s cubic-bezier(.22,1,.36,1); }
+.portrait-close svg { fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; }
+.portrait-navigation[data-open=true] .portrait-close { opacity:1; transform:scale(1) rotate(0); }
+.portrait-goo { position:absolute; z-index:0; left:-16px; top:-16px; overflow:visible; pointer-events:none; fill:var(--orbit-fill); visibility:hidden; transition:visibility 0s .45s; }
+.portrait-menu { position:absolute; z-index:1; top:0; left:0; width:204px; height:190px; visibility:hidden; pointer-events:none; transition:visibility 0s .45s; }
+.portrait-navigation[data-open=true] :is(.portrait-menu,.portrait-goo) { visibility:visible; transition-delay:0s; }
+.portrait-position-0 { --dx:0px; --dy:104px; --duration:460ms; --delay:0ms; }
+.portrait-position-1 { --dx:83px; --dy:78px; --duration:530ms; --delay:25ms; }
+.portrait-position-2 { --dx:120px; --dy:0px; --duration:600ms; --delay:50ms; }
+.portrait-drop,.portrait-blob { transform:translate(0,0) scale(.45); transition:transform .36s cubic-bezier(.5,0,.65,1),opacity .2s ease; }
+.portrait-drop { transform-origin:22px 22px; }
+.portrait-blob { position:absolute; left:-4px; top:-4px; display:grid; place-items:center; width:52px; height:52px; padding:0; border:0; border-radius:50%; background:transparent; color:var(--orbit-ink); opacity:0; pointer-events:none; cursor:default; }
+.portrait-navigation[data-open=true] :is(.portrait-drop,.portrait-blob) { transform:translate(var(--dx),var(--dy)) scale(1); transition:transform var(--duration) cubic-bezier(.25,1.25,.35,1) var(--delay),opacity .16s ease var(--delay); }
+.portrait-navigation[data-open=true] .portrait-blob { opacity:1; pointer-events:auto; }
+.portrait-blob-content { pointer-events:none; display:grid; place-items:center; width:100%; height:100%; border-radius:50%; background:var(--orbit-fill); transition:transform .22s cubic-bezier(.22,1,.36,1); }
+.portrait-blob-content > svg { width:19px; height:19px; }
+.portrait-blob-label,.portrait-blob-soon { pointer-events:none; position:absolute; left:50%; white-space:nowrap; transform:translate(-50%, -3px); opacity:0; color:var(--ink); transition:opacity .12s,transform .18s; }
+.portrait-blob-label { top:61px; font-size:11px; font-weight:600; line-height:1.2; letter-spacing:-.01em; }
+.portrait-blob-soon { top:77px; font-size:9px; line-height:1.2; color:var(--secondary); }
+.portrait-navigation[data-open=true] :is(.portrait-blob-label,.portrait-blob-soon) { opacity:1; transform:translate(-50%,0); transition-delay:calc(var(--delay) + 190ms); }
+.portrait-blob:focus-visible { outline:2px solid var(--blue); outline-offset:5px; }
+@media(hover:hover) and (pointer:fine) { .portrait-trigger:hover .portrait { transform:scale(1.06); } .portrait-trigger:active .portrait { transform:scale(.98); } .portrait-blob:hover .portrait-blob-content { transform:scale(1.045); } }
+[data-theme=tokyo] .portrait-navigation { --orbit-fill:#b54b71; --orbit-ink:#fff7f5; }
+[data-theme=neon] .portrait-navigation { --orbit-fill:#a7eaf1; --orbit-ink:#073039; }
+[data-theme=noir] .portrait-navigation { --orbit-fill:#d5d2cb; --orbit-ink:#242628; }
+[data-theme=matcha] .portrait-navigation { --orbit-fill:#304f43; --orbit-ink:#fcf5df; }
+[data-theme=tokyo] .portrait-blob-label,[data-theme=neon] .portrait-blob-label,[data-theme=matcha] .portrait-blob-label { color:#fff9ec; text-shadow:0 1px 5px #10241be6,0 0 12px #10241bc9; }
+[data-theme=tokyo] .portrait-blob-soon,[data-theme=neon] .portrait-blob-soon,[data-theme=matcha] .portrait-blob-soon { color:#ede9df; text-shadow:0 1px 4px #10241b; }
+@media(prefers-reduced-motion:reduce) { .portrait-navigation * { transition:none!important; } .portrait-goo { display:none; } .portrait-trigger:hover .portrait,.portrait-trigger:active .portrait,.portrait-blob:hover .portrait-blob-content { transform:none; } }
+@media(forced-colors:active) { .portrait-goo { display:none; } .portrait-blob-content,.portrait-close { background:Canvas; color:CanvasText; border:1px solid ButtonText; box-shadow:none; } .portrait-blob-label,.portrait-blob-soon { color:CanvasText!important; text-shadow:none!important; } .portrait-blob:focus-visible,.portrait-trigger:focus-visible { outline-color:Highlight; } }
+/* Garden header sits over pale paper; dark captions stay readable here. */
+[data-theme=matcha] .portrait-blob-label { color:#213d31; text-shadow:0 1px 5px #f5f0da,0 0 10px #f5f0da; }
+[data-theme=matcha] .portrait-blob-soon { color:#3e5141; text-shadow:0 1px 5px #f5f0da; }
+/* One semantic menu, two layouts. Small screens use a quiet anchored list;
+   no SVG filter, orbit motion, content fading, or separate mobile state. */
+@media(max-width:800px), (hover:none) and (pointer:coarse) {
+ .portrait-navigation {
+  --menu-paper:linear-gradient(150deg,#fff,#f8f9fc);
+  --menu-ink:#25272c;
+  --menu-muted:#727783;
+  --menu-edge:#e1e4eb;
+  --menu-accent:#176ac2;
+  --menu-icon:#edf3fa;
+  --menu-hover:#edf1f7;
+  --menu-radius:16px;
+  --menu-shadow:0 14px 36px #17213624,0 2px 6px #1721360a;
+ }
+ [data-theme=tokyo] .portrait-navigation {
+  --menu-paper:linear-gradient(145deg,#192336,#101724);
+  --menu-ink:#fcf1f5; --menu-muted:#bfb4c6; --menu-edge:#68435d;
+  --menu-accent:#f4a0b7; --menu-icon:#34273a; --menu-hover:#2c2539;
+  --menu-radius:13px; --menu-shadow:0 16px 38px #0007,inset 0 1px 0 #e69ab02b;
+ }
+ [data-theme=neon] .portrait-navigation {
+  --menu-paper:linear-gradient(135deg,#0c222b,#07141c);
+  --menu-ink:#dffaff; --menu-muted:#9ebec5; --menu-edge:#427782;
+  --menu-accent:#a7eaf1; --menu-icon:#12313c; --menu-hover:#12313c;
+  --menu-radius:7px; --menu-shadow:0 14px 38px #0008,inset 0 1px 0 #9ceaff38;
+ }
+ [data-theme=noir] .portrait-navigation {
+  --menu-paper:linear-gradient(135deg,#303234,#232527);
+  --menu-ink:#efede7; --menu-muted:#b6b6b4; --menu-edge:#55585a;
+  --menu-accent:#e1ded6; --menu-icon:#404244; --menu-hover:#3b3e40;
+  --menu-radius:11px; --menu-shadow:0 16px 38px #0006,inset 0 1px 0 #ffffff14;
+ }
+ [data-theme=matcha] .portrait-navigation {
+  --menu-paper:linear-gradient(145deg,#f8f2df,#eaeedb);
+  --menu-ink:#243e31; --menu-muted:#5b6c57; --menu-edge:#a8b698;
+  --menu-accent:#3c6246; --menu-icon:#dce5ce; --menu-hover:#dce5ce;
+  --menu-radius:14px; --menu-shadow:0 14px 36px #243e3133,inset 0 1px 0 #fff9e9;
+ }
+ .portrait-goo { display:none; }
+ .portrait-menu {
+  top:56px; left:0; width:min(248px,calc(100vw - 50px)); height:auto;
+  display:grid; gap:2px; padding:6px;
+  background:var(--menu-paper); border:1px solid var(--menu-edge);
+  border-radius:var(--menu-radius); box-shadow:var(--menu-shadow);
+  opacity:0; transform:translateY(-6px) scale(.985); transform-origin:22px 0;
+  transition:opacity .16s ease,transform .2s cubic-bezier(.22,1,.36,1),visibility 0s .2s;
+ }
+ .portrait-navigation[data-open=true] .portrait-menu {
+  opacity:1; transform:none; pointer-events:auto;
+  transition:opacity .18s ease,transform .26s cubic-bezier(.22,1,.36,1),visibility 0s;
+ }
+ .portrait-menu .portrait-blob,.portrait-navigation[data-open=true] .portrait-blob {
+  position:relative; left:auto; top:auto; width:100%; height:52px; padding:0 10px;
+  display:grid; grid-template-columns:32px 1fr auto; gap:10px; align-items:center;
+  border-radius:calc(var(--menu-radius) - 5px); color:var(--menu-ink);
+  opacity:1; transform:none; transition:background-color .16s ease;
+ }
+ .portrait-menu .portrait-blob-content {
+  width:32px; height:32px; border-radius:8px;
+  background:var(--menu-icon); color:var(--menu-accent); transform:none; transition:none;
+ }
+ .portrait-menu .portrait-blob-content > svg { width:17px; height:17px; }
+ :root .portrait-menu .portrait-blob-label,
+ :root .portrait-menu .portrait-blob-soon {
+  position:static; opacity:1; transform:none; transition:none; text-shadow:none;
+  line-height:1.25; letter-spacing:0;
+ }
+ :root .portrait-menu .portrait-blob-label { justify-self:start; color:var(--menu-ink); font-size:13px; font-weight:550; }
+ :root .portrait-menu .portrait-blob-soon { color:var(--menu-muted); font-size:10px; font-weight:400; }
+ .portrait-menu .portrait-blob:focus-visible { outline:2px solid var(--menu-accent); outline-offset:-2px; background:var(--menu-hover); }
+ .portrait-menu .portrait-blob:hover .portrait-blob-content { transform:none; }
+ @media(hover:hover) and (pointer:fine) { .portrait-menu .portrait-blob:hover { background:var(--menu-hover); } }
+ @media(prefers-reduced-motion:reduce) { .portrait-menu { transform:none; } }
+ @media(forced-colors:active) {
+  .portrait-menu { background:Canvas; border-color:ButtonText; box-shadow:none; }
+  .portrait-menu .portrait-blob-content { color:CanvasText; background:Canvas; }
+  .portrait-menu .portrait-blob:focus-visible { outline-color:Highlight; background:Canvas; }
+ }
+}
+
+.portrait-blob { cursor:pointer; }
+.portrait-blob-soon { display:none; }
+@media(max-width:800px), (hover:none) and (pointer:coarse) { .portrait-menu .portrait-blob-soon { display:block; font-size:15px; } .portrait-menu .portrait-blob[aria-current=page] { background:var(--menu-hover); } }

@@ -233,3 +233,53 @@ User flagged the gear disappearing into Matcha foliage and suggested white. Comp
 ## 2026-11-15 - Korean Matcha release approval
 - User approved deployment of the final reviewed artwork, form contrast and white navigation controls. Local acceptance checks passed; main confirmed at 365d86c.
 - Preparing release through the signed main-branch webhook, preserving the original and study assets and pre-art rollback. Live verification pending.
+
+
+## Verified Korean Matcha deployment - November 15, 2026
+Released 564dbf3e144b9def4a8ad8814c50919714bc0f94 through main and the signed webhook. Coolify deployment 9co0pux0o42au0gjawvymffw finished at 2026-11-15 07:01:02 UTC; application running:healthy. GitHub rollback/before-korean-matcha-20261115 preserves prior production 365d86c.
+Live desktop/portrait artwork returned 200 and exactly matched the approved asset SHA-256 hashes. Chromium/WebKit passed Matcha at 320/390/768/1440 widths, proportional image selection, no overflow, white form gear/back, pond touch, home/form/back and reduced motion. General live checks passed all five themes, Noir touch/recovery, TRON phone geometry, both edsong hosts, health, legacy contact path/query redirects and same-origin fluid iframe policy. No page errors or actual inquiry submissions. Portfolio remains hidden and original/study artwork is preserved. Evidence: artifacts/korean-matcha-release/report.json, browser captures and artifacts/detail-refinement/live-report.json. Physical phone/native keyboard behavior remains untested.
+
+## 2026-11-15 - Local portrait menu reference pass
+- Preserved production 564dbf3 with rollback/before-portrait-menu-20261115; working on codex/portrait-blob-menu-local-20261115.
+- Inspected actual HTML/CSS of all four favorite CodePens linked in CONTEXT.md and opened the Gooey Menu live preview; replaced initial large organic bubbles with compact circular fan and SVG goo separation.
+- Added three disabled placeholders, theme colors, accessible keyboard/dismissal behavior, and compact-form overlap handling. Preserved artwork, inquiry flow and hidden portfolio.
+- 21 tests, typecheck and final build passed. Windows generated standalone packaging intermittently raised EPERM, resolved on retry. CUA reviewed themes, keyboard and 320px form clearance; no console errors. Preview left open locally. No commit, push or deployment.
+- Final short-screen pass tightened the homepage arc to clear the headline and separated the More caption from the middle circle. Final production build passed outside the sandbox after recurring Windows EPERM packaging failures; source compilation and TypeScript had already passed. The prior generated standalone folder was retained under artifacts/standalone-before-menu-* during diagnosis. Final preview capture reflects the corrected compact layout.
+
+## 2026-11-15 - Remove header name and unify hover
+- Removed visible name and unused Portrait href prop from home/form. Preserved form Back/referral behavior and footer identity.
+- Replaced broad wrapper hover with one fixed 44px portrait hit area, restrained circle hover, stationary pointer-transparent captions, and opacity-assisted closing. Removed shadow animation and duplicate responsive rules; retained CSS-only motion and reduced-motion fallback.
+- Snapshot of preceding local draft: artifacts/portrait-menu-before-hover-*. Production rollback unchanged.
+- 21 tests, typecheck and build passed. CUA verified hover boundary, toggles, keyboard and 320px home/form spacing; reviewed Matcha form. No page errors. Saved header-refined.jpg and left local preview open. No push/deploy.
+
+## 2026-11-15 - Mobile portrait dropdown
+- Added a responsive, theme-specific 3-row mobile panel; preserved desktop circle menu. Uses same DOM/state/accessibility, 52px rows, short CSS opacity/translation reveal, no mobile SVG filter or backdrop blur.
+- Removed mobile orbit workarounds and form-heading fade. Mobile panel overlays content without moving it. Desktop geometry and materials unchanged.
+- Retained pre-change CSS in artifacts/portrait-menu-before-mobile-*. Hidden portfolio and production rollback intact.
+- 21 tests, typecheck and build passed; all five mobile themes visually reviewed plus 320px form fit, keyboard/dismissal, and desktop circle fallback. Evidence in artifacts/portrait-menu/mobile-*.jpg. Local only, no deploy.
+
+## 2026-11-15 - Personal pages, editorial resume, Home recovery
+- Connected portrait menu to About, existing Selected work gallery, and new Resume. User authorization supersedes placeholders; no extra standalone main-header work link.
+- Verified deployed profile PDF by live fetch and SHA-256 equality; exact original copied locally. HTML resume contains verified roles/dates/skills; About photo retained at full 4:3.
+- Replaced initial resume card after user feedback with an open editorial timeline, numbered sections, section navigation, and desktop columns/mobile stack.
+- Made inner-page Home explicit and sticky, added footer Home, and fixed anchor clearance after user reported missing return navigation. Verified Home click and sticky visibility after scrolling.
+- Existing 21 tests/typecheck/build passed; browser desktop/mobile review and menu/referral flow checked. Dark Reader extension caused injected-attribute hydration warning; no suppression added. Local rollback snapshots preserved. No push/deployment.
+
+## 2026-11-15 - Local personal-page refinement
+- Saved full pre-pass rollback archive: artifacts/rollback-personal-refinement-20261115-040655.zip; verified readable with 70 entries.
+- Unified scrolling Home/portrait/settings controls and full-width quiet header background. Inner Matcha controls use dark ink; homepage treatment retained.
+- Removed About card, shortened copy, balanced photo/text; polished gallery into a consistent grid with open captions, responsive labels and CSS screenshot crops; updated image sizing.
+- Shortened resume opening/bullets, improved contrast/mobile width, and provided 44px section links. Exact PDF/art files preserved.
+- Tests/typecheck/build passed. CUA checked desktop/tablet/phone layouts, theme samples, sticky controls, links/referral flow and no overflow. Known Dark Reader hydration warnings only; no real inquiry sent. Local preview on /about, no push/deploy.
+
+## Start header transparency - November 15, 2026
+- Removed reading-header paint from /start and restored original theme navigation colors (ivory in Matcha). Other reading-page treatment unchanged.
+- Browser confirmed transparent header/no generated paint in all five themes; visually reviewed Matcha desktop/mobile. CSS-only correction, no inquiry behavior changed. Rollback stylesheet retained; no deploy.
+
+## Portfolio selection refresh - November 15, 2026
+- Replaced displayed MyWord with Bifrost Controller, CloseDesk, Grantstead; retained other projects, minimalist captions, referral flow and original MyWord asset.
+- Public destinations and original-color previews verified; no private workspace screenshots. Local capture fixtures and pre-edit rollback in artifacts/portfolio-refresh/.
+- Typecheck and diff check passed; desktop/mobile rendered seven projects with loaded previews and no horizontal overflow. No deployment.
+
+## Personal pages release authorized - November 15, 2026
+Final production build, TypeScript and all 21 tests passed. User approved release of portrait navigation, About/Resume/editorial gallery, transparent Start header and updated project selection. Preserve production 564dbf3 rollback before main push. No backend/inquiry behavior or theme artwork changes. Live verification pending.

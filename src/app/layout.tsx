@@ -4,6 +4,8 @@ import PersonalSettings from "@/components/PersonalSettings";
 import ThemeAtmosphere from "@/components/ThemeAtmosphere";
 import "./appearance.css";
 import "./themes.css";
+import "./portrait-menu.css";
+import "./personal-pages.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://edsong.xyz"),

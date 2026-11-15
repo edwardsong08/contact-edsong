@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import PersonalPage from "@/components/PersonalPage";
 import ContactActions from "@/components/ContactActions";
 import { normalizeSource } from "@/lib/inquiry";
 import styles from "./portfolio.module.css";
@@ -45,11 +45,27 @@ const projects = [
     featured: false,
   },
   {
-    name: "MyWord",
-    type: "Open source",
-    image: "/portfolio/myword.jpg",
-    alt: "MyWord product website in warm white and green, with a preview of the Android inbox using fictional conversations.",
-    href: "https://myword.edsong.xyz",
+    name: "Bifrost Controller",
+    type: "Controller mapping",
+    image: "/portfolio/bifrost-controller.jpg",
+    alt: "Bifrost Controller product page with a charcoal and gold controller on a Nordic mapping workbench.",
+    href: "https://therealmsofasgard.com/gaming-hub/bifrost-controller",
+    featured: false,
+  },
+  {
+    name: "CloseDesk",
+    type: "Real estate workspace",
+    image: "/portfolio/closedesk.jpg",
+    alt: "CloseDesk website with navy typography on warm white and a preview of its transaction workspace using fictional example data.",
+    href: "https://closedesk.edsong.xyz",
+    featured: false,
+  },
+  {
+    name: "Grantstead",
+    type: "Grant workspace",
+    image: "/portfolio/grantstead.jpg",
+    alt: "Grantstead website with green serif typography and a diagram connecting a nonprofit common application to individual funder drafts.",
+    href: "https://grants.edsong.xyz",
     featured: false,
   },
   {
@@ -64,20 +80,10 @@ const projects = [
 
 export default async function Portfolio({ searchParams }: { searchParams: Promise<{ from?: string | string[] }> }) {
   const source = normalizeSource((await searchParams).from);
-  const homeHref = source ? `/?from=${encodeURIComponent(source)}` : "/";
-  const startHref = source ? `/start?from=${encodeURIComponent(source)}` : "/start";
 
   return (
-    <div className={`page ${styles.page}`}>
-      <a className="skip-link" href="#main">Skip to content</a>
-      <header className="header">
-        <Link className="wordmark" href={homeHref}>Edward Song</Link>
-        <nav className={styles.navigation} aria-label="Portfolio navigation">
-          <Link className={styles.backLink} href={homeHref} aria-label="Back to home"><span aria-hidden="true">←</span> Back</Link>
-          <Link className={styles.contactLink} href={startHref}>Start a project <span aria-hidden="true">↗</span></Link>
-        </nav>
-      </header>
-      <main id="main">
+    <PersonalPage source={source}>
+      <div className={styles.page}>
         <div className={styles.intro}>
           <h1 className={styles.title}>Selected work.</h1>
         </div>
@@ -91,14 +97,14 @@ export default async function Portfolio({ searchParams }: { searchParams: Promis
                   alt={project.alt}
                   width={1265}
                   height={712}
-                  sizes={project.featured ? "(max-width: 800px) calc(100vw - 50px), (max-width: 1200px) calc(100vw - 128px), 1072px" : "(max-width: 700px) calc(100vw - 50px), (max-width: 1200px) calc(50vw - 80px), 520px"}
+                  sizes="(max-width:700px) calc(100vw - 50px), (max-width:800px) calc(50vw - 50px), (max-width:1200px) calc(50vw - 82px), 520px"
                   preload={project.featured}
                   className={styles.image}
                 />
               </div>
               <div className={styles.projectInfo}>
                 <div className={styles.projectHeading}>
-                  <h2><a className={styles.projectLink} href={project.href} target="_blank" rel="noopener noreferrer">{project.name}<span className={styles.projectType}> | {project.type}</span><span className={styles.newTab}> (opens in a new tab)</span></a></h2>
+                  <h2><a className={styles.projectLink} href={project.href} target="_blank" rel="noopener noreferrer"><span className={styles.projectName}>{project.name}</span><span className={styles.projectType}>{project.type}</span><span className={styles.newTab}> (opens in a new tab)</span></a></h2>
                   <span className={styles.projectArrow} aria-hidden="true">↗</span>
                 </div>
               </div>
@@ -110,8 +116,7 @@ export default async function Portfolio({ searchParams }: { searchParams: Promis
           <h2 id="project-heading">What are you thinking?</h2>
           <ContactActions source={source} />
         </section>
-      </main>
-      <footer className="footer"><span>© {new Date().getFullYear()} Edward Song</span></footer>
-    </div>
+      </div>
+    </PersonalPage>
   );
 }
