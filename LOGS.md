@@ -123,3 +123,11 @@
 - Softened theme scenery while preserving each theme's identity and Default's deployed headline style.
 - Browser verification: arrow/End theme selection, Space toggle, drawing/Undo/Escape focus return, all five themes on homepage/form at 364px measured CSS width with no horizontal overflow, three form fields, drawing absent on form, and transparent 44px gear in each theme. Real touch-device and OS reduced-motion emulation are not part of this browser check; touch pointer capture and reduced-motion rules remain implemented.
 - Typecheck, 18 existing regression tests, and production build passed. Nothing pushed or deployed.
+
+## 2026-11-14 — Immersive themes, local only
+- Created rollback/local-before-immersive-themes-20261114 at da2e0f3 before edits; earlier rollback retained.
+- Replaced Tokyo/Noir cursor spotlights; built custom vector Tokyo city and Matcha garden, animated TRON circuit paths, and localized Silver Noir title smoke.
+- Added persistent Motion switch; retained Doodle, bare 44px gear, grey Default headline, and hidden portfolio.
+- Browser checked desktop scenes and all five themes on home and inquiry at 320px CSS width: no horizontal overflow. Fixed smoke overflow and garden footer contrast/mobile plant cropping. Motion off pauses rain, hides smoke, persists reload; resumed successfully. No browser errors/warnings captured. Form navigation retains the short three visible fields plus hidden honeypot; no real message sent.
+- Typecheck, 18 regression tests, and production build passed. Reduced-motion is implemented through media-query rules and live media listeners; OS-setting and physical touch-device tests were not performed.
+- No push/deployment; local preview at http://127.0.0.1:3096/.

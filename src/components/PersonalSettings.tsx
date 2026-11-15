@@ -18,6 +18,7 @@ export default function PersonalSettings() {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"draw" | null>(null);
   const [ready, setReady] = useState(false);
+  const [motion, setMotion] = useState(true);
   const panel = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
@@ -26,6 +27,8 @@ export default function PersonalSettings() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("edsong-theme");
+      const moving = localStorage.getItem("edsong-motion") !== "off";
+      setMotion(moving); document.documentElement.dataset.motion = moving ? "on" : "off";
       if (themes.some(([id]) => id === saved)) {
         setTheme(saved!); document.documentElement.dataset.theme = saved!;
       }
@@ -81,6 +84,10 @@ export default function PersonalSettings() {
             <span className="theme-check" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="m3 8 3 3 7-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
           </button>)}
         </div>
+        {theme !== "light" && pathname === "/" ? <button className="doodle-toggle motion-toggle" role="switch" aria-checked={motion} onClick={() => {
+          const next = !motion; setMotion(next); document.documentElement.dataset.motion = next ? "on" : "off";
+          try { localStorage.setItem("edsong-motion", next ? "on" : "off"); } catch { /* Optional preference. */ }
+        }}><span>Motion</span><span className="toggle-track" aria-hidden="true"><span /></span></button> : null}
         {pathname === "/" ? <button className="doodle-toggle" role="switch" aria-checked={mode === "draw"} onClick={() => setMode(mode ? null : "draw")}>
           <span>Doodle</span><span className="toggle-track" aria-hidden="true"><span /></span>
         </button> : null}

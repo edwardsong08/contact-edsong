@@ -1,129 +1,160 @@
-/* Art direction. Stable IDs preserve preferences from the first local preview:
-   light = Default; neon = TRON. */
+/* Theme art direction. Stored IDs light/neon remain compatible with earlier previews. */
 body { isolation:isolate; }
 .page { position:relative; z-index:1; }
+.hero-title { position:relative; }
+h1 .headline-first { color:var(--ink); }
 h1 .headline-second { color:var(--ink); }
+h1 .headline-ending { color:inherit; }
 .headline-accent { font-style:normal; color:var(--blue); }
-.theme-atmosphere { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; --light-x:50%; --light-y:45%; }
-.theme-atmosphere > div { display:none; position:absolute; inset:0; overflow:hidden; }
+:root:not([data-theme]) .headline-second,:root[data-theme="light"] .headline-second,
+:root:not([data-theme]) .headline-accent,:root[data-theme="light"] .headline-accent { color:var(--secondary); }
+.theme-atmosphere { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.theme-atmosphere > div { display:none; position:absolute; inset:0; overflow:hidden; opacity:0; transition:opacity .6s ease,display .6s allow-discrete; }
 .primary-button { position:relative; overflow:hidden; isolation:isolate; }
 .primary-button::after { content:""; position:absolute; inset:0; pointer-events:none; }
+.noir-title-smoke { display:none; position:absolute; width:calc(100% + 120px); height:calc(100% + 150px); top:-100px; left:-60px; pointer-events:none; }
 
-/* TOKYO MIDNIGHT — luminous glass, distant architecture, a violet/coral dusk. */
+/* Tokyo: a quiet clearing in a luminous, rain-soaked city. */
 :root[data-theme="tokyo"] {
- --background:#090b1b; --surface:#15182e; --ink:#f6f2ff; --secondary:#b7b8d4;
+ --background:#080a18; --surface:#15182e; --ink:#f6f2ff; --secondary:#c3bfd4;
  --blue:#d0acff; --button-ink:#201332; --border:#44425f; --hover:#25243e;
  --play-1:#d0acff; --play-2:#ff869e; --play-3:#7dd8ec;
 }
-[data-theme="tokyo"] .tokyo-scene { display:block; background:radial-gradient(ellipse at 80% 15%,#62265a30,transparent 55%),linear-gradient(165deg,#090b1b 25%,#151128 80%,#31162d); }
-.city-glow { position:absolute; inset:0; background:radial-gradient(ellipse 42% 60% at var(--light-x) var(--light-y),#8e53d325,transparent 80%); }
-.city-architecture { position:absolute; inset:0; opacity:.55; }
-.city-architecture i { position:absolute; bottom:0; width:5%; height:46%; border-left:1px solid #b879f244; border-right:1px solid #f67e9c22; background:repeating-linear-gradient(0deg,transparent 0 30px,#b879f20c 31px 32px),linear-gradient(90deg,#b879f20c,transparent); }
-.city-architecture i:nth-child(1) { left:3%; height:54%; width:6%; }
-.city-architecture i:nth-child(2) { left:10%; height:37%; }
-.city-architecture i:nth-child(3) { left:16%; height:24%; width:3%; }
-.city-architecture i:nth-child(4) { right:4%; height:53%; }
-.city-architecture i:nth-child(5) { right:10%; height:32%; width:8%; }
-.city-architecture i:nth-child(6) { right:20%; height:19%; }
-.city-architecture i::before { content:""; position:absolute; top:24px; left:-1px; width:2px; height:70px; background:#c2a0ff; box-shadow:0 0 18px #a76eff; opacity:.6; }
-.city-architecture i:nth-child(even)::before { background:#ff819b; box-shadow:0 0 18px #ff819b; top:50%; height:40px; }
-.city-horizon { position:absolute; bottom:0; left:0; right:0; height:30%; background:linear-gradient(0deg,#090b1b 5%,transparent); }
-[data-theme="tokyo"] .headline-accent { color:#d3b1ff; text-shadow:0 0 48px #af65ff35; }
+[data-theme="tokyo"] .tokyo-scene { display:block; opacity:1; background:radial-gradient(ellipse at 90% 35%,#9d345b25,transparent 50%),radial-gradient(ellipse at 0% 50%,#5344a731,transparent 50%),linear-gradient(#080b1a,#201328); }
+.tokyo-city { position:absolute; inset:0; width:100%; height:100%; }
+.tokyo-moon { position:absolute; top:13%; left:24%; width:110px; height:110px; border-radius:50%; background:radial-gradient(circle,#b9bbdd10 40%,transparent 72%); }
+.tokyo-signs { filter:drop-shadow(0 0 7px #d782c280); animation:neon-breathe 8s ease-in-out infinite alternate; }
+.tokyo-vignette { position:absolute; inset:0; background:radial-gradient(ellipse 36% 32% at 50% 44%,#090c1b88,transparent 95%),linear-gradient(0deg,#070a1699,transparent 18%); }
+.tokyo-rain { position:absolute; inset:-100px; opacity:.13; transform:rotate(8deg); background-image:repeating-linear-gradient(90deg,transparent 0 76px,#b9bbdf55 77px,transparent 78px 154px); mask-image:repeating-linear-gradient(0deg,#000 0 22px,transparent 23px 170px); animation:rain-fall 1.8s linear infinite; }
+.rain-far { background-size:211px 100%; opacity:.07; animation-duration:3.4s; animation-delay:-1s; }
+@keyframes rain-fall { to { translate:-24px 170px; } }
+@keyframes neon-breathe { 0%,30% { opacity:.65; } 60%,100% { opacity:1; } }
+[data-theme="tokyo"] .headline-accent { color:#d8b9ff; text-shadow:0 0 40px #bd72ff30; }
 [data-theme="tokyo"] .primary-button { background:linear-gradient(115deg,#d3b1ff,#f0b8d1); box-shadow:0 5px 30px #a45ef025; }
 [data-theme="tokyo"] .primary-button:hover { box-shadow:0 5px 38px #bb71ff50; filter:none; }
 [data-theme="tokyo"] .portrait { box-shadow:0 0 0 2px #bc88f255,0 0 22px #b160e51a; }
 
-/* TRON — perspective, circuitry, light tracing the edge of a control. */
+/* TRON: geometric structure, cyan circuits, amber counterpoint, moving light. */
 :root[data-theme="neon"] {
- --background:#040d13; --surface:#081a24; --ink:#e9fbff; --secondary:#9bbbc8;
+ --background:#030b12; --surface:#081a24; --ink:#e9fbff; --secondary:#a6c2cf;
  --blue:#6ceaff; --button-ink:#03202a; --border:#285263; --hover:#10313d;
  --play-1:#67eaff; --play-2:#ffbc70; --play-3:#c2f9ff;
 }
-[data-theme="neon"] .tron-scene { display:block; background:radial-gradient(ellipse at 50% 85%,#0b415444,transparent 58%); }
-.tron-floor { position:absolute; width:180%; left:-40%; height:65%; bottom:-34%; transform:perspective(480px) rotateX(58deg); transform-origin:50% 0; background-image:linear-gradient(#54dbfa25 1px,transparent 1px),linear-gradient(90deg,#54dbfa25 1px,transparent 1px); background-size:72px 55px; mask-image:linear-gradient(transparent,#000 35%); }
-.tron-horizon { position:absolute; left:10%; right:10%; bottom:25%; height:1px; background:linear-gradient(90deg,transparent,#6ceaff60,transparent); box-shadow:0 0 25px #6ceaff40; }
-.tron-orbit { position:absolute; width:70vh; height:70vh; max-width:85vw; max-height:85vw; left:50%; top:45%; transform:translate(-50%,-50%); border:1px solid #71dff01e; border-radius:50%; box-shadow:0 0 0 12px #71dff004,0 0 0 13px #71dff00a; }
-.tron-corners { position:absolute; inset:112px 40px 80px; background:linear-gradient(#6ceaff77,#6ceaff77) left top/32px 1px no-repeat,linear-gradient(#6ceaff77,#6ceaff77) left top/1px 32px no-repeat,linear-gradient(#6ceaff77,#6ceaff77) right bottom/32px 1px no-repeat,linear-gradient(#6ceaff77,#6ceaff77) right bottom/1px 32px no-repeat; }
+[data-theme="neon"] .tron-scene { display:block; opacity:1; background:radial-gradient(ellipse at 50% 100%,#14527550,transparent 65%),#030b12; }
+.tron-circuits { position:absolute; inset:0; width:100%; height:100%; fill:none; }
+.circuit-bed { stroke:#6ceaff; stroke-opacity:.15; stroke-width:1; }
+.circuit-light { stroke:#87efff; stroke-width:2; filter:drop-shadow(0 0 5px #38dcff); }
+.circuit-light path { stroke-dasharray:35 965; animation:circuit-run 6s linear infinite; }
+.circuit-light path:nth-child(2) { animation-delay:-3s; animation-duration:7s; }
+.circuit-light path:nth-child(3) { animation-delay:-1.3s; animation-duration:5s; }
+.circuit-light path:nth-child(4) { animation-delay:-4s; stroke:#ffbd71; }
+.circuit-light path:nth-child(5) { animation-duration:4s; animation-delay:-1s; }
+.circuit-light path:nth-child(6) { animation-duration:4s; animation-delay:-3s; }
+.circuit-nodes { opacity:.5; }
+@keyframes circuit-run { to { stroke-dashoffset:-1000; } }
+.tron-floor { position:absolute; width:200%; left:-50%; height:65%; bottom:-32%; transform:perspective(500px) rotateX(58deg); transform-origin:50% 0; background-image:linear-gradient(#54dbfa40 1px,transparent 1px),linear-gradient(90deg,#54dbfa30 1px,transparent 1px); background-size:90px 60px; mask-image:linear-gradient(transparent,#000 40%); animation:grid-travel 5s linear infinite; }
+@keyframes grid-travel { to { background-position:0 60px,0 0; } }
+.tron-horizon { position:absolute; left:5%; right:5%; bottom:26%; height:1px; background:linear-gradient(90deg,transparent,#6ceaff90,transparent); box-shadow:0 0 22px #6ceaff66; }
+.tron-disc { position:absolute; width:min(68vh,76vw); height:min(68vh,76vw); top:43%; left:50%; transform:translate(-50%,-50%); border:1px solid #57dfff17; border-radius:50%; }
+.tron-disc i { position:absolute; inset:-12px; border:1px solid transparent; border-top-color:#6ceaff65; border-bottom-color:#6ceaff18; border-radius:50%; animation:disc-turn 30s linear infinite; }
+.tron-disc i:nth-child(2) { inset:8px; border-top-color:transparent; border-right-color:#6ceaff25; animation-direction:reverse; animation-duration:40s; }
+.tron-disc i:nth-child(3) { inset:-20px; border:none; background:conic-gradient(from 60deg,transparent 0 88%,#6ceaff07 90%,transparent); animation:disc-turn 24s linear infinite; }
+@keyframes disc-turn { to { rotate:360deg; } }
 [data-theme="neon"] .intro h1 { font-weight:500; letter-spacing:-.035em; }
 [data-theme="neon"] .headline-accent { text-shadow:0 0 35px #42deff35; }
-[data-theme="neon"] .primary-button { border:1px solid #6ceaff; border-radius:7px; background:#082630; color:#b5f6ff; box-shadow:inset 0 0 20px #6ceaff08,0 0 24px #6ceaff10; }
+[data-theme="neon"] .primary-button { border:1px solid #6ceaff; border-radius:5px; background:#082630; color:#b5f6ff; box-shadow:inset 0 0 20px #6ceaff08,0 0 24px #6ceaff10; }
 [data-theme="neon"] .primary-button::after { background:linear-gradient(110deg,transparent 30%,#c9faff60 49%,transparent 65%); transform:translateX(-130%); }
 [data-theme="neon"] .primary-button:hover::after,[data-theme="neon"] .primary-button:focus-visible::after { animation:light-trace .7s ease-out both; }
+@keyframes light-trace { to { transform:translateX(130%); } }
 [data-theme="neon"] .primary-button:hover { filter:none; box-shadow:0 0 28px #6ceaff35,inset 0 0 20px #6ceaff10; }
 [data-theme="neon"] .portrait { box-shadow:0 0 0 2px #6ceaff66,0 0 18px #6ceaff22; }
-@keyframes light-trace { to { transform:translateX(130%); } }
 
-/* SILVER NOIR — restrained editorial type, brushed metal, directional light. */
+/* Silver Noir: smoke is confined to the typography, never a cursor spotlight. */
 :root[data-theme="noir"] {
  --background:#141415; --surface:#202022; --ink:#f2f0ed; --secondary:#b8b5b1;
  --blue:#e0dfdc; --button-ink:#202023; --border:#555553; --hover:#333332;
  --play-1:#ece9e2; --play-2:#aaa8a6; --play-3:#c6ad8d;
 }
-[data-theme="noir"] .noir-scene { display:block; background:linear-gradient(130deg,#34343500 20%,#55555322 45%,#14141500 65%),#141415; }
-.noir-light { position:absolute; inset:0; background:radial-gradient(ellipse 65% 110% at var(--light-x) 0%,#d8d5ce14,transparent 75%); }
+[data-theme="noir"] .noir-scene { display:block; opacity:1; background:linear-gradient(125deg,#252526,#111112 70%); }
+.noir-grain { position:absolute; inset:0; background:repeating-linear-gradient(115deg,#ffffff03 0 1px,transparent 1px 4px); }
 .noir-frame { position:absolute; inset:115px 64px 80px; border-top:1px solid #cec8bb22; border-bottom:1px solid #cec8bb22; }
+[data-theme="noir"] .noir-title-smoke { display:block; }
 [data-theme="noir"] .intro h1 { font-weight:400; letter-spacing:-.055em; }
 [data-theme="noir"] .headline-accent { font-family:Georgia,"Times New Roman",serif; font-style:italic; font-weight:400; letter-spacing:-.05em; color:#e9e6df; }
 [data-theme="noir"] .headline-second { font-weight:300; }
-[data-theme="noir"] .primary-button { background:linear-gradient(115deg,#a8a7a3,#f2f0ea 45%,#c6c4be 60%,#9b9b97); background-size:200% 100%; background-position:var(--sheen-x,50%) 50%; border:1px solid #fff8; box-shadow:inset 0 1px 0 #fff8,0 5px 15px #0003; color:#202020; border-radius:5px; transition:background-position .3s,transform .2s; }
+[data-theme="noir"] .primary-button { background:linear-gradient(115deg,#a8a7a3,#f2f0ea 45%,#c6c4be 60%,#9b9b97); background-size:200% 100%; background-position:50% 50%; border:1px solid #fff8; box-shadow:inset 0 1px 0 #fff8,0 5px 15px #0003; color:#202020; border-radius:5px; transition:background-position .4s,transform .2s; }
 [data-theme="noir"] .primary-button:hover { background-position:95% 50%; filter:none; }
 [data-theme="noir"] .portrait img { filter:grayscale(1); transition:filter .4s; }
 [data-theme="noir"] .portrait-wordmark:hover img { filter:grayscale(0); }
 [data-theme="noir"] .portrait { box-shadow:0 0 0 1px #ece9e290; }
 
-/* MATCHA GARDEN — soft paper, botanical silhouettes, an unfolding sprig. */
+/* Matcha: a complete tea-garden landscape, with quiet botanical movement. */
 :root[data-theme="matcha"] {
- --background:#f3f0e3; --surface:#faf8ef; --ink:#263f30; --secondary:#566650;
- --blue:#45683f; --button-ink:#fffdf2; --border:#bdc8af; --hover:#e5ead9;
- --play-1:#45683f; --play-2:#a27742; --play-3:#8b9a66;
+ --background:#eeeddd; --surface:#faf8ef; --ink:#233d2c; --secondary:#4e6048;
+ --blue:#3f6437; --button-ink:#fffdf2; --border:#bdc8af; --hover:#e5ead9;
+ --play-1:#45683f; --play-2:#a27742; --play-3:#667947;
 }
-[data-theme="matcha"] .garden-scene { display:block; background:repeating-linear-gradient(96deg,#70552503 0 1px,transparent 1px 5px),radial-gradient(ellipse at 20% 90%,#b5c59b33,transparent 60%); }
-.garden-sun { position:absolute; width:min(50vw,650px); height:min(50vw,650px); top:-25%; right:-12%; border-radius:50%; background:radial-gradient(circle,#d9d9ae33 0 55%,transparent 72%); box-shadow:none; }
-.garden-branch { position:absolute; width:clamp(180px,24vw,370px); bottom:-65px; left:-80px; color:#7f9663; opacity:.17; transform:rotate(-8deg); }
-.garden-sprig { position:absolute; width:clamp(110px,14vw,220px); right:-40px; bottom:35px; color:#8f9e74; opacity:.14; transform:rotate(-32deg); }
+[data-theme="matcha"] .garden-scene { display:block; opacity:1; background:#eeeddd; }
+.garden-landscape { position:absolute; width:100%; height:100%; inset:0; }
+.tea-left { transform-origin:100px 1000px; animation:tea-sway 12s ease-in-out infinite alternate; }
+.tea-right { transform-origin:1520px 1000px; animation:tea-sway 15s ease-in-out -6s infinite alternate-reverse; }
+@keyframes tea-sway { from { rotate:-1.5deg; } to { rotate:1.5deg; } }
+.garden-mist { position:absolute; left:-15%; bottom:12%; width:130%; height:22%; background:radial-gradient(ellipse,#f2efdf75,transparent 65%); filter:blur(20px); animation:garden-drift 25s ease-in-out infinite alternate; }
+@keyframes garden-drift { to { translate:5% -12px; } }
+.garden-paper { position:absolute; inset:0; background:repeating-linear-gradient(96deg,#70552503 0 1px,transparent 1px 4px); }
 [data-theme="matcha"] .intro h1 { font-family:Georgia,"Times New Roman",serif; font-weight:400; line-height:1.07; letter-spacing:-.06em; }
-[data-theme="matcha"] .headline-accent { font-style:italic; font-weight:400; color:#486a3e; }
-[data-theme="matcha"] .primary-button { background:#45683f; box-shadow:0 4px 0 #304d2d16; border-radius:24px 24px 24px 8px; }
+[data-theme="matcha"] .headline-accent { font-style:italic; font-weight:400; color:#45663b; }
+[data-theme="matcha"] .primary-button { background:#3f6437; box-shadow:0 4px 0 #304d2d16; border-radius:24px 24px 24px 8px; }
 [data-theme="matcha"] .primary-button:hover { background:#355630; transform:translateY(-2px); box-shadow:0 6px 0 #304d2d16; filter:none; }
 [data-theme="matcha"] .portrait { box-shadow:0 0 0 3px #c4cfb0; }
 
-/* Forms inherit materials but keep the familiar labels and layout. */
-[data-theme="tokyo"] .input-group input:focus,[data-theme="tokyo"] .input-group textarea:focus,
-[data-theme="neon"] .input-group input:focus,[data-theme="neon"] .input-group textarea:focus,
-[data-theme="noir"] .input-group input:focus,[data-theme="noir"] .input-group textarea:focus,
-[data-theme="matcha"] .input-group input:focus,[data-theme="matcha"] .input-group textarea:focus { box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 20%,transparent); }
-body:has(.form-page) .theme-atmosphere { opacity:.5; }
+/* Quieter scenery behind forms. Animations can always be paused. */
+body:has(.form-page) .theme-atmosphere { opacity:.32; }
+body:has(.form-page) .theme-atmosphere * { animation-play-state:paused; }
+.theme-atmosphere[data-paused="true"] *,[data-motion="off"] .theme-atmosphere * { animation-play-state:paused !important; }
+[data-motion="off"] .noir-title-smoke { display:none; }
+.motion-toggle { margin-top:7px; }
+.motion-toggle + .doodle-toggle { margin-top:0; border-top:0; padding-top:5px; min-height:48px; }
+[data-theme] .input-group input:focus,[data-theme] .input-group textarea:focus { box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 20%,transparent); }
+@starting-style {
+ [data-theme="tokyo"] .tokyo-scene,[data-theme="neon"] .tron-scene,[data-theme="noir"] .noir-scene,[data-theme="matcha"] .garden-scene { opacity:0; }
+}
 @media (max-width:800px) {
- .tron-corners { inset:95px 20px 65px; }
  .noir-frame { inset:96px 32px 65px; }
- .city-architecture { opacity:.4; }
+ .circuit-light { stroke-width:1.3; }
 }
 @media (max-width:480px) {
- .garden-branch { width:200px; left:-100px; bottom:-30px; }
- .garden-sprig { width:120px; right:-60px; }
- .garden-sun { width:300px; height:300px; top:-80px; right:-180px; }
- .tron-floor { background-size:42px 38px; }
- .tron-horizon { bottom:20%; }
+ .tokyo-city { opacity:.8; }
+ .tokyo-rain { opacity:.07; }
+ .tokyo-vignette { background:radial-gradient(ellipse at 50% 45%,#080b1b66,transparent 90%); }
+ .tron-circuits { opacity:.65; }
+ .tron-floor { background-size:52px 45px; }
+ .tron-disc { width:85vw; height:85vw; }
  .noir-frame { inset:94px 25px 65px; }
  [data-theme="noir"] .intro h1,[data-theme="matcha"] .intro h1 { font-size:clamp(35px,10.9vw,54px); }
+ .tea-left,.tea-right { display:none; } .garden-botanicals { display:block; }
 }
 @media (prefers-reduced-motion:reduce) {
  .theme-atmosphere *, .primary-button::after { animation:none !important; transition:none !important; }
+ .theme-atmosphere > div { transition:none; }
+ .noir-title-smoke { display:none !important; }
  [data-theme="matcha"] .primary-button:hover { transform:none; }
 }
 @media (forced-colors:active) {
- .theme-atmosphere { display:none; }
+ .theme-atmosphere,.noir-title-smoke { display:none !important; }
  .headline-accent { color:LinkText; text-shadow:none; }
  .primary-button { border:1px solid ButtonText; }
 }
 
 
-/* Crossfade scenery on a theme change; static fallback in older browsers. */
-.theme-atmosphere > div { opacity:0; transition:opacity .45s ease,display .45s allow-discrete; }
-[data-theme="tokyo"] .tokyo-scene,[data-theme="neon"] .tron-scene,
-[data-theme="noir"] .noir-scene,[data-theme="matcha"] .garden-scene { opacity:1; }
-@starting-style {
- [data-theme="tokyo"] .tokyo-scene,[data-theme="neon"] .tron-scene,
- [data-theme="noir"] .noir-scene,[data-theme="matcha"] .garden-scene { opacity:0; }
-}
-@media (prefers-reduced-motion:reduce) { .theme-atmosphere > div { transition:none; } }
+[data-theme=matcha] .footer { color:#233d2c; }
+.garden-scene::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg,#eeeddd 0%,#eeedddc9 5%,transparent 15%); }
+
+
+.garden-sun { position:absolute; top:12%; right:10%; width:clamp(90px,14vw,190px); aspect-ratio:1; border-radius:50%; background:#d7c88e52; }
+.garden-botanicals { display:none; position:absolute; inset:0; width:100%; height:100%; }
+@media(max-width:480px) { .garden-botanicals { display:block; } }
+
+
+/* Keep decorative smoke outside the headline without widening the page. */
+.page { overflow-x:clip; }

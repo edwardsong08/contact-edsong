@@ -31,3 +31,4 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+- Latest local theme revision replaces all cursor spotlights with ambient scenes: Tokyo city/rain, TRON traveling circuit lights, Silver Noir letter-emitted smoke, and Matcha tea landscape. Persist Motion preference before paint; pause ambient motion on forms, document-hidden, user toggle, and reduced-motion. Keep semantic headline readable. No deployment authorized.
