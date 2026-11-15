@@ -1,6 +1,7 @@
 .page { max-width: 1200px; }
 .navigation { display: flex; align-items: center; gap: 24px; }
-.backLink { display: inline-flex; align-items: center; gap: 7px; color: var(--secondary); font-size: 12px; padding: 12px 4px; }
+.backLink { display: inline-flex; align-items: center; gap: 7px; min-height:44px; color:var(--control-ink); font-size:14px; font-weight:600; padding:12px 4px; text-shadow:var(--control-shadow); }
+.backLink span { font-size:20px; line-height:1; }
 .backLink:hover { color: var(--blue); }
 .contactLink { color: var(--blue); font-size: 12px; padding: 12px 0; }
 .contactLink span { margin-left: 6px; }

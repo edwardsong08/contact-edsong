@@ -3,6 +3,7 @@
  --surface:#fff; --border:#dedee3; --hover:#f2f2f6; --button-ink:#fff;
  --play-1:#4476c9; --play-2:#9662ae; --play-3:#ab723c; --error:#a12720;
  --control-radius:12px; --palette-surface:var(--surface); --palette-shadow:0 12px 40px #171b2512,0 2px 8px #171b2506;
+ --control-ink:var(--ink); --control-shadow:0 1px 2px var(--background);
  color-scheme:light;
 }
 :root[data-theme="tokyo"] { --error:#ffb5ad; --palette-surface:linear-gradient(145deg,#202039,#13172b); --palette-shadow:0 18px 50px #0006,inset 0 1px 0 #e0b7ff15; color-scheme:dark; }
@@ -14,7 +15,7 @@ body { background:var(--background); }
 :root:not([data-theme]) .headline-second,:root[data-theme="light"] .headline-second,
 :root:not([data-theme]) .headline-accent,:root[data-theme="light"] .headline-accent { color:var(--secondary); }
 .portrait-wordmark { gap:12px; font-size:17px; letter-spacing:-.035em; }
-.portrait { width:44px; height:44px; flex:0 0 44px; overflow:hidden; border-radius:50%; box-shadow:0 0 0 1px #00000012; transition:transform .3s cubic-bezier(.2,.8,.2,1); }
+.portrait { width:44px; height:44px; flex:0 0 44px; overflow:hidden; border:2px solid var(--control-ink); border-radius:50%; box-shadow:0 0 0 2px color-mix(in srgb,var(--background) 80%,transparent); transition:transform .3s cubic-bezier(.2,.8,.2,1); }
 .portrait img { width:100%; height:100%; object-fit:cover; transform:scale(1.3); transform-origin:50% 58%; }
 .wordmark:hover { color:var(--ink); }
 @media (hover:hover) { .portrait-wordmark:hover .portrait { transform:scale(1.04); } }
@@ -24,16 +25,18 @@ body { background:var(--background); }
 .field-error,.submission-error { color:var(--error); }
 .skip-link { background:var(--surface); z-index:100; }
 .form-page .header { padding-right:68px; }
+.back-link { color:var(--control-ink); font-size:14px; font-weight:600; text-shadow:var(--control-shadow); }
+.back-link span { font-size:20px; line-height:1; }
 
 /* The gear has a portrait-sized silhouette, with no circular container. */
 .settings-anchor { position:absolute; top:24px; right:max(64px,calc((100vw - 1312px)/2)); z-index:30; }
-.settings-trigger { position:relative; width:44px; height:44px; display:grid; place-items:center; border:0; padding:0; border-radius:0; background:transparent; color:var(--secondary); cursor:pointer; }
-.settings-trigger svg { width:44px; height:44px; overflow:visible; transition:transform .42s cubic-bezier(.2,.8,.2,1),color .2s; }
+.settings-trigger { position:relative; width:44px; height:44px; display:grid; place-items:center; border:0; padding:0; border-radius:0; background:transparent; color:var(--control-ink); cursor:pointer; text-decoration:none; }
+.settings-trigger svg { width:44px; height:44px; overflow:visible; stroke-width:2; filter:drop-shadow(var(--control-shadow)); transition:transform .42s cubic-bezier(.2,.8,.2,1),color .2s,stroke-width .2s; }
 .settings-trigger:hover,.settings-trigger.is-open { color:var(--ink); background:transparent; box-shadow:none; }
 @media (hover:hover) { .settings-trigger:hover svg { transform:rotate(12deg); } }
 .settings-trigger.is-open svg { transform:rotate(45deg); }
 .settings-trigger:focus-visible { outline:0; color:var(--blue); }
-.settings-trigger:focus-visible::after { content:""; position:absolute; bottom:-7px; left:11px; width:22px; height:2px; background:currentColor; }
+.settings-trigger:focus-visible svg { stroke-width:3; filter:drop-shadow(0 0 2px var(--background)) drop-shadow(0 0 5px var(--blue)); }
 .settings-trigger:disabled { cursor:default; }
 
 /* A compact palette. The check is the sole persistent selection indicator. */
@@ -96,7 +99,6 @@ body { background:var(--background); }
 }
 @media (forced-colors:active) {
  .settings-trigger:focus-visible { outline:2px solid Highlight; outline-offset:4px; }
- .settings-trigger:focus-visible::after { display:none; }
  .theme-option[aria-checked="true"] { border:1px solid Highlight; }
  .toggle-track { border:1px solid ButtonText; }
  .toggle-track > span { background:ButtonText; }

@@ -152,3 +152,7 @@
 - Added bounded scene-motion renderer: synchronized Tokyo lights/rain/reflections, artwork-aligned TRON light-wall pulses, and sparse Matcha falling leaves/pond ripples.
 - Verified canopy/pond pointer delivery and live leaves/ripples, simplified theme+Doodle menu, Doodle mount/Done, narrow layout without overflow (291px measured CSS width). Scene pointer layer does not capture events. Build, typecheck, and 18 tests passed. OS reduced-motion and physical touch hardware not exercised.
 - Local only. No push, deployment, or real inquiry email.
+
+## 2026-11-14 — Portrait and navigation contrast
+- Saved rollback/before-control-contrast-20261114. CSS-only portrait border, gear contrast/stroke/focus, and inquiry/portfolio Back-link refinements.
+- Checked shared styles across all five themes; visually reviewed TRON home/form and Matcha form. Escape restores gear focus with 3px stroke and no underline. Browser warning/error log empty. No push or deploy.
