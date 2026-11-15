@@ -40,3 +40,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - TRON direction: preserve the cinematic light-wall composition Edward liked; use original edited desktop/portrait artwork without bikes or tower silhouettes. Do not replace it with simple abstract CSS lines, curvy sculptural worlds, or dense busy architecture. More motion should follow the actual light walls, edge structures and reflections. Silver Noir static-to-interactive typography must remain aligned even after switching themes.
 
 - Release authorization (November 14, 2026): Edward explicitly approved fixing responsive artwork scaling, checking mobile interactions, then pushing/deploying the complete refined theme experience. This supersedes the earlier local-only restrictions for this release. Preserve the artwork, hidden portfolio, exact Noir typography, reduced-motion fallback and existing inquiry/routing contracts. Scenes use proportional cover crops (portrait assets when width <= height), with matching coordinates in scene-layout.ts.
+
+
+- Current scope (November 15, 2026): gear, mobile TRON framing and Silver Noir dissipation refinement is LOCAL ONLY. Do not push or deploy without new authorization. Preserve all artwork files and hidden portfolio. Rollback: rollback/before-detail-refinement-20261115 at 00bb13a. Tall TRON phones now use proportional width-fit/top anchoring with a faded foreground; CSS and scene-layout.ts must remain aligned, including the light/reflection mask.
+
+
+- Release authorization (November 15, 2026): Edward approved deploying the reviewed gear, mobile TRON and Silver Noir refinements after successful local checks. This supersedes the preceding local-only boundary for this release. Push the preserved rollback before main; verify the deployed commit and public behavior. Preserve artwork and hidden portfolio.

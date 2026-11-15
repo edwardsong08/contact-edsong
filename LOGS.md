@@ -192,3 +192,17 @@
 ## Verified theme release - November 14, 2026
 Application code 290b3f38dcbc8318b166ea75fc6ee443e25a064a was pushed to main and deployed by the existing signed webhook. Personal Coolify deployment x6bku8k4m8lpajbyzoayzdal finished successfully at 2026-11-15 04:23:26 UTC; application status running:healthy. Public Chromium and WebKit touch-emulated sessions passed all five themes, Noir activation/recovery, hidden portfolio and home/form/back navigation with no page errors. edsong.xyz and www.edsong.xyz returned 200; contact.edsong.xyz/start retained its path and referral query in its permanent redirect. Health and same-origin Noir iframe policy passed. No actual inquiry was submitted. Physical phone/native keyboard behavior remains untested.
 All 20 tests, TypeScript, fluid JS syntax and final production build passed. Rollback branches are pushed to GitHub: rollback/production-before-themes-20261114 (3fd0813) and rollback/before-responsive-scaling-20261114 (c91c087). Full local/live reports and screenshots are in ignored artifacts/responsive-release. This verification note changes documentation only; the application code remains 290b3f3.
+
+
+## 2026-11-15 - Local gear, TRON phone and Noir refinements
+- Preserved clean 00bb13a as rollback/before-detail-refinement-20261115; work is on codex/detail-refinement-local-20261115. No push/deployment authorized or performed.
+- Rounded and softened the full-size bare gear silhouette; retained 44px target and visible keyboard focus without a circle/underline.
+- Reframed tall-phone TRON using the complete existing portrait asset, proportional width fit and a fading foreground. Shared geometry and light/reflection opacity track the artwork; added a geometry regression.
+- Reduced Noir letter stretching, added diffusion only to detached wisps, strengthened uneven breakup and advanced local recovery. Retained source typography, exact activation alignment, original solver/license, touch-safe overlay and DOM fallback.
+- 21 tests, typecheck, fluid JS syntax and production build passed. Chromium/WebKit local checks passed theme/form/gear/Doodle/reduced-motion behavior and targeted Noir touch activation, visible output, recovery and CTA. Static/interactive headline bounds identical from Default and Matcha; no page errors. Reviewed additional 320/390/430 phone compositions and controlled rollback-versus-current Noir traces.
+- All artwork files and hidden portfolio preserved. No actual inquiry sent; physical phone/native keyboard not tested. Local preview: http://127.0.0.1:3096/. Evidence: artifacts/detail-refinement/. Changes remain local for user review.
+
+
+## 2026-11-15 - Approved detail refinement release
+- User authorized deployment after local validation. Confirmed GitHub main is still 00bb13a and personal Coolify application is healthy on main.
+- Preparing the reviewed changes for release through the existing webhook, retaining rollback/before-detail-refinement-20261115. Live verification follows deployment.

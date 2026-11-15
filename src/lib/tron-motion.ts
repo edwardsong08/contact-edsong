@@ -8,14 +8,18 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
   let pulses:Pulse[]=[];
   let paths=TRON_DESKTOP;
   let horizon=0;
+  let foregroundEnd=Infinity;
   let samples:{x:number;y:number}[][]=[];
   const resize=(w:number,h:number)=>{
     width=w;height=h;pulses=[];
-    const layout=sceneLayout(w,h);
+    const layout=sceneLayout(w,h,"tron");
+    foregroundEnd=layout.framed?layout.imageHeight*layout.scale:Infinity;
     paths=layout.portrait?TRON_MOBILE:TRON_DESKTOP;
     horizon=layout.toScreen(0,layout.portrait?1343:741).y;
     samples=paths.map(path=>sampleLightPath(path).map(p=>layout.toScreen(p.x,p.y)));
   };
+  // Match the artwork's foreground mask, including reflected/interacting light.
+  const foregroundOpacity=(y:number)=>foregroundEnd===Infinity?1:Math.max(0,Math.min(1,(foregroundEnd-y)/(foregroundEnd*.16)));
   const closest=(x:number,y:number)=>{
     let distance=Infinity,lane=0,t=0;
     samples.forEach((points,index)=>points.forEach((p,i)=>{
@@ -51,7 +55,7 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
       const a=atPoint(at),b=atPoint(to);
       // Quiet the overhead framing; the light walls carry the main motion.
       const sceneWeight=.38+.62*Math.min(1,a.y/(height*.62));
-      const alpha=(1-i/12)**1.7*fade*power*sceneWeight;
+      const alpha=(1-i/12)**1.7*fade*power*sceneWeight*foregroundOpacity(a.y);
       ctx.globalAlpha=alpha;ctx.strokeStyle=path.color;
       ctx.lineWidth=path.weight>1?2:1;ctx.shadowColor=path.color;ctx.shadowBlur=i<3?7:0;
       ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
@@ -61,7 +65,7 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
         const ay=horizon+(horizon-a.y)*.86,by=horizon+(horizon-b.y)*.86;
         const distance=Math.max(0,(ay-horizon)/(height-horizon));
         const broken=.55+.45*Math.sin(a.x*.09+ay*.14)**2;
-        ctx.globalAlpha=alpha*.19*(1-Math.min(1,distance)*.65)*broken;
+        ctx.globalAlpha=alpha*.19*(1-Math.min(1,distance)*.65)*broken*foregroundOpacity(ay);
         ctx.lineWidth=2.8+distance*3;ctx.shadowBlur=6;
         ctx.beginPath();ctx.moveTo(a.x,ay);ctx.lineTo(b.x,by);ctx.stroke();
       }
@@ -81,7 +85,7 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
         for(let j=1;j<points.length;j++){
           const a=points[j-1],b=points[j],distance=Math.hypot(b.x-pointerX,b.y-pointerY);
           if(distance>110)continue;
-          ctx.globalAlpha=(1-distance/110)**2*energy*.9;
+          ctx.globalAlpha=(1-distance/110)**2*energy*.9*foregroundOpacity(b.y);
           ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
         }
       }

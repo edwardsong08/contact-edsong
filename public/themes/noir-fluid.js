@@ -1279,7 +1279,9 @@ function step (dt) {
         gl.uniform2f(advectionProgram.uniforms.dyeTexelSize, dye.texelSizeX, dye.texelSizeY);
     gl.uniform1i(advectionProgram.uniforms.uVelocity, velocity.read.attach(0));
     gl.uniform1i(advectionProgram.uniforms.uSource, dye.read.attach(1));
-    gl.uniform1f(advectionProgram.uniforms.dt, dt * .52);
+    // The letter body releases material instead of stretching into ribbons.
+    // Detached wisps retain the full fluid transport in wispProgram.
+    gl.uniform1f(advectionProgram.uniforms.dt, dt * .025);
     gl.uniform1f(advectionProgram.uniforms.dissipation, config.DENSITY_DISSIPATION);
     blit(dye.write);
     dye.swap();
@@ -1812,9 +1814,9 @@ const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_S
    float recoveryPattern=noise(q*24.+vec2(3.,7.));
    float spatialElapsed=(1.-texture2D(activity,vUv).r)*3.2;
    float localAge=mix(max(0.,recoveryAge-recoveryPattern*.22),
-     max(0.,spatialElapsed-.58-recoveryPattern*.16),hybrid);
-   float gathering=smoothstep(0.,1.05,localAge);
-   float detail=smoothstep(.25,1.35,localAge);
+     max(0.,spatialElapsed-.42-recoveryPattern*.16),hybrid);
+   float gathering=smoothstep(0.,1.,localAge);
+   float detail=smoothstep(.22,1.2,localAge);
    vec2 motion=texture2D(flow,vUv).xy;
    // Recovery is local: areas the pointer has already passed may settle while
    // the active stroke continues, but moving pigment stays out of the way.
@@ -1841,10 +1843,10 @@ const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_S
                +texture2D(current,vUv-vec2(spread.x,0.)).rgb
                +texture2D(current,vUv+vec2(0.,spread.y)).rgb
                +texture2D(current,vUv-vec2(0.,spread.y)).rgb)*.25;
-   pigment=mix(pigment,nearby,1.-exp(-stepTime*stirred*mix(3.5,2.8,lighterMotion)));
-   // Keep moving pigment legible long enough to form currents instead of
-   // washing the whole territory out in one pass.
-   float thinning=stirred*mix(.9,4.2,smoothstep(.25,.7,billow))*(1.-gathering);
+   pigment=mix(pigment,nearby,1.-exp(-stepTime*stirred*mix(1.2,1.,lighterMotion)));
+   // Uneven erosion opens space between surviving strokes and released wisps.
+   // Less diffusion keeps the unbroken edges of each letter sharply defined.
+   float thinning=stirred*mix(1.5,11.,smoothstep(.28,.68,billow))*(1.-gathering);
    pigment*=exp(-stepTime*thinning*mix(1.,.65,water));
    float materialHandoff=smoothstep(.85,1.45,localAge);
    if(guided>.5 && gathering>0. && disturbed>.001){
@@ -1917,7 +1919,7 @@ const wispProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_SHAD
      dot(1.-north.rgb,luminance)*north.a-dot(1.-south.rgb,luminance)*south.a);
    // A bounded attraction toward nearby painted shapes, not exact particle-origin tracking.
    vec2 inward=gradient/(.08+length(gradient))*vec2(.045/aspect,.045);
-   vec2 outward=motion*flowPixel*3.2+drift*2.2;
+   vec2 outward=motion*flowPixel*4.2+drift*2.2;
    inward*=mix(1.,1.18,hybrid*gather);
    inward*=1.+.12*refinedGather*gather;
    vec2 transport=mix(outward,inward+drift*.35,gather);
@@ -1938,7 +1940,16 @@ const wispProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_SHAD
    // Keep a little more of the released color available for early transfer,
    // then return to baseline decay before the final detail stage.
    wispDecay-=.2*materialReturn*gather*(1.-smoothstep(1.1,1.9,spatialAge));
-   vec3 carried=texture2D(previous,uv).rgb*exp(-stepTime*wispDecay);
+   // Released material disperses through a small neighborhood instead of
+   // transporting a second, rubbery copy of the letter outlines. Keep this
+   // diffusion in the wisp buffer; the surviving letter body stays precise.
+   vec2 spread=flowPixel*.85;
+   vec3 center=texture2D(previous,uv).rgb;
+   vec3 neighbors=(texture2D(previous,uv+vec2(spread.x,0.)).rgb
+     +texture2D(previous,uv-vec2(spread.x,0.)).rgb
+     +texture2D(previous,uv+vec2(0.,spread.y)).rgb
+     +texture2D(previous,uv-vec2(0.,spread.y)).rgb)*.25;
+   vec3 carried=mix(center,neighbors,1.-exp(-stepTime*28.))*exp(-stepTime*wispDecay);
    float loss=1.-exp(-stepTime*stirred*mix(1.2,5.5,smoothstep(.25,.7,n))*mix(1.,.65,water));
    float h=1.,w=1.;
    vec2 materialUv=(vUv-vec2(.5,.5))/vec2(w,h)+.5;

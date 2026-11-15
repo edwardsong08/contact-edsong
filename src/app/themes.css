@@ -100,6 +100,11 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
  .tron-art { background-image:url('/themes/tron-original-world-mobile.webp'); }
  .garden-art { background-position:57% 100%; }
 }
+/* Preserve the entire architectural frame on tall phones. The artwork and
+   its lights share this width-fit, top-anchored projection (scene-layout.ts). */
+@media(max-width:600px) and (max-aspect-ratio:941/1672) {
+ .tron-art { bottom:auto; height:auto; aspect-ratio:941/1672; background-position:center top; mask-image:linear-gradient(#000 84%,transparent); }
+}
 /* Motion now follows the artwork coordinates, not a separate decorative grid. */
 .scene-motion { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 .tokyo-rain,.tokyo-wetlight,.tron-distance,.tron-arena,.tron-horizon,.garden-light { display:none; }

@@ -27,3 +27,21 @@ test("portrait tablets use portrait cinematic art and match the garden crop", ()
   assert.equal(garden.imageWidth,1672);
   assert.equal(garden.offsetX,(768-1672*garden.scale)*.57);
 });
+
+test("TRON tall phones keep both side frames and map lights to the raised floor", () => {
+  for (const [width,height] of [[360,800],[390,844],[430,932]]) {
+    const layout=sceneLayout(width,height,"tron");
+    assert.equal(layout.framed,true);
+    assert.deepEqual(layout.toScreen(0,0),{x:0,y:0});
+    assert(Math.abs(layout.toScreen(941,1672).x-width)<.001);
+    assert(layout.toScreen(941,1672).y<height);
+    assert(layout.toScreen(0,1343).y<height*.72,"light walls sit near the CTA, not the footer");
+    const p=layout.toScreen(420,1343);
+    assert(Math.abs(layout.toImage(p.x,p.y).y-1343)<.001);
+  }
+  for (const [width,height] of [[390,450],[768,1024],[1440,900]]) {
+    const layout=sceneLayout(width,height,"tron");
+    assert.equal(layout.framed,false);
+    assert(Math.abs(layout.toScreen(0,layout.imageHeight).y-height)<.001);
+  }
+});
