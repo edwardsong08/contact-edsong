@@ -29,7 +29,7 @@ body { background:var(--background); }
 .back-link span { font-size:20px; line-height:1; }
 
 /* The gear has a portrait-sized silhouette, with no circular container. */
-.settings-anchor { position:absolute; top:24px; right:max(64px,calc((100vw - 1312px)/2)); z-index:30; }
+.settings-anchor { position:fixed; top:24px; right:max(64px,calc((100% - 1312px)/2)); z-index:30; }
 .settings-trigger { position:relative; width:44px; height:44px; display:grid; place-items:center; border:0; padding:0; border-radius:0; background:transparent; color:var(--control-ink); cursor:pointer; text-decoration:none; }
 .settings-trigger svg { width:44px; height:44px; overflow:visible; stroke-width:2; filter:drop-shadow(var(--control-shadow)); transition:transform .42s cubic-bezier(.2,.8,.2,1),color .2s,stroke-width .2s; }
 .settings-trigger:hover,.settings-trigger.is-open { color:var(--ink); background:transparent; box-shadow:none; }

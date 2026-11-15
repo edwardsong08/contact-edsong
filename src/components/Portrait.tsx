@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
+import PortraitMenuIcon from "./PortraitMenuIcon";
 
 const items = [
-  { label: "About me", href: "/about", icon: "M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 21v-2a7.5 7.5 0 0 1 15 0v2" },
-  { label: "Selected work", href: "/portfolio", icon: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" },
-  { label: "Resume", href: "/resume", icon: "M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6" },
+  { label: "About me", href: "/about", icon: "about" },
+  { label: "Selected work", href: "/portfolio", icon: "work" },
+  { label: "Resume", href: "/resume", icon: "resume" },
 ] as const;
 
 export default function Portrait({ source = "" }: { source?: string }) {
@@ -66,7 +67,7 @@ export default function Portrait({ source = "" }: { source?: string }) {
         }
       }}>
       <span className="portrait"><Image src="/portrait.png" width={88} height={88} sizes="44px" alt="" /></span>
-      <span className="portrait-close" aria-hidden="true"><svg viewBox="0 0 12 12" width="10" height="10"><path d="m3 3 6 6m0-6L3 9" /></svg></span>
+      <span className="portrait-close" aria-hidden="true"><svg viewBox="0 0 12 12" width="10" height="10"><path className="portrait-menu-cue" d="m3 4.5 3 3 3-3"/><path className="portrait-menu-dismiss" d="m3 3 6 6m0-6L3 9" /></svg></span>
     </button>
     <svg className="portrait-goo" viewBox="-16 -16 232 212" width="232" height="212" aria-hidden="true" focusable="false">
       <defs><filter id={filterId} x="-30%" y="-30%" width="160%" height="160%" colorInterpolationFilters="sRGB">
@@ -83,10 +84,10 @@ export default function Portrait({ source = "" }: { source?: string }) {
         className={`portrait-blob portrait-position-${index}`} href={item.href + (source ? `?from=${encodeURIComponent(source)}` : "")} role="menuitem" aria-current={pathname === item.href ? "page" : undefined} onClick={() => setOpen(false)} tabIndex={open && active === index ? 0 : -1}
         onFocus={() => setActive(index)}>
         <span className="portrait-blob-content">
-          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={item.icon}/></svg>
+          <PortraitMenuIcon kind={item.icon} />
         </span>
         <span className="portrait-blob-label">{item.label}</span>
-        <span className="portrait-blob-soon" aria-hidden="true">↗</span>
+        <span className="portrait-blob-soon" aria-hidden="true">›</span>
       </Link>)}
     </div>
   </div>;

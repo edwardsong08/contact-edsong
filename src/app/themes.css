@@ -135,7 +135,7 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 [data-theme=matcha] .form-title { font-family:Georgia,'Times New Roman',serif; font-weight:400; }
 [data-theme=matcha] .form-heading { position:relative; isolation:isolate; }
 [data-theme=matcha] .form-heading::before { content:""; position:absolute; z-index:-1; inset:-24px -30px; pointer-events:none; background:radial-gradient(ellipse at center,#e6e8d3dd 20%,#e6e8d366 55%,transparent 75%); }
-[data-theme=matcha] .submit-row p { color:#263d2c; text-shadow:0 1px 2px #f3f3e9,0 0 5px #f3f3e9; }
+[data-theme=matcha] .submit-row p { align-self:center; padding:5px 10px; border-radius:4px; background:#faf7e9; color:#263d2c; text-shadow:none; }
 [data-theme=neon] .form-title,[data-theme=noir] .form-title { font-weight:450; }
 .input-group :is(input,textarea):hover:not(:focus) { border-color:var(--ink); }
 [data-theme] .input-group :is(input,textarea):focus { border-color:var(--blue); }

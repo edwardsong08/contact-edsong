@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1265" height="712" viewBox="0 0 1265 712">
+  <defs>
+    <radialGradient id="paper"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f1f0ed"/></radialGradient>
+  </defs>
+  <rect width="1265" height="712" fill="url(#paper)"/>
+  <g fill="none" stroke="#7d817b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M590 229h58l28 28v94h-86z"/>
+    <path d="M648 229v29h28M609 287h47M609 304h47M609 321h29" opacity=".65"/>
+  </g>
+  <text x="632.5" y="435" text-anchor="middle" fill="#343a35" font-family="Georgia, 'Times New Roman', serif" font-size="52" letter-spacing="-1.5">Coming soon.</text>
+  <path d="M612.5 472h40" stroke="#a6aca0" stroke-width="1.5"/>
+</svg>

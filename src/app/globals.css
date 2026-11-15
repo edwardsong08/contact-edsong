@@ -5,7 +5,8 @@
   --blue: #0071e3;
 }
 * { box-sizing: border-box; }
-html { background: var(--background); }
+/* Reserve the scrollbar gutter on short pages too, keeping navigation aligned. */
+html { background: var(--background); scrollbar-gutter: stable; }
 body {
   margin: 0;
   color: var(--ink);

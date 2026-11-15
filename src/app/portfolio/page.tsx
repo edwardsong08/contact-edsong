@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import ProjectGallery, { type Project } from "./ProjectGallery";
 import PersonalPage from "@/components/PersonalPage";
 import ContactActions from "@/components/ContactActions";
 import { normalizeSource } from "@/lib/inquiry";
@@ -19,9 +19,10 @@ export const metadata: Metadata = {
   },
 };
 
-const projects = [
+const projects: Project[] = [
   {
     name: "Find the Next 6,000",
+    category: "work",
     type: "Nonprofit",
     image: "/portfolio/find-the-next-6000.jpg",
     alt: "Navy and red campaign website with an illustrated landscape and the headline Find one. Reach one. Connect one.",
@@ -30,6 +31,7 @@ const projects = [
   },
   {
     name: "Ryu Legal",
+    category: "work",
     type: "Law firm",
     image: "/portfolio/ryu-legal.jpg",
     alt: "Law Office of Soomin Ryu website with navy lettering over a softly lit library.",
@@ -38,6 +40,7 @@ const projects = [
   },
   {
     name: "The Realms of Asgard",
+    category: "work",
     type: "Nonprofit",
     image: "/portfolio/troa.jpg",
     alt: "TROA community website with gold typography and an illuminated city beneath a starry sky.",
@@ -46,6 +49,7 @@ const projects = [
   },
   {
     name: "Bifrost Controller",
+    category: "work",
     type: "Controller mapping",
     image: "/portfolio/bifrost-controller.jpg",
     alt: "Bifrost Controller product page with a charcoal and gold controller on a Nordic mapping workbench.",
@@ -54,6 +58,7 @@ const projects = [
   },
   {
     name: "CloseDesk",
+    category: "development",
     type: "Real estate workspace",
     image: "/portfolio/closedesk.jpg",
     alt: "CloseDesk website with navy typography on warm white and a preview of its transaction workspace using fictional example data.",
@@ -62,6 +67,7 @@ const projects = [
   },
   {
     name: "Grantstead",
+    category: "development",
     type: "Grant workspace",
     image: "/portfolio/grantstead.jpg",
     alt: "Grantstead website with green serif typography and a diagram connecting a nonprofit common application to individual funder drafts.",
@@ -70,52 +76,48 @@ const projects = [
   },
   {
     name: "QFin Games",
+    category: "work",
     type: "Independent game studio",
     image: "/portfolio/qfin-games.jpg",
     alt: "QFin Games studio website with cream typography and colorful pirate card-game artwork.",
     href: "https://qfingames.com",
     featured: false,
   },
+  { name: "Main Hub", type: "Interactive project map", category: "personal", image: "/portfolio/main-hub.jpg", alt: "Main Hub living systems map with connected project territories on a dark canvas.", href: "https://hub.edsong.xyz" },
+  { name: "Blog", type: "Coming soon", category: "personal", href: "https://blog.edsong.xyz", comingSoon: true },
 ];
 
 export default async function Portfolio({ searchParams }: { searchParams: Promise<{ from?: string | string[] }> }) {
   const source = normalizeSource((await searchParams).from);
+  // Explicit development-only mapping: production never receives localhost URLs.
+  const localPreviews = process.env.NODE_ENV === "development" && process.env.PORTFOLIO_LOCAL_PREVIEWS === "1";
+  const localOrigins: Record<string, string> = {
+    "findthenext6000.org": "http://127.0.0.1:3191",
+    "www.ryu-legal.com": "http://127.0.0.1:3192",
+    "therealmsofasgard.com": "http://127.0.0.1:3193",
+    "qfingames.com": "http://127.0.0.1:3194",
+    "closedesk.edsong.xyz": "http://127.0.0.1:3195",
+    "grants.edsong.xyz": "http://127.0.0.1:3196",
+  };
+  const previewProjects = projects.map(project => {
+    const destination = new URL(project.href);
+    const origin = localPreviews ? localOrigins[destination.hostname] : undefined;
+    const previewPath = origin && destination.hostname === "therealmsofasgard.com" ? `/v3${destination.pathname === "/" ? "" : destination.pathname}` : destination.pathname;
+    return { ...project, previewHref: origin ? `${origin}${previewPath}` : project.href };
+  });
 
   return (
-    <PersonalPage source={source}>
+    <PersonalPage source={source} footerContact={false}>
       <div className={styles.page}>
         <div className={styles.intro}>
           <h1 className={styles.title}>Selected work.</h1>
         </div>
 
-        <div className={styles.projects}>
-          {projects.map((project) => (
-            <article key={project.name} className={`${styles.project} ${project.featured ? styles.featured : ""}`}>
-              <div className={styles.preview}>
-                <Image
-                  src={project.image}
-                  alt={project.alt}
-                  width={1265}
-                  height={712}
-                  sizes="(max-width:700px) calc(100vw - 50px), (max-width:800px) calc(50vw - 50px), (max-width:1200px) calc(50vw - 82px), 520px"
-                  preload={project.featured}
-                  className={styles.image}
-                />
-              </div>
-              <div className={styles.projectInfo}>
-                <div className={styles.projectHeading}>
-                  <h2><a className={styles.projectLink} href={project.href} target="_blank" rel="noopener noreferrer"><span className={styles.projectName}>{project.name}</span><span className={styles.projectType}>{project.type}</span><span className={styles.newTab}> (opens in a new tab)</span></a></h2>
-                  <span className={styles.projectArrow} aria-hidden="true">↗</span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+        <ProjectGallery projects={previewProjects} />
 
-        <section className={styles.invitation} aria-labelledby="project-heading">
-          <h2 id="project-heading">What are you thinking?</h2>
+        <div className={styles.invitation}>
           <ContactActions source={source} />
-        </section>
+        </div>
       </div>
     </PersonalPage>
   );
