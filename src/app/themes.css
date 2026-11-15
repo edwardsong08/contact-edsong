@@ -49,7 +49,7 @@ h1 .headline-ending { color:inherit; }
 
 :root[data-theme=matcha] { --background:#f3ead6; --surface:#faf5e9; --ink:#263d2c; --secondary:#4c5946; --blue:#47613d; --button-ink:#fffaf0; --border:#b1b89c; --hover:#e5e6d4; --play-1:#45683f; --play-2:#a27742; --play-3:#667947; --palette-surface:linear-gradient(145deg,#fff9ecf8,#efecddfa); }
 [data-theme=matcha] .garden-scene { display:block; background:#f3ead6; }
-.garden-art { position:absolute; inset:0; background:url('/themes/matcha-painted.webp') center/cover no-repeat; }
+.garden-art { position:absolute; inset:0; background:url('/themes/matcha-korean-soft.webp') center/cover no-repeat; }
 [data-theme=matcha] .intro h1 { font-family:Georgia,'Times New Roman',serif; font-weight:400; line-height:1.07; letter-spacing:-.06em; }
 [data-theme=matcha] .headline-accent { font-style:italic; font-weight:400; color:#47613d; }
 [data-theme=matcha] .primary-button { background:#365237; border-radius:5px; box-shadow:0 3px 10px #24362215; }
@@ -59,7 +59,7 @@ h1 .headline-ending { color:inherit; }
 
 /* Preserve the scenery at the edges; a broad veil protects the reading area. */
 body:has(.form-page) .theme-atmosphere::after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 62% 90% at 50% 48%,var(--background) 18%,color-mix(in srgb,var(--background) 94%,transparent) 47%,color-mix(in srgb,var(--background) 48%,transparent) 100%); }
-[data-theme=matcha] body:has(.form-page) .theme-atmosphere::after { background:radial-gradient(ellipse 57% 85% at 46% 45%,#f0f0da 18%,#f0f0daf5 43%,#e5e9c65c 100%); }
+[data-theme=matcha] body:has(.form-page) .theme-atmosphere::after { background:radial-gradient(ellipse 42% 60% at 50% 48%,#e6e8d344,transparent 85%); }
 [data-theme=noir] body:has(.form-page) .theme-atmosphere::after { display:none; }
 body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * { animation-play-state:paused!important; }
 [data-theme] .input-group input:focus,[data-theme] .input-group textarea:focus { box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 20%,transparent); }
@@ -97,15 +97,16 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 [data-theme=matcha] .settings-trigger { color:#fffaf0; }
 [data-theme=matcha] .settings-trigger svg { filter:drop-shadow(0 1px 1px #173323) drop-shadow(0 0 2px #17332399); }
 [data-theme=matcha] .settings-trigger:focus-visible svg { stroke-width:3; filter:drop-shadow(0 0 1px #173323) drop-shadow(0 0 3px #173323); }
-[data-theme=matcha] body:has(.form-page) .settings-trigger { color:#163024; }
-[data-theme=matcha] body:has(.form-page) .settings-trigger svg { filter:drop-shadow(0 0 1px #fffaf0); }
+[data-theme=matcha] .back-link { color:#fffaf0; text-shadow:0 1px 1px #173323,0 0 3px #173323; }
+[data-theme=matcha] .back-link:hover { color:#fff; }
+[data-theme=matcha] .back-link:focus-visible { outline-color:#fffaf0; }
 [data-theme=neon] .footer,[data-theme=tokyo] .footer,[data-theme=neon] .wordmark,[data-theme=tokyo] .wordmark { text-shadow:0 1px 4px #000; }
 
 /* Keep this aspect-ratio breakpoint and crop in sync with scene-layout.ts. */
 @media(max-aspect-ratio:1/1) {
  .tokyo-art { background-image:url('/themes/tokyo-mobile.webp'); }
  .tron-art { background-image:url('/themes/tron-original-world-mobile.webp'); }
- .garden-art { background-position:57% 100%; }
+ .garden-art { background-image:url('/themes/matcha-korean-soft-mobile.webp'); background-position:center bottom; }
 }
 /* Preserve the entire architectural frame on tall phones. The artwork and
    its lights share this width-fit, top-anchored projection (scene-layout.ts). */
@@ -132,11 +133,14 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 [data-theme=noir] .input-group :is(input,textarea) { border-radius:5px; background:#262729; border-color:#848480; }
 [data-theme=matcha] .input-group :is(input,textarea) { border-radius:6px; background:#faf7e9f5; border-color:#7e8c6d; }
 [data-theme=matcha] .form-title { font-family:Georgia,'Times New Roman',serif; font-weight:400; }
+[data-theme=matcha] .form-heading { position:relative; isolation:isolate; }
+[data-theme=matcha] .form-heading::before { content:""; position:absolute; z-index:-1; inset:-24px -30px; pointer-events:none; background:radial-gradient(ellipse at center,#e6e8d3dd 20%,#e6e8d366 55%,transparent 75%); }
+[data-theme=matcha] .submit-row p { color:#263d2c; text-shadow:0 1px 2px #f3f3e9,0 0 5px #f3f3e9; }
 [data-theme=neon] .form-title,[data-theme=noir] .form-title { font-weight:450; }
 .input-group :is(input,textarea):hover:not(:focus) { border-color:var(--ink); }
 [data-theme] .input-group :is(input,textarea):focus { border-color:var(--blue); }
 [data-theme] .input-group [aria-invalid=true] { border-color:var(--error); }
 @media(max-width:600px) {
  body:has(.form-page) .theme-atmosphere::after { background:linear-gradient(180deg,color-mix(in srgb,var(--background) 70%,transparent),var(--background) 22%,color-mix(in srgb,var(--background) 96%,transparent) 78%,color-mix(in srgb,var(--background) 65%,transparent)); }
- [data-theme=matcha] body:has(.form-page) .theme-atmosphere::after { background:linear-gradient(180deg,#f0f0daa8,#f0f0daf7 24%,#f0f0daf7 76%,#e5e9c688); }
+ [data-theme=matcha] body:has(.form-page) .theme-atmosphere::after { background:linear-gradient(180deg,transparent 10%,#e6e8d326 24%,#e6e8d326 65%,transparent 86%); }
 }

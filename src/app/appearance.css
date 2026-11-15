@@ -58,7 +58,7 @@ body { background:var(--background); }
 .swatch-neon { background:url('/themes/tron-original-world.webp') center/cover; }
 .swatch-noir { background:linear-gradient(125deg,#363739,#17181a); position:relative; }
 .swatch-noir::after { content:"B"; position:absolute; inset:0; display:grid; place-items:center; color:#e9e6df; font:italic 23px Georgia,serif; }
-.swatch-matcha { background:url('/themes/matcha-painted.webp') center/cover; }
+.swatch-matcha { background:url('/themes/matcha-korean-soft.webp') center/cover; }
 .doodle-toggle { width:100%; min-height:54px; margin-top:8px; padding:11px 10px 3px; display:flex; align-items:center; justify-content:space-between; border:0; border-top:1px solid color-mix(in srgb,var(--border) 65%,transparent); background:transparent; color:var(--ink); cursor:pointer; font-size:13px; font-weight:450; }
 .toggle-track { display:block; width:36px; height:22px; padding:3px; border-radius:999px; background:color-mix(in srgb,var(--secondary) 32%,var(--surface)); transition:background .3s ease,box-shadow .3s ease; box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 8%,transparent); }
 .toggle-track > span { display:block; width:16px; height:16px; border-radius:50%; background:var(--ink); box-shadow:0 1px 3px #0003; transition:transform .36s cubic-bezier(.22,1,.36,1); }

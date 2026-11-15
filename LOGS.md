@@ -220,3 +220,16 @@ User flagged the gear disappearing into Matcha foliage and suggested white. Comp
 ## 2026-11-15 - Matcha gear release authorized
 - Approved scope: deploy the Matcha gear contrast fix, keeping form gear and back link dark. Local production build and browser checks passed.
 - Subsequent Korean-influenced artwork exploration is local only, after release verification. Preserve current assets and rollback.
+
+
+## 2026-11-15 - Gear shipped; Korean garden stays local
+- Released 365d86c through webhook deployment hchoxuk9eb3cbuzc5703xmfu; finished 05:28:20 UTC. Live Chromium/WebKit verified ivory home gear and dark form gear/back. Prior d44063a rollback pushed.
+- Created local codex/korean-matcha-local-20261115 and rollback/before-korean-matcha-20261115 at 365d86c. Generated desktop/portrait Korean-inspired garden variants using built-in image edits; retained original and first study assets.
+- User steered during local review: reduce homepage color contrast, restore form background detail, use white back/gear on form. Created softer celadon/sage/apricot art, lifted desktop branch clear of the title, removed broad form bleaching, and added ivory local form navigation with fine dark separation. Protected heading/reply-note readability without a full-page wash.
+- Aligned responsive garden geometry and leaf/ripple interaction bounds with the dedicated portrait image. Full prompt/source records in ARTWORK.md; browser evidence in artifacts/korean-matcha.
+- 21 tests, typecheck and local production build passed. Chromium/WebKit responsive and interaction checks passed; no email sent, no physical device test. No experimental art/form changes deployed; production remains 365d86c.
+
+
+## 2026-11-15 - Korean Matcha release approval
+- User approved deployment of the final reviewed artwork, form contrast and white navigation controls. Local acceptance checks passed; main confirmed at 365d86c.
+- Preparing release through the signed main-branch webhook, preserving the original and study assets and pre-art rollback. Live verification pending.

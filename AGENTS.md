@@ -49,3 +49,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 
 - November 15 follow-up: user authorized deploying only the Matcha gear contrast change, with dark gear/back controls on the form. After that release, explore a partially traditional Korean-inspired Matcha background LOCALLY ONLY. Preserve the current artwork and a rollback; do not deploy the art experiment.
+
+
+- Current LOCAL Korean Matcha experiment (November 15): user subsequently preferred less homepage color contrast, less washed-out form artwork, and WHITE back/gear controls on the form. This supersedes the dark form preference for the local experiment only. Production remains gear-only release 365d86c with dark form controls. Do not deploy the art/white-form experiment without authorization. Keep original and study artwork plus rollback/before-korean-matcha-20261115.
+
+
+- November 15 release approval: user authorized deploying the reviewed Korean-influenced Matcha art, softer homepage palette, clearer form artwork and white form gear/back controls after successful local checks. This supersedes the local-only boundary for this release. Retain original/study art, hidden portfolio and rollback/before-korean-matcha-20261115 at 365d86c.

@@ -10,7 +10,7 @@ function paintedLeaf(tone:number) {
   const silhouette=new Path2D("M0 1 L-.38 .42 L-.85 .16 L-.67 .02 L-1 -.12 L-.6 -.22 L-.72 -.7 L-.46 -.52 L-.25 -.38 L-.08 -1.08 L.08 -.86 L.19 -.43 L.63 -.78 L.59 -.42 L.52 -.18 L.94 -.05 L.73 .12 L.37 .4 Z");
   ctx.save(); ctx.clip(silhouette);
   const wash=ctx.createLinearGradient(-.7,-.8,.6,.7);
-  wash.addColorStop(0,tone?"#d58c58":"#df9764"); wash.addColorStop(.55,tone?"#b96540":"#c8784b"); wash.addColorStop(1,"#af6b43");
+  wash.addColorStop(0,tone?"#c6a17b":"#cfaa84"); wash.addColorStop(.55,tone?"#ad8865":"#bc946f"); wash.addColorStop(1,"#a28262");
   ctx.fillStyle=wash; ctx.fillRect(-1.2,-1.2,2.4,2.6);
   // Deterministic broken pigment, close to the paper texture in the illustration.
   for(let i=0;i<190;i++) {
@@ -32,8 +32,9 @@ export function createGardenMotion(ctx:CanvasRenderingContext2D) {
   const brushes=[paintedLeaf(0),paintedLeaf(1)];
   // Shoreline follows the right-hand rocks, including the narrow-screen crop.
   const shoreline=(x:number)=>{
-    const sourceX=layout.toImage(x,0).x/1672;
-    return layout.toScreen(0,941*(.845+.065*Math.max(0,Math.min(1,sourceX))**3)).y;
+    const sourceX=layout.toImage(x,0).x/layout.imageWidth;
+    const bank=layout.portrait?.864:.85;
+    return layout.toScreen(0,layout.imageHeight*(bank+.046*Math.max(0,Math.min(1,sourceX))**3)).y;
   };
   const ripple=(x:number,y:number)=>{
     if(y<shoreline(x)||y>height*.975)return;
@@ -43,11 +44,11 @@ export function createGardenMotion(ctx:CanvasRenderingContext2D) {
   const release=()=>{
     if(leaves.length>=3)return;
     const edge=layout.portrait?.92:.84, targetX=width*(edge-.04-Math.random()*.035);
-    leaves.push({x:width*(edge+Math.random()*.02),y:Math.max(75,layout.toScreen(0,941*(.12+Math.random()*.07)).y),targetX,targetY:Math.min(height*.955,shoreline(targetX)+height*.035),age:0,duration:8+Math.random()*2,size:10+Math.random()*3,phase:Math.random()*6.28,ink:Math.random()>.5?1:0});
+    leaves.push({x:width*(edge+Math.random()*.02),y:Math.max(75,layout.toScreen(0,layout.imageHeight*(.12+Math.random()*.07)).y),targetX,targetY:Math.min(height*.955,shoreline(targetX)+height*.035),age:0,duration:8+Math.random()*2,size:10+Math.random()*3,phase:Math.random()*6.28,ink:Math.random()>.5?1:0});
   };
   const pointer=(x:number,y:number,down:boolean)=>{
     if(down&&y>shoreline(x)&&time-lastPond>.3){ripple(x,y);lastPond=time;}
-    else if(y>75&&layout.toImage(x,y).y<285&&layout.toImage(x,y).x>900&&time-lastCanopy>2.5){release();lastCanopy=time;}
+    else if(y>75&&layout.toImage(x,y).y<layout.imageHeight*.303&&layout.toImage(x,y).x>layout.imageWidth*.54&&time-lastCanopy>2.5){release();lastCanopy=time;}
   };
   const draw=(dt:number)=>{
     time+=dt;

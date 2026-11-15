@@ -114,3 +114,19 @@ User flagged the gear disappearing into Matcha foliage and suggested white. Comp
 
 ## Matcha gear release and local art experiment - November 15, 2026
 User approved releasing warm-white Matcha homepage gear while retaining dark form controls. Build and targeted Chromium/WebKit checks passed. Production branch unchanged at d44063a before release. After deployment verification, create a separate local Matcha background variation influenced by traditional Korean painting, retaining current art and rollback. No art deployment authorized.
+
+
+## Verified Matcha gear release and local Korean garden study - November 15, 2026
+Deployed gear-only commit 365d86c5de23a2e9397dc16afb9443698137a7ff via signed webhook. Coolify deployment hchoxuk9eb3cbuzc5703xmfu finished at 2026-11-15 05:28:20 UTC. Live Chromium/WebKit checks confirmed ivory homepage gear and dark form gear/back, including open/focus/navigation behavior. Rollback before-matcha-gear-20261115 points to d44063a on GitHub.
+
+Subsequent work is LOCAL ONLY on codex/korean-matcha-local-20261115, with rollback/before-korean-matcha-20261115 at 365d86c. Built-in image edits created original Korean-influenced contemporary garden art with separate desktop and portrait compositions; original matcha-painted.webp and first study assets are preserved. Current assets: matcha-korean-soft.webp (1672x941) and matcha-korean-soft-mobile.webp (941x1672), about 335 KB total. Full prompts, source files and research reference are recorded in ARTWORK.md.
+
+User saw the first local study and requested less homepage color contrast, a less washed-out form, and white back/gear on the form. Revised artwork uses quieter celadon, sage and dusty apricot, with the desktop pine lifted clear of the title. Replaced the near-opaque form veil with a light localized treatment; protected form heading and reply note readability. Local form back/gear are ivory with dark separation. This does not change live production's dark form controls.
+
+Garden image-to-screen geometry now uses centered portrait assets when width <= height; leaf spawn, canopy hit detection and shoreline clipping use source dimensions rather than desktop-only coordinates. Existing leaf/ripple interactions remain, with leaf colors harmonized to the softer palette. Other themes, headline, inquiry behavior and hidden portfolio unchanged.
+
+Validation: 21 tests, typecheck and final production build passed. Isolated Chromium/WebKit checked 320/390/768/1440 layouts, artwork source selection, proportional crops, no overflow, hidden portfolio, pond touch response, home/form/back flow, white local form controls and reduced motion. Reviewed final desktop/phone form captures after transitions settled. No real inquiry submitted or physical phone tested. Evidence: artifacts/korean-matcha and artifacts/verify-korean-matcha.cjs. Preview: http://127.0.0.1:3096/ (select Matcha Garden). No Korean artwork or revised form controls pushed/deployed.
+
+
+## Korean Matcha release authorized - November 15, 2026
+User approved deploying the reviewed local Matcha refinements. Final local build, 21 tests, typecheck and Chromium/WebKit responsive/motion/navigation checks passed. Confirmed remote main remains 365d86c. Release includes softer desktop/portrait artwork and ivory form controls; prior production is preserved by rollback/before-korean-matcha-20261115. Live verification follows deployment.

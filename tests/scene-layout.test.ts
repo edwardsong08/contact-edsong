@@ -20,12 +20,16 @@ test("scene crops preserve proportions and cover phone, tablet and wide screens"
   }
 });
 
-test("portrait tablets use portrait cinematic art and match the garden crop", () => {
+test("portrait tablets use portrait art, including the recomposed Korean garden", () => {
   assert.equal(sceneLayout(768,1024).imageWidth,941);
   assert.equal(sceneLayout(1024,768).imageWidth,1672);
   const garden = sceneLayout(768,1024,"garden");
-  assert.equal(garden.imageWidth,1672);
-  assert.equal(garden.offsetX,(768-1672*garden.scale)*.57);
+  assert.equal(garden.imageWidth,941);
+  assert.equal(garden.imageHeight,1672);
+  assert.equal(garden.offsetX,(768-941*garden.scale)*.5);
+  const phone=sceneLayout(390,844,"garden");
+  assert.equal(phone.imageWidth,941);
+  assert.equal(phone.offsetX,(390-941*phone.scale)*.5);
 });
 
 test("TRON tall phones keep both side frames and map lights to the raised floor", () => {
