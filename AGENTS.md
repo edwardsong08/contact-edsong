@@ -32,3 +32,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 - Latest local theme revision replaces all cursor spotlights with ambient scenes: Tokyo city/rain, TRON traveling circuit lights, Silver Noir letter-emitted smoke, and Matcha tea landscape. Persist Motion preference before paint; pause ambient motion on forms, document-hidden, user toggle, and reduced-motion. Keep semantic headline readable. No deployment authorized.
+- Silver Noir now uses the actual profile fluid solver with a headline source texture, not a smoke emitter. Preserve the upstream MIT notice, static semantic text fallback, idle pause, and the narrowly scoped same-origin iframe policy. Tokyo/Matcha use custom WebP artwork; TRON uses a perspective arena. Local review only.

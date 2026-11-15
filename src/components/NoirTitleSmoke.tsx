@@ -2,91 +2,88 @@
 
 import { useEffect, useRef } from "react";
 
-type Wisp = { x:number; y:number; age:number; life:number; size:number; phase:number };
-
-/** Silver smoke rises from a sampled letter mask; semantic text stays sharp beneath it. */
+/** The profile's actual fluid solver, supplied with a live typography texture. */
 export default function NoirTitleSmoke() {
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const host = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const element = canvas.current;
+    const element = host.current;
     const title = element?.parentElement;
     if (!element || !title) return;
-    const reduce = matchMedia("(prefers-reduced-motion: reduce)");
     const root = document.documentElement;
-    let stop: (() => void) | undefined;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    let frame: HTMLIFrameElement | null = null;
+    let timer: ReturnType<typeof setTimeout>;
+    let source = "";
+    let loaded = false;
+    let settle: ReturnType<typeof setTimeout>;
+    const clear = () => {
+      clearTimeout(settle); loaded = false;
+      delete title.dataset.fluidReady;
+      frame?.remove(); frame = null;
+    };
     const setup = () => {
-      stop?.(); stop = undefined;
-      if (root.dataset.theme !== "noir" || root.dataset.motion === "off" || reduce.matches || document.hidden) return;
-      const ctx = element.getContext("2d");
-      if (!ctx) return;
-      let width = 0, height = 0;
-      let points: [number,number][] = [];
-      let wisps: Wisp[] = [];
-      const sprite = document.createElement("canvas"); sprite.width = sprite.height = 64;
-      const brush = sprite.getContext("2d");
-      if (!brush) return;
-      const gradient = brush.createRadialGradient(32,32,0,32,32,32);
-      gradient.addColorStop(0,"rgba(235,232,225,.22)");
-      gradient.addColorStop(.35,"rgba(200,198,193,.12)");
-      gradient.addColorStop(1,"rgba(200,198,193,0)");
-      brush.fillStyle = gradient; brush.fillRect(0,0,64,64);
-      const resize = () => {
-        const box = title.getBoundingClientRect();
-        width = Math.ceil(box.width + 120); height = Math.ceil(box.height + 150);
-        const dpr = Math.min(devicePixelRatio || 1, 1.5);
-        element.width = width * dpr; element.height = height * dpr;
-        ctx.setTransform(dpr,0,0,dpr,0,0);
-        const mask = document.createElement("canvas"); mask.width = width; mask.height = height;
-        const ink = mask.getContext("2d", { willReadFrequently:true });
+      clearTimeout(timer); clear();
+      if (root.dataset.theme !== "noir" || root.dataset.motion === "off" || reduced.matches || document.hidden) return;
+      timer = setTimeout(() => {
+        const box = element.getBoundingClientRect();
+        if (!box.width || !box.height) return;
+        const mask = document.createElement("canvas");
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        mask.width = Math.round(box.width * dpr); mask.height = Math.round(box.height * dpr);
+        const ink = mask.getContext("2d");
         if (!ink) return;
-        ink.fillStyle = "white"; ink.textBaseline = "middle";
+        ink.scale(dpr, dpr); ink.fillStyle = "white"; ink.fillRect(0, 0, box.width, box.height);
+        ink.fillStyle = "black"; ink.textBaseline = "alphabetic";
         for (const node of title.querySelectorAll<HTMLElement>("[data-smoke-source]")) {
-          const r = node.getBoundingClientRect(), s = getComputedStyle(node), text = node.textContent || "";
-          ink.font = s.fontStyle + " " + s.fontWeight + " " + s.fontSize + " " + s.fontFamily;
-          const measured = ink.measureText(text).width;
-          ink.save(); ink.translate(r.left-box.left+60,r.top-box.top+100+r.height*.47);
-          ink.scale(r.width / Math.max(measured,1),1); ink.fillText(text,0,0); ink.restore();
+          const rect = node.getBoundingClientRect(), style = getComputedStyle(node);
+          const text = node.textContent || "";
+          ink.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+          const metrics = ink.measureText(text);
+          const ascent = metrics.fontBoundingBoxAscent || parseFloat(style.fontSize) * .8;
+          const descent = metrics.fontBoundingBoxDescent || parseFloat(style.fontSize) * .2;
+          ink.save();
+          ink.translate(rect.left - box.left, rect.top - box.top + (rect.height - ascent - descent) / 2 + ascent);
+          ink.scale(rect.width / Math.max(metrics.width, 1), 1); ink.fillText(text, 0, 0); ink.restore();
         }
-        const data = ink.getImageData(0,0,width,height).data;
-        points = [];
-        for(let y=0;y<height;y+=3) for(let x=0;x<width;x+=3) {
-          if(data[(y*width+x)*4+3]>100 && points.length<12000) points.push([x,y]);
-        }
-        wisps = [];
-      };
-      resize();
-      const observer = new ResizeObserver(resize); observer.observe(title);
-      let frame = 0, previous = 0, accumulator = 0;
-      const draw = (time:number) => {
-        if(time-previous<32) { frame=requestAnimationFrame(draw); return; }
-        const dt = Math.min((time-previous)/1000 || .032,.06); previous=time;
-        ctx.clearRect(0,0,width,height);
-        accumulator += dt*35;
-        while(accumulator>=1 && points.length) {
-          accumulator--;
-          const p=points[Math.floor(Math.random()*points.length)];
-          if(wisps.length<180) wisps.push({x:p[0],y:p[1],age:0,life:2.8+Math.random()*2,size:10+Math.random()*15,phase:Math.random()*Math.PI*2});
-        }
-        wisps = wisps.filter(p=>p.age<p.life);
-        for(const p of wisps) {
-          p.age+=dt; p.y-=dt*(14+p.age*5); p.x+=Math.sin(p.age*2+p.phase)*dt*12;
-          const fraction=p.age/p.life;
-          ctx.globalAlpha=Math.sin(fraction*Math.PI)*.58;
-          const size=p.size*(1+p.age*.65);
-          ctx.drawImage(sprite,p.x-size,p.y-size,size*2,size*2);
-        }
-        ctx.globalAlpha=1;
-        frame=requestAnimationFrame(draw);
-      };
-      frame=requestAnimationFrame(draw);
-      stop=()=>{cancelAnimationFrame(frame);observer.disconnect();ctx.clearRect(0,0,width,height);};
+        source = mask.toDataURL("image/png");
+        frame = document.createElement("iframe");
+        frame.title = "Decorative headline dispersion"; frame.tabIndex = -1;
+        frame.setAttribute("aria-hidden", "true");
+        frame.src = "/themes/noir-fluid.html?embed&smoke&hybrid&material-recovery&refinement=arrival";
+        element.appendChild(frame);
+      }, 120);
+    };
+    const receive = (event: MessageEvent) => {
+      if (event.origin !== location.origin || event.source !== frame?.contentWindow) return;
+      if (event.data?.type === "headline-source-request") frame?.contentWindow?.postMessage({type:"headline-source", image:source}, location.origin);
+      if (event.data?.type === "fluid-ready") { loaded = true; frame?.contentWindow?.postMessage({type:"fluid-visible", visible:false}, location.origin); }
+      if (event.data?.type === "fluid-failed") clear();
+    };
+    const move = (event: PointerEvent) => {
+      if (!frame || !loaded || event.target instanceof Element && event.target.closest("a,button,input,textarea,.playground")) return;
+      const box = element.getBoundingClientRect();
+      const x = (event.clientX - box.left) / box.width, y = (event.clientY - box.top) / box.height;
+      if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
+        title.dataset.fluidReady = "true";
+        clearTimeout(settle);
+        settle = setTimeout(() => { delete title.dataset.fluidReady; frame?.contentWindow?.postMessage({type:"fluid-visible",visible:false}, location.origin); }, 6500);
+        frame.contentWindow?.postMessage({type:"fluid-visible",visible:true}, location.origin);
+        frame.contentWindow?.postMessage({type:"fluid-pointer",x,y}, location.origin);
+      }
     };
     const watch = new MutationObserver(setup);
-    watch.observe(root,{attributes:true,attributeFilter:["data-theme","data-motion"]});
-    reduce.addEventListener("change",setup);
-    document.addEventListener("visibilitychange",setup);
+    watch.observe(root, {attributes:true, attributeFilter:["data-theme", "data-motion"]});
+    const resize = new ResizeObserver(setup); resize.observe(title);
+    window.addEventListener("message", receive); window.addEventListener("pointermove", move, {passive:true});
+    window.addEventListener("pointerdown", move, {passive:true});
+    reduced.addEventListener("change", setup); document.addEventListener("visibilitychange", setup);
     setup();
-    return ()=>{stop?.();watch.disconnect();reduce.removeEventListener("change",setup);document.removeEventListener("visibilitychange",setup);};
-  },[]);
-  return <canvas ref={canvas} className="noir-title-smoke" aria-hidden="true" />;
+    return () => {
+      clearTimeout(timer); clear(); watch.disconnect(); resize.disconnect();
+      window.removeEventListener("message", receive); window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerdown", move); reduced.removeEventListener("change", setup);
+      document.removeEventListener("visibilitychange", setup);
+    };
+  }, []);
+  return <div ref={host} className="noir-title-smoke" aria-hidden="true" />;
 }

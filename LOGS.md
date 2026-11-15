@@ -131,3 +131,10 @@
 - Browser checked desktop scenes and all five themes on home and inquiry at 320px CSS width: no horizontal overflow. Fixed smoke overflow and garden footer contrast/mobile plant cropping. Motion off pauses rain, hides smoke, persists reload; resumed successfully. No browser errors/warnings captured. Form navigation retains the short three visible fields plus hidden honeypot; no real message sent.
 - Typecheck, 18 regression tests, and production build passed. Reduced-motion is implemented through media-query rules and live media listeners; OS-setting and physical touch-device tests were not performed.
 - No push/deployment; local preview at http://127.0.0.1:3096/.
+
+## 2026-11-14 — Custom artwork and actual profile dispersion
+- Preserved ca58536 on rollback/before-art-direction-20261114.
+- Generated bespoke Tokyo alley and tactile tea botanical artwork; stored optimized project-owned WebP assets. Rebuilt TRON as a unified perspective arena with moving lights/reflections.
+- Ported actual profile fluid-watercolor-study.js solver, retaining license; replaced image input with a measured headline texture. Removed the old puff emitter. Added transparent output, same-origin messaging, renderer teardown, idle pause, and context-loss fallback.
+- Browser verified desktop artwork, actual letter breakup, mobile renderer, Motion teardown, and all five home/form themes at 320px without horizontal overflow. Fixed mobile botanical crop and iframe color-scheme transparency.
+- Typecheck, 18 existing tests, and production build pass. No actual inquiry email sent, no push, no deploy. OS reduced-motion and physical touch-device checks remain unperformed.
