@@ -145,3 +145,10 @@
 - Corrected lost pointer momentum between glyphs; stronger bounded displacement, quicker recovery, and frame-rate-aware delta cap. Verified visible response to a quick browser pointer sweep.
 - Local-only review; no push/deployment. Typecheck and 18 tests passed; build and final mobile checks recorded in completion.
 - Final build passed; desktop and portrait Tokyo/TRON plus illustrated Matcha reviewed at 350px CSS width, with no horizontal overflow observed. Inquiry navigation verified. Browser error/warning log empty. Preview left on TRON.
+
+## 2026-11-14 — Integrated scene motion and Matcha interaction
+- Rollback branch rollback/before-scene-motion-20261114 preserves 6fbaca2.
+- Removed Motion menu control and all stored preference gates; preserved automatic reduced-motion behavior.
+- Added bounded scene-motion renderer: synchronized Tokyo lights/rain/reflections, artwork-aligned TRON light-wall pulses, and sparse Matcha falling leaves/pond ripples.
+- Verified canopy/pond pointer delivery and live leaves/ripples, simplified theme+Doodle menu, Doodle mount/Done, narrow layout without overflow (291px measured CSS width). Scene pointer layer does not capture events. Build, typecheck, and 18 tests passed. OS reduced-motion and physical touch hardware not exercised.
+- Local only. No push, deployment, or real inquiry email.

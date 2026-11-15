@@ -31,5 +31,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
-- Latest local theme revision replaces all cursor spotlights with ambient scenes: Tokyo city/rain, TRON traveling circuit lights, Silver Noir letter-emitted smoke, and Matcha tea landscape. Persist Motion preference before paint; pause ambient motion on forms, document-hidden, user toggle, and reduced-motion. Keep semantic headline readable. No deployment authorized.
+- Theme scenes replace cursor spotlights: Tokyo city/rain, TRON traveling lights, Silver Noir fluid text dispersion, and Matcha illustrated garden. Keep the semantic headline readable. No deployment authorized.
 - Silver Noir now uses the actual profile fluid solver with a headline source texture, not a smoke emitter. Preserve the upstream MIT notice, static semantic text fallback, idle pause, and the narrowly scoped same-origin iframe policy. Tokyo/Matcha use custom WebP artwork; TRON uses a perspective arena. Local review only.
+- Motion is now intrinsic to each theme: no Motion toggle or saved motion preference. Always respect OS reduced-motion, pause hidden/inactive scenes, and keep animation off the form. Matcha canopy/pond interactions must never intercept links, inputs, or Doodle.

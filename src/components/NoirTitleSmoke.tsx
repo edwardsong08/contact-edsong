@@ -23,7 +23,7 @@ export default function NoirTitleSmoke() {
     };
     const setup = () => {
       clearTimeout(timer); clear();
-      if (root.dataset.theme !== "noir" || root.dataset.motion === "off" || reduced.matches || document.hidden) return;
+      if (root.dataset.theme !== "noir" || reduced.matches || document.hidden) return;
       timer = setTimeout(() => {
         const box = element.getBoundingClientRect();
         if (!box.width || !box.height) return;
@@ -72,7 +72,7 @@ export default function NoirTitleSmoke() {
       }
     };
     const watch = new MutationObserver(setup);
-    watch.observe(root, {attributes:true, attributeFilter:["data-theme", "data-motion"]});
+    watch.observe(root, {attributes:true, attributeFilter:["data-theme"]});
     const resize = new ResizeObserver(setup); resize.observe(title);
     window.addEventListener("message", receive); window.addEventListener("pointermove", move, {passive:true});
     window.addEventListener("pointerdown", move, {passive:true});
