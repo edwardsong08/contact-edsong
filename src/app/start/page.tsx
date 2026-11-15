@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import BackLink from "@/components/BackLink";
 import Portrait from "@/components/Portrait";
 import InquiryForm from "@/components/InquiryForm";
 import { normalizeSource } from "@/lib/inquiry";
@@ -18,7 +18,7 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="header">
         <Portrait source={source} />
-        <Link className="portfolio back-link" href={source ? `/?from=${encodeURIComponent(source)}` : "/"} aria-label="Return to home"><span aria-hidden="true">←</span> Home</Link>
+        <BackLink source={source} />
       </header>
       <main id="main" className="inquiry-main">
         <div className="inquiry-content">

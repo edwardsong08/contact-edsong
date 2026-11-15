@@ -28,7 +28,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue); outline-
 }
 .skip-link { position: absolute; top: -100px; left: 24px; padding: 12px; background: white; z-index: 2; }
 .skip-link:focus { top: 15px; }
-.header { display: flex; justify-content: space-between; align-items: center; min-height: 92px; }
+.header { position:relative; z-index:20; display: flex; justify-content: space-between; align-items: center; min-height: 92px; }
 .wordmark { display: inline-flex; align-items: center; min-height: 44px; font-weight: 650; font-size: 19px; line-height: 1.2; letter-spacing: -.045em; transition: color .16s ease; }
 .portfolio { display: inline-flex; align-items: center; min-height: 44px; color: var(--secondary); font-size: 12px; padding: 10px 0; }
 .portfolio span { display: inline-block; margin-left: 5px; }

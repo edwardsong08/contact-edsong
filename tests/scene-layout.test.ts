@@ -20,16 +20,33 @@ test("scene crops preserve proportions and cover phone, tablet and wide screens"
   }
 });
 
-test("portrait tablets use portrait art, including the recomposed Korean garden", () => {
-  assert.equal(sceneLayout(768,1024).imageWidth,941);
+test("garden tablets use their own composition while tall phones retain portrait art", () => {
+  assert.equal(sceneLayout(768,1024).imageWidth,820);
+  assert.equal(sceneLayout(768,1024).imageHeight,1640);
   assert.equal(sceneLayout(1024,768).imageWidth,1672);
   const garden = sceneLayout(768,1024,"garden");
-  assert.equal(garden.imageWidth,941);
-  assert.equal(garden.imageHeight,1672);
-  assert.equal(garden.offsetX,(768-941*garden.scale)*.5);
+  assert.equal(garden.imageWidth,1200);
+  assert.equal(garden.imageHeight,900);
+  assert.equal(garden.offsetX,(768-1200*garden.scale)*.6);
   const phone=sceneLayout(390,844,"garden");
-  assert.equal(phone.imageWidth,941);
-  assert.equal(phone.offsetX,(390-941*phone.scale)*.5);
+  assert.equal(phone.imageWidth,820);
+  assert.equal(phone.offsetX,390-820*phone.scale);
+});
+
+test("garden pavilion remains in frame with a scrollbar at responsive breakpoints", () => {
+  for(const [viewportWidth,height] of [[320,700],[390,844],[600,1000],[601,1000],[768,1024],[1024,768],[1100,1000],[1440,1000],[2560,1080]]) {
+    const width=viewportWidth-15;
+    const layout=sceneLayout(width,height,"garden",viewportWidth);
+    // Measured roof edges in the three final art files, not generated geometry.
+    const [left,right,top]=layout.portrait?[.38,.94,.74]:layout.gardenTablet?[.495,.738,.70]:[.589,.872,.627];
+    const a=layout.toScreen(layout.imageWidth*left,layout.imageHeight*top);
+    const b=layout.toScreen(layout.imageWidth*right,layout.imageHeight*.93);
+    assert(a.x>=0 && b.x<=width,`complete pavilion at ${viewportWidth}x${height}`);
+    assert(a.y>height*(viewportWidth/height>2?.45:.6) && b.y<height,"pavilion remains in lower composition");
+  }
+  assert.equal(sceneLayout(600-15,1000,"garden",600).portrait,true);
+  assert.equal(sceneLayout(601-15,1000,"garden",601).gardenTablet,true);
+  assert.equal(sceneLayout(1334-15,1000,"garden",1334).gardenTablet,false);
 });
 
 test("TRON tall phones keep both side frames and map lights to the raised floor", () => {

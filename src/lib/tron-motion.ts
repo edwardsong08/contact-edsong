@@ -1,6 +1,13 @@
 import { sceneLayout } from "./scene-layout";
 import { TRON_DESKTOP, TRON_MOBILE, sampleLightPath } from "./tron-paths";
 
+const CIRCUIT_STAGES=[
+      {lanes:[4,5],start:1,duration:3.2,reverse:false,power:1.15},
+      {lanes:[0,1],start:4.05,duration:2.9,reverse:true,power:1.35},
+      {lanes:[2,3],start:6.8,duration:3.4,reverse:false,power:1.2},
+    ];
+const PANEL_PASSES=[[6,.055,8],[1.3,.42,3]] as const;
+
 type Pulse = { lane:number; t:number; direction:number; age:number };
 export function createTronMotion(ctx:CanvasRenderingContext2D) {
   let width=0,height=0,time=0,energy=0,lastPress=-10;
@@ -55,7 +62,7 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
       const a=atPoint(at),b=atPoint(to);
       // Quiet the overhead framing; the light walls carry the main motion.
       const sceneWeight=.38+.62*Math.min(1,a.y/(height*.62));
-      const alpha=(1-i/12)**1.7*fade*power*sceneWeight*foregroundOpacity(a.y);
+      const alpha=Math.min(1,(1-i/12)**1.7*fade*power*sceneWeight*foregroundOpacity(a.y));
       ctx.globalAlpha=alpha;ctx.strokeStyle=path.color;
       ctx.lineWidth=path.weight>1?2:1;ctx.shadowColor=path.color;ctx.shadowBlur=i<3?7:0;
       ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
@@ -90,6 +97,52 @@ export function createTronMotion(ctx:CanvasRenderingContext2D) {
         }
       }
     });
+    // One architectural circuit: overhead feeds the walls, the walls converge
+    // at the horizon, then the floor carries the signal toward the visitor.
+    // The same trail function paints its corresponding wet-floor reflection.
+    const cycle=time%15;
+    for(const stage of CIRCUIT_STAGES){
+      const progress=(cycle-stage.start)/stage.duration;
+      if(progress<=0||progress>=1)continue;
+      for(const lane of stage.lanes)trail(lane,stage.reverse?1-progress:progress,stage.power,stage.reverse?-1:1);
+    }
+    // Short sections of the existing side panels wake in a measured sequence.
+    // No free-floating dots, new geometry, or washes across the central copy.
+    for(let lane=0;lane<2;lane++){
+      const points=samples[lane];
+      for(let panel=0;panel<5;panel++){
+        const age=cycle-(3.5+panel*.42);
+        if(age<0||age>2.6)continue;
+        const strength=Math.sin(Math.min(1,age/.55)*Math.PI/2)*Math.max(0,1-age/2.6);
+        const start=Math.floor((.84-panel*.13)*(points.length-1));
+        const end=Math.min(points.length-1,start+10);
+        const floor=samples[lane+2];
+        const floorY=(x:number)=>{
+          for(let index=1;index<floor.length;index++){
+            const a=floor[index-1],b=floor[index];
+            if(x<Math.min(a.x,b.x)||x>Math.max(a.x,b.x))continue;
+            const mix=(x-a.x)/(b.x-a.x||1);
+            return a.y+(b.y-a.y)*mix;
+          }
+          return floor[floor.length-1].y;
+        };
+        const a=points[start],b=points[end];
+        const lowA=floorY(a.x),lowB=floorY(b.x);
+        // A translucent section of the actual wall, bounded by its two rails.
+        const face=ctx.createLinearGradient(0,Math.min(a.y,b.y),0,Math.max(lowA,lowB));
+        face.addColorStop(0,paths[lane].color);face.addColorStop(.7,"transparent");
+        ctx.fillStyle=face;ctx.shadowBlur=0;ctx.globalAlpha=strength*.085*foregroundOpacity(lowA);
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.lineTo(b.x,lowB);ctx.lineTo(a.x,lowA);ctx.closePath();ctx.fill();
+        ctx.strokeStyle=paths[lane].color;ctx.shadowColor=paths[lane].color;
+        for(const [lineWidth,alpha,blur] of PANEL_PASSES){
+          ctx.lineWidth=lineWidth;ctx.shadowBlur=blur;ctx.globalAlpha=strength*alpha*foregroundOpacity(points[start].y);
+          ctx.beginPath();ctx.moveTo(points[start].x,points[start].y);
+          for(let point=start+1;point<=end;point++)ctx.lineTo(points[point].x,points[point].y);
+          ctx.stroke();
+        }
+      }
+    }
     for(const pulse of pulses){pulse.age+=dt;pulse.t+=dt*.27*pulse.direction;trail(pulse.lane,pulse.t,Math.max(0,1-pulse.age/3)*1.4,pulse.direction);}
     pulses=pulses.filter(p=>p.age<3&&p.t>0&&p.t<1);
     ctx.restore();

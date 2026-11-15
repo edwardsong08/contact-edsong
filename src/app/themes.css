@@ -10,25 +10,13 @@ h1 .headline-ending { color:inherit; }
 .theme-atmosphere { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
 .theme-atmosphere > div { display:none; position:absolute; inset:0; overflow:hidden; }
 .primary-button { position:relative; overflow:hidden; isolation:isolate; }
-.noir-title-smoke { display:none; position:absolute; inset:-80px -40px; pointer-events:none; }
-/* WebKit can hit-test a decorative iframe despite pointer-events:none.
-   A transparent surface above it keeps touch in this document; native scrolling
-   remains enabled and the shared pointer handler receives the gesture. */
-@media(pointer:coarse) {
- .noir-title-smoke::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:auto; }
-}
-.noir-title-smoke iframe { display:block; width:100%; height:100%; border:0; opacity:0; transition:opacity .35s ease; }
-[data-theme=noir] [data-smoke-source] { transition:opacity .35s ease; }
-[data-fluid-warming=true] .noir-title-smoke iframe,[data-fluid-ready=true] .noir-title-smoke iframe { opacity:1; transition:none; }
-[data-fluid-ready=true] [data-smoke-source] { opacity:0; transition:none; }
-
-:root[data-theme=tokyo] { --background:#061018; --surface:#111c25; --ink:#f7f1ed; --secondary:#c7c7cc; --blue:#f4a0b7; --button-ink:#221018; --border:#4e424b; --hover:#29232d; --play-1:#edb0b6; --play-2:#ffc07a; --play-3:#a2dce8; --control-radius:10px; --palette-surface:linear-gradient(145deg,#192a36f2,#0b1823f7); --palette-shadow:0 20px 60px #0007,inset 0 1px 0 #ffa7c52b; }
+:root[data-theme=tokyo] { --background:#061018; --surface:#111c25; --ink:#f7f1ed; --secondary:#c7c7cc; --blue:#efbd7a; --button-ink:#211723; --border:#4e424b; --hover:#29232d; --play-1:#edb0b6; --play-2:#ffc07a; --play-3:#a2dce8; --control-radius:10px; --palette-surface:linear-gradient(145deg,#192a36f2,#0b1823f7); --palette-shadow:0 20px 60px #0007,inset 0 1px 0 #ffa7c52b; }
 [data-theme=tokyo] .tokyo-scene { display:block; background:#061018; }
-.tokyo-art { position:absolute; inset:0; background:url('/themes/tokyo-digital.webp') center/cover no-repeat; }
+.tokyo-art { position:absolute; inset:0; background:url('/themes/tokyo-cityscape.webp') center/cover no-repeat; }
 .tokyo-vignette { position:absolute; inset:0; background:linear-gradient(180deg,#04101955,transparent 25%,transparent 75%,#040b12aa),linear-gradient(90deg,#040b1233,transparent 70%); }
-[data-theme=tokyo] .headline-accent { color:#efc0c2; }
-[data-theme=tokyo] .primary-button { background:#f4a0b7; border:1px solid #ffd5e080; border-radius:8px; box-shadow:0 4px 24px #0005,inset 0 1px 0 #ffe4ec55; }
-[data-theme=tokyo] .primary-button:hover { background:#ffb3c8; box-shadow:0 0 24px #fa66972b,inset 0 1px 0 #ffe4ec80; }
+[data-theme=tokyo] .headline-accent { color:#f2c49d; }
+[data-theme=tokyo] .primary-button { background:#efbd7a; border:1px solid #ffe1b280; border-radius:8px; box-shadow:0 4px 24px #0005,inset 0 1px 0 #ffe4ec55; }
+[data-theme=tokyo] .primary-button:hover { background:#f8cc94; box-shadow:0 0 24px #efb36320,inset 0 1px 0 #fff0d580; }
 
 :root[data-theme=neon] { --background:#030a0e; --surface:#08191f; --ink:#e9faff; --secondary:#aac4ce; --blue:#78eaff; --button-ink:#06151b; --border:#2b5662; --hover:#0f2b34; --play-1:#67eaff; --play-2:#ffbc70; --play-3:#d9f9ff; --palette-surface:linear-gradient(145deg,#0e2028f5,#060f15fa); --palette-shadow:0 20px 60px #0008,inset 0 1px 0 #a8f3ff3b; }
 [data-theme=neon] .tron-scene { display:block; background:radial-gradient(ellipse at 50% 83%,#10435455,transparent 55%),#030a0e; }
@@ -37,19 +25,35 @@ h1 .headline-ending { color:inherit; }
 [data-theme=neon] .primary-button { background:linear-gradient(180deg,#d0f8fc,#9fe7f2); color:#05202b; border:1px solid #e3fbff; border-radius:4px; box-shadow:0 0 20px #56dfff16,inset 0 -2px 0 #348b9a45; }
 [data-theme=neon] .primary-button:hover { background:#e5fcff; box-shadow:0 0 36px #56dfff44; }
 
-:root[data-theme=noir] { --background:#1b1c1e; --surface:#242527; --ink:#e9e6df; --secondary:#b8b5b1; --blue:#e0dfdc; --button-ink:#202023; --border:#555553; --hover:#303133; --play-1:#ece9e2; --play-2:#aaa8a6; --play-3:#c6ad8d; }
-[data-theme=noir] .noir-scene { display:block; background:radial-gradient(ellipse at 18% 18%,#cbd0db0a,transparent 65%),linear-gradient(125deg,#242528,#1c1d20 48%,#151618); }
-.noir-grain { position:absolute; inset:0; background:repeating-linear-gradient(115deg,#ffffff01 0 1px,transparent 1px 4px); }
-[data-theme=noir] .noir-title-smoke { display:block; }
+/* Original ink artwork, crisp semantic type, and one selective red. */
+:root[data-theme=noir] { --background:#17191d; --surface:#202227; --ink:#f2f0eb; --secondary:#c5c3c1; --blue:#f25462; --button-ink:#fff7f4; --border:#5c5c60; --hover:#2e2c30; --play-1:#f25462; --play-2:#e5e2dc; --play-3:#989da8; }
+[data-theme=noir] .noir-scene { display:block; background:#17191d; }
+.noir-art { position:absolute; inset:0; background:url('/themes/noir-graphic.webp') center bottom/cover no-repeat; }
+.noir-scene::before { content:""; position:absolute; inset:0 0 auto; height:130px; z-index:1; background:linear-gradient(#090b10a6,transparent); }
+/* Art remains sharp at the edges; a low-key ink wash protects the live type. */
+.noir-scene::after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 43% 44% at 50% 47%,#17191d50,transparent 100%),linear-gradient(0deg,#111318e6,transparent 16%); }
 [data-theme=noir] .intro h1 { font-weight:400; letter-spacing:-.055em; }
-[data-theme=noir] .headline-accent { font-family:Georgia,'Times New Roman',serif; font-style:italic; font-weight:400; letter-spacing:-.05em; color:#e9e6df; }
+[data-theme=noir] .headline-accent { font-family:Georgia,'Times New Roman',serif; font-style:italic; font-weight:400; letter-spacing:-.05em; color:#ef4050; }
 [data-theme=noir] .headline-second { font-weight:300; }
-[data-theme=noir] .primary-button { background:linear-gradient(165deg,#e2dfd9,#cfcdc7); border:1px solid #f7f4eb66; box-shadow:inset 0 1px 0 #fff4,0 4px 16px #0002; color:#202020; border-radius:4px; }
-[data-theme=noir] .portrait img { filter:grayscale(1); }
+[data-theme=noir] .primary-button { background:#bc2336; border:1px solid #e44b5b; box-shadow:inset 0 1px 0 #ffb4b51f,0 4px 18px #0003; color:#fff7f4; border-radius:3px; }
+[data-theme=noir] .portrait img { filter:grayscale(1) contrast(1.12); }
+[data-theme=noir] .settings-trigger svg { filter:drop-shadow(0 1px 1px #07080b) drop-shadow(0 0 2px #07080b); }
+[data-theme=noir] .footer { color:#d6d3ce; text-shadow:0 1px 3px #080a0d,0 0 6px #080a0d; }
+[data-theme=noir] .portrait-blob-label { text-shadow:0 1px 2px #080a0d,0 0 5px #080a0d,0 0 8px #080a0d; }
+[data-theme=noir] ::selection { color:#fff; background:#a62338; }
+@media(max-aspect-ratio:1/1) {
+ .noir-art { background-image:url('/themes/noir-graphic-mobile.webp'); background-position:center bottom; }
+ .noir-scene::after { background:radial-gradient(ellipse 70% 31% at 50% 47%,#17191d66,transparent 100%),linear-gradient(0deg,#111318e6,transparent 16%); }
+}
+/* A phone crop enlarged to tablet width would pull the white roof through
+   the copy. Keep its height and feather its left edge into the ink instead. */
+@media(min-width:601px) and (max-aspect-ratio:1/1) {
+ .noir-art { left:auto; width:50svh; max-width:100%; background-size:cover; background-position:right bottom; mask-image:linear-gradient(90deg,transparent,#000 32%); }
+}
 
 :root[data-theme=matcha] { --background:#f3ead6; --surface:#faf5e9; --ink:#263d2c; --secondary:#4c5946; --blue:#47613d; --button-ink:#fffaf0; --border:#b1b89c; --hover:#e5e6d4; --play-1:#45683f; --play-2:#a27742; --play-3:#667947; --palette-surface:linear-gradient(145deg,#fff9ecf8,#efecddfa); }
 [data-theme=matcha] .garden-scene { display:block; background:#f3ead6; }
-.garden-art { position:absolute; inset:0; background:url('/themes/matcha-korean-soft.webp') center/cover no-repeat; }
+.garden-art { position:absolute; inset:0; background:url('/themes/matcha-hanok.webp') center/cover no-repeat; }
 [data-theme=matcha] .intro h1 { font-family:Georgia,'Times New Roman',serif; font-weight:400; line-height:1.07; letter-spacing:-.06em; }
 [data-theme=matcha] .headline-accent { font-style:italic; font-weight:400; color:#47613d; }
 [data-theme=matcha] .primary-button { background:#365237; border-radius:5px; box-shadow:0 3px 10px #24362215; }
@@ -60,7 +64,7 @@ h1 .headline-ending { color:inherit; }
 /* Preserve the scenery at the edges; a broad veil protects the reading area. */
 body:has(.form-page) .theme-atmosphere::after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 62% 90% at 50% 48%,var(--background) 18%,color-mix(in srgb,var(--background) 94%,transparent) 47%,color-mix(in srgb,var(--background) 48%,transparent) 100%); }
 [data-theme=matcha] body:has(.form-page) .theme-atmosphere::after { background:radial-gradient(ellipse 42% 60% at 50% 48%,#e6e8d344,transparent 85%); }
-[data-theme=noir] body:has(.form-page) .theme-atmosphere::after { display:none; }
+[data-theme=noir] body:has(.form-page) .theme-atmosphere::after { background:radial-gradient(ellipse 48% 80% at 50% 48%,#17191df2 10%,#17191dd9 47%,#17191d33); }
 body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * { animation-play-state:paused!important; }
 [data-theme] .input-group input:focus,[data-theme] .input-group textarea:focus { box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 20%,transparent); }
 
@@ -69,9 +73,7 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 
 }
 @media(prefers-reduced-motion:reduce) { .theme-atmosphere * { animation:none!important; } }
-@media(forced-colors:active) { .theme-atmosphere,.noir-title-smoke { display:none!important; } [data-fluid-ready=true] [data-smoke-source] { color:CanvasText!important; opacity:1!important; } }
-.noir-title-smoke iframe { color-scheme:normal; }
-[data-fluid-ready=true] { user-select:none; }
+@media(forced-colors:active) { .theme-atmosphere { display:none!important; } }
 
 
 [data-theme=matcha] .garden-scene::after { background:linear-gradient(180deg,#f3ead6b3,transparent 15%),linear-gradient(0deg,#f3ead6cc,transparent 16%); }
@@ -82,8 +84,8 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 [data-theme=neon] .intro h1 { font-weight:400; letter-spacing:-.025em; }
 .tokyo-art { background-size:cover; background-position:center bottom; }
 .tokyo-vignette { background:radial-gradient(ellipse at center,#020b142e,transparent 70%),linear-gradient(0deg,#020b14aa,transparent 18%); }
-[data-theme=tokyo] .headline-accent { color:#f6a8bf; text-shadow:0 0 38px #e64f8020; }
-.garden-art { background-position:center bottom; background-size:cover; opacity:1; }
+[data-theme=tokyo] .headline-accent { color:#f2c49d; text-shadow:0 0 38px #efb36312; }
+.garden-art { background-position:60% bottom; background-size:cover; opacity:1; }
 [data-theme=matcha] { --background:#e5e9c6; --surface:#f3f4df; --ink:#244333; --secondary:#405941; --blue:#406343; --control-radius:12px; --palette-surface:linear-gradient(145deg,#faf7eaf5,#e8edd8f7); --palette-shadow:0 18px 45px #293d2924,inset 0 1px 0 #fffbeb; }
 [data-theme=matcha] .garden-scene { background:#e5e9c6; }
 [data-theme=matcha] .garden-scene::after { background:linear-gradient(0deg,#e5e9c6bb,transparent 16%); }
@@ -104,9 +106,15 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 
 /* Keep this aspect-ratio breakpoint and crop in sync with scene-layout.ts. */
 @media(max-aspect-ratio:1/1) {
- .tokyo-art { background-image:url('/themes/tokyo-mobile.webp'); }
+ .tokyo-art { background-image:url('/themes/tokyo-cityscape-mobile.webp'); }
  .tron-art { background-image:url('/themes/tron-original-world-mobile.webp'); }
- .garden-art { background-image:url('/themes/matcha-korean-soft-mobile.webp'); background-position:center bottom; }
+}
+/* Keep the complete pavilion in frame on tablets and near-square windows. */
+@media(max-aspect-ratio:4/3) {
+ .garden-art { background-image:url('/themes/matcha-hanok-tablet.webp'); }
+}
+@media(max-aspect-ratio:3/5) {
+ .garden-art { background-image:url('/themes/matcha-hanok-mobile.webp'); background-position:right bottom; }
 }
 /* Preserve the entire architectural frame on tall phones. The artwork and
    its lights share this width-fit, top-anchored projection (scene-layout.ts). */
@@ -119,18 +127,18 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 @media(prefers-reduced-motion:reduce) { .scene-motion { display:none; } }
 
 /* Theme materials also carry through the small controls and inquiry flow. */
-[data-theme=noir] { --palette-surface:linear-gradient(145deg,#323335f5,#202123fa); --palette-shadow:0 20px 54px #0006,inset 0 1px 0 #eee9df25; }
+[data-theme=noir] { --palette-surface:linear-gradient(145deg,#2c2d30fa,#1c1e22fc); --palette-shadow:0 20px 54px #0006,inset 0 1px 0 #eee9df25; }
 [data-theme=tokyo] .settings-panel { border-color:#8d677844; }
 [data-theme=neon] .settings-panel { border-color:#6cb9c54a; }
 [data-theme=noir] .settings-panel { border-color:#bcb9b238; }
 [data-theme=matcha] .settings-panel { border-color:#697c4e40; }
 [data-theme=neon] .theme-swatch { border-radius:2px; }
 [data-theme=matcha] .theme-swatch { border-radius:6px 3px 6px 3px; }
-[data-theme=noir] .primary-button:hover { background:linear-gradient(165deg,#f0ede6,#dddad3); box-shadow:inset 0 1px 0 #fff6,0 5px 20px #0003; }
+[data-theme=noir] .primary-button:hover { background:#d02a3e; border-color:#f26874; box-shadow:0 5px 20px #0005; }
 [data-theme=neon] .tron-scene::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,#030a0e75,transparent 38%); }
 [data-theme=tokyo] .input-group :is(input,textarea) { border-radius:8px; background:#0e1b25ed; border-color:#71838c; }
 [data-theme=neon] .input-group :is(input,textarea) { border-radius:4px; background:#081820ed; border-color:#58818e; }
-[data-theme=noir] .input-group :is(input,textarea) { border-radius:5px; background:#262729; border-color:#848480; }
+[data-theme=noir] .input-group :is(input,textarea) { border-radius:3px; background:#202227f5; border-color:#85858b; }
 [data-theme=matcha] .input-group :is(input,textarea) { border-radius:6px; background:#faf7e9f5; border-color:#7e8c6d; }
 [data-theme=matcha] .form-title { font-family:Georgia,'Times New Roman',serif; font-weight:400; }
 [data-theme=matcha] .form-heading { position:relative; isolation:isolate; }

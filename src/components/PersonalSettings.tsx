@@ -9,7 +9,7 @@ const themes = [
   ["light", "Default"],
   ["tokyo", "Tokyo Midnight"],
   ["neon", "TRON"],
-  ["noir", "Silver Noir"],
+  ["noir", "Crimson Noir"],
   ["matcha", "Matcha Garden"],
 ] as const;
 

@@ -39,8 +39,10 @@ body { background:var(--background); }
 .settings-trigger:focus-visible svg { stroke-width:2.5; filter:drop-shadow(0 0 2px var(--background)) drop-shadow(0 0 3px var(--blue)); }
 .settings-trigger:disabled { cursor:default; }
 
-/* A compact palette. The check is the sole persistent selection indicator. */
-.settings-panel { position:absolute; right:0; top:58px; width:264px; max-width:calc(100vw - 32px); max-height:calc(100dvh - 104px); overflow-y:auto; padding:10px; backdrop-filter:blur(24px) saturate(115%); border:1px solid color-mix(in srgb,var(--border) 70%,transparent); border-radius:var(--control-radius); background:var(--palette-surface); box-shadow:var(--palette-shadow); transform-origin:calc(100% - 22px) 0; opacity:1; transform:translateY(0) scale(1); transition:opacity .2s ease,transform .32s cubic-bezier(.16,1,.3,1),display .32s allow-discrete; }
+/* A compact tinted surface. Avoid backdrop-filter on this animated layer:
+   it can leave an oversized rectangular sampling area outside the menu.
+   The check is the sole persistent selection indicator. */
+.settings-panel { position:absolute; right:0; top:58px; width:264px; max-width:calc(100vw - 32px); max-height:calc(100dvh - 104px); overflow-y:auto; padding:10px; border:1px solid color-mix(in srgb,var(--border) 70%,transparent); border-radius:var(--control-radius); background:var(--palette-surface); background-color:var(--surface); box-shadow:var(--palette-shadow); transform-origin:calc(100% - 22px) 0; opacity:1; transform:translateY(0) scale(1); transition:opacity .2s ease,transform .32s cubic-bezier(.16,1,.3,1),display .32s allow-discrete; }
 .settings-panel[hidden] { display:none; opacity:0; transform:translateY(-8px) scale(.96); }
 @starting-style { .settings-panel:not([hidden]) { opacity:0; transform:translateY(-8px) scale(.96); } }
 .theme-options { display:grid; gap:2px; }
@@ -54,11 +56,11 @@ body { background:var(--background); }
 .theme-swatch { display:block; width:44px; height:32px; flex:0 0 44px; border-radius:5px; border:1px solid #8883; box-shadow:inset 0 0 0 1px #ffffff0a; transition:transform .25s ease; }
 .theme-option:hover .theme-swatch { transform:translateY(-1px); }
 .swatch-light { background:linear-gradient(#777,#777) center 10px/22px 2px no-repeat,linear-gradient(#0071e3,#0071e3) center 19px/9px 3px no-repeat,#f8f8fa; }
-.swatch-tokyo { background:url('/themes/tokyo-digital.webp') center/cover; }
+.swatch-tokyo { background:url('/themes/tokyo-cityscape.webp') center/cover; }
 .swatch-neon { background:url('/themes/tron-original-world.webp') center/cover; }
-.swatch-noir { background:linear-gradient(125deg,#363739,#17181a); position:relative; }
-.swatch-noir::after { content:"B"; position:absolute; inset:0; display:grid; place-items:center; color:#e9e6df; font:italic 23px Georgia,serif; }
-.swatch-matcha { background:url('/themes/matcha-korean-soft.webp') center/cover; }
+.swatch-noir { background:url('/themes/noir-graphic.webp') right center/cover; position:relative; }
+.swatch-noir::after { content:"B"; position:absolute; inset:0; display:grid; place-items:center; color:#ff6570; font:italic 23px Georgia,serif; }
+.swatch-matcha { background:url('/themes/matcha-hanok.webp') center/cover; }
 .doodle-toggle { width:100%; min-height:54px; margin-top:8px; padding:11px 10px 3px; display:flex; align-items:center; justify-content:space-between; border:0; border-top:1px solid color-mix(in srgb,var(--border) 65%,transparent); background:transparent; color:var(--ink); cursor:pointer; font-size:13px; font-weight:450; }
 .toggle-track { display:block; width:36px; height:22px; padding:3px; border-radius:999px; background:color-mix(in srgb,var(--secondary) 32%,var(--surface)); transition:background .3s ease,box-shadow .3s ease; box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 8%,transparent); }
 .toggle-track > span { display:block; width:16px; height:16px; border-radius:50%; background:var(--ink); box-shadow:0 1px 3px #0003; transition:transform .36s cubic-bezier(.22,1,.36,1); }

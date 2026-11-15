@@ -7,9 +7,11 @@ import { useEffect, useId, useRef, useState } from "react";
 import PortraitMenuIcon from "./PortraitMenuIcon";
 
 const items = [
+  { label: "Home", href: "/", icon: "home" },
   { label: "About me", href: "/about", icon: "about" },
   { label: "Selected work", href: "/portfolio", icon: "work" },
   { label: "Resume", href: "/resume", icon: "resume" },
+  { label: "Contact", href: "/start", icon: "contact" },
 ] as const;
 
 export default function Portrait({ source = "" }: { source?: string }) {
@@ -69,7 +71,7 @@ export default function Portrait({ source = "" }: { source?: string }) {
       <span className="portrait"><Image src="/portrait.png" width={88} height={88} sizes="44px" alt="" /></span>
       <span className="portrait-close" aria-hidden="true"><svg viewBox="0 0 12 12" width="10" height="10"><path className="portrait-menu-cue" d="m3 4.5 3 3 3-3"/><path className="portrait-menu-dismiss" d="m3 3 6 6m0-6L3 9" /></svg></span>
     </button>
-    <svg className="portrait-goo" viewBox="-16 -16 232 212" width="232" height="212" aria-hidden="true" focusable="false">
+    <svg className="portrait-goo" viewBox="-16 -16 264 264" width="264" height="264" aria-hidden="true" focusable="false">
       <defs><filter id={filterId} x="-30%" y="-30%" width="160%" height="160%" colorInterpolationFilters="sRGB">
         <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
         <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
@@ -86,6 +88,7 @@ export default function Portrait({ source = "" }: { source?: string }) {
         <span className="portrait-blob-content">
           <PortraitMenuIcon kind={item.icon} />
         </span>
+        <span className="portrait-current" aria-hidden="true"><svg viewBox="0 0 12 12" width="10" height="10" fill="none"><path d="m2.5 6 2.3 2.3 4.7-4.7" /></svg></span>
         <span className="portrait-blob-label">{item.label}</span>
         <span className="portrait-blob-soon" aria-hidden="true">›</span>
       </Link>)}
