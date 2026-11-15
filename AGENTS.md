@@ -46,3 +46,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 
 - Release authorization (November 15, 2026): Edward approved deploying the reviewed gear, mobile TRON and Silver Noir refinements after successful local checks. This supersedes the preceding local-only boundary for this release. Push the preserved rollback before main; verify the deployed commit and public behavior. Preserve artwork and hidden portfolio.
+
+
+- November 15 follow-up: user authorized deploying only the Matcha gear contrast change, with dark gear/back controls on the form. After that release, explore a partially traditional Korean-inspired Matcha background LOCALLY ONLY. Preserve the current artwork and a rollback; do not deploy the art experiment.

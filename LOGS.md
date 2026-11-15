@@ -206,3 +206,17 @@ All 20 tests, TypeScript, fluid JS syntax and final production build passed. Rol
 ## 2026-11-15 - Approved detail refinement release
 - User authorized deployment after local validation. Confirmed GitHub main is still 00bb13a and personal Coolify application is healthy on main.
 - Preparing the reviewed changes for release through the existing webhook, retaining rollback/before-detail-refinement-20261115. Live verification follows deployment.
+
+
+## Verified detail refinement deployment - November 15, 2026
+Released d44063a36090445bfff9e11c9694a87f223654f6 through main and the signed webhook. Personal Coolify deployment 9gajuahyhvm3e4ttejlzmka5 finished at 2026-11-15 05:19:13 UTC; application running:healthy. Rollback rollback/before-detail-refinement-20261115 (00bb13a) is preserved on GitHub.
+Live edsong.xyz and www.edsong.xyz returned 200; old contact.edsong.xyz/start retained its path and referral query in the redirect. Health and same-origin Noir iframe policy passed. The public fluid asset exactly matches the committed release (comparison uses Git bytes, not Windows checkout line endings). Isolated Chromium/WebKit passed all five themes, revised 44px gear, proportional top-anchored TRON phone composition, Noir touch/recovery, hidden portfolio and home/form/back navigation with no page errors. No actual inquiry sent. Physical phone/native keyboard behavior remains untested. Evidence: artifacts/detail-refinement/live-report.json and live browser captures. Artwork unchanged.
+
+
+## Matcha gear contrast - November 15, 2026 (local)
+User flagged the gear disappearing into Matcha foliage and suggested white. Compared current green, ivory and darker green at 1440/768/390px. Local themes.css now uses warm ivory with a fine dark shadow over the canopy, including hover/open, without a surrounding circle. The light inquiry page retains a dark forest gear. Keyboard focus increases stroke weight. Chromium/WebKit checks passed home/form/back, open/focus and transparent background. Evidence: artifacts/matcha-gear and artifacts/verify-matcha-gear.cjs. Not committed, pushed or deployed; production remains d44063a. Artwork and portfolio visibility unchanged.
+
+
+## 2026-11-15 - Matcha gear release authorized
+- Approved scope: deploy the Matcha gear contrast fix, keeping form gear and back link dark. Local production build and browser checks passed.
+- Subsequent Korean-influenced artwork exploration is local only, after release verification. Preserve current assets and rollback.

@@ -101,3 +101,16 @@ Validation: 21 tests, TypeScript, JS syntax and production build passed. Isolate
 
 ## Detail refinement release authorization - November 15, 2026
 Edward approved deployment of the reviewed local changes. Local acceptance is complete: 21 tests, typecheck, production build, Chromium/WebKit theme and touch checks, and exact Noir headline alignment. Release uses main and the existing signed webhook; rollback/before-detail-refinement-20261115 preserves 00bb13a. Production verification is pending until the deployment completes.
+
+
+## Verified detail refinement deployment - November 15, 2026
+Released d44063a36090445bfff9e11c9694a87f223654f6 through main and the signed webhook. Personal Coolify deployment 9gajuahyhvm3e4ttejlzmka5 finished at 2026-11-15 05:19:13 UTC; application running:healthy. Rollback rollback/before-detail-refinement-20261115 (00bb13a) is preserved on GitHub.
+Live edsong.xyz and www.edsong.xyz returned 200; old contact.edsong.xyz/start retained its path and referral query in the redirect. Health and same-origin Noir iframe policy passed. The public fluid asset exactly matches the committed release (comparison uses Git bytes, not Windows checkout line endings). Isolated Chromium/WebKit passed all five themes, revised 44px gear, proportional top-anchored TRON phone composition, Noir touch/recovery, hidden portfolio and home/form/back navigation with no page errors. No actual inquiry sent. Physical phone/native keyboard behavior remains untested. Evidence: artifacts/detail-refinement/live-report.json and live browser captures. Artwork unchanged.
+
+
+## Matcha gear contrast - November 15, 2026 (local)
+User flagged the gear disappearing into Matcha foliage and suggested white. Compared current green, ivory and darker green at 1440/768/390px. Local themes.css now uses warm ivory with a fine dark shadow over the canopy, including hover/open, without a surrounding circle. The light inquiry page retains a dark forest gear. Keyboard focus increases stroke weight. Chromium/WebKit checks passed home/form/back, open/focus and transparent background. Evidence: artifacts/matcha-gear and artifacts/verify-matcha-gear.cjs. Not committed, pushed or deployed; production remains d44063a. Artwork and portfolio visibility unchanged.
+
+
+## Matcha gear release and local art experiment - November 15, 2026
+User approved releasing warm-white Matcha homepage gear while retaining dark form controls. Build and targeted Chromium/WebKit checks passed. Production branch unchanged at d44063a before release. After deployment verification, create a separate local Matcha background variation influenced by traditional Korean painting, retaining current art and rollback. No art deployment authorized.
