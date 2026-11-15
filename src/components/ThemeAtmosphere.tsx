@@ -13,7 +13,7 @@ export default function ThemeAtmosphere() {
   return <div ref={scene} className="theme-atmosphere" aria-hidden="true">
     <div className="tokyo-scene"><div className="tokyo-art"/><div className="tokyo-rain"/><div className="tokyo-wetlight"/><div className="tokyo-vignette"/></div>
     <div className="tron-scene">
-      <div className="tron-distance"/>
+      <div className="tron-art"/><div className="tron-distance"/>
       <svg className="tron-arena" viewBox="0 0 1600 1000" preserveAspectRatio="none">
         <defs>
           <linearGradient id="arenaFade" x2="0" y2="1"><stop stopColor="#6eeeff" stopOpacity="0"/><stop offset="1" stopColor="#6eeeff" stopOpacity=".35"/></linearGradient>

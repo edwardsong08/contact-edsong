@@ -38,12 +38,12 @@ let config = {
     DYE_RESOLUTION: 1024,
     CAPTURE_RESOLUTION: 512,
     DENSITY_DISSIPATION: 0,
-    VELOCITY_DISSIPATION: new URLSearchParams(location.search).get('refinement') === 'light' || arrivalSmoke ? 5.25 : 4.2,
+    VELOCITY_DISSIPATION: 6.5,
     PRESSURE: 0.8,
     PRESSURE_ITERATIONS: 20,
     CURL: new URLSearchParams(location.search).has('water') ? 5 : 14,
-    SPLAT_RADIUS: 0.16,
-    SPLAT_FORCE: new URLSearchParams(location.search).has('water') ? 320 : 400,
+    SPLAT_RADIUS: 0.23,
+    SPLAT_FORCE: 950,
     SHADING: false,
     COLORFUL: false,
     COLOR_UPDATE_SPEED: 10,
@@ -1174,7 +1174,7 @@ function update () {
 function calcDeltaTime () {
     let now = Date.now();
     let dt = (now - lastUpdateTime) / 1000;
-    dt = Math.min(dt, 0.016666);
+    dt = Math.min(dt, 0.033333);
     lastUpdateTime = now;
     return dt;
 }
@@ -1409,7 +1409,7 @@ function splatPointer (pointer) {
     let dx = pointer.deltaX * config.SPLAT_FORCE;
     let dy = pointer.deltaY * config.SPLAT_FORCE;
     const speed = Math.hypot(dx, dy);
-    const scale = Math.min(1, 18 / Math.max(speed, .001));
+    const scale = Math.min(1, 32 / Math.max(speed, .001));
     splat(pointer.texcoordX, pointer.texcoordY, dx * scale, dy * scale, pointer.color);
 }
 
@@ -1687,12 +1687,14 @@ window.addEventListener('message',event=>{
  const data=event.data;
  if(data?.type==='fluid-visible'){embedVisible=data.visible===true;return;}
  if(data?.type!=='fluid-pointer'||!Number.isFinite(data.x)||!Number.isFinite(data.y)||data.x<0||data.x>1||data.y<0||data.y>1)return;
- if(!hitsPaint(data.x,data.y)){lastEmbeddedPointer=0;return;}
  const pointer=pointers[0],now=performance.now();
  const x=data.x*canvas.width,y=data.y*canvas.height;
  if(now-lastEmbeddedPointer>150)updatePointerDownData(pointer,-1,x,y);
  else updatePointerMoveData(pointer,x,y);
- lastEmbeddedPointer=now;noteGesture(now,data.x,1.-data.y);
+ lastEmbeddedPointer=now;
+ // Keep pointer continuity across letter gaps; apply force only near the ink.
+ if(!hitsPaint(data.x,data.y)){pointer.moved=false;return;}
+ noteGesture(now,data.x,1.-data.y);
 });
 const sourceTexture = gl.createTexture();
 const smokeTexture = gl.createTexture();
@@ -1703,8 +1705,8 @@ const refinedGather=refinedTiming?(refinement==='gather'?1:['balanced','light','
 const lighterMotion=refinedTiming&&(refinement==='light'||arrivalSmoke);
 const activityWidth=64,activityHeight=40;
 const activityData=new Uint8Array(activityWidth*activityHeight*4);
-// Absolute expiry avoids accumulating rounded decrements. Sixty byte levels
-// per second preserves the approved release's 60 Hz pacing (255 / 60 = 4.25s).
+// Absolute expiry avoids rounded decrements. 110 levels/sec gives a responsive
+// typography recovery window of about 2.3 seconds.
 const activityExpires=new Float64Array(activityWidth*activityHeight);
 const activityTexture=gl.createTexture();
 gl.bindTexture(gl.TEXTURE_2D,activityTexture);
@@ -1728,7 +1730,7 @@ function stampActivity(x,y,now){
    const strength=Math.max(0,1-distance/radius);
    const value=Math.round(255*(.9+.1*strength));
    const i=(py*activityWidth+px)*4;
-   if(refinedTiming)activityExpires[i/4]=Math.max(activityExpires[i/4],now+value/60*1000);
+   if(refinedTiming)activityExpires[i/4]=Math.max(activityExpires[i/4],now+value/110*1000);
    activityData[i]=Math.max(activityData[i],value);
    activityData[i+1]=activityData[i];activityData[i+2]=activityData[i];activityData[i+3]=255;
  }
@@ -1752,7 +1754,7 @@ function updateActivity(dt){
  for(let i=0;i<activityData.length;i+=4){
    if(activityData[i]>0){
      const value=refinedTiming
-       ? Math.min(255,Math.max(0,Math.round((activityExpires[i/4]-now)*.06)))
+       ? Math.min(255,Math.max(0,Math.round((activityExpires[i/4]-now)*.11)))
        : Math.max(0,activityData[i]-decay);
      activityData[i]=value;activityData[i+1]=value;activityData[i+2]=value;active=true;
    }
@@ -1966,7 +1968,7 @@ function evolveWisps(dt){
  gl.uniform1i(wispProgram.uniforms.returningPigment,6);
  gl.uniform1f(wispProgram.uniforms.guided,guidedRecovery&&recoveryDensity?1:0);
  gl.uniform1f(wispProgram.uniforms.materialReturn,materialRecovery&&materialEngine?1:0);
- gl.uniform1f(wispProgram.uniforms.recoveryAge,Math.max(0,(performance.now()-lastGesture-550)/1000));
+ gl.uniform1f(wispProgram.uniforms.recoveryAge,Math.max(0,(performance.now()-lastGesture-180)/1000));
  gl.uniform1f(wispProgram.uniforms.mobile,canvas.clientWidth<650?1:0);
  gl.uniform2f(wispProgram.uniforms.flowPixel,velocity.texelSizeX,velocity.texelSizeY);
  gl.uniform1f(wispProgram.uniforms.stepTime,dt);
@@ -2003,8 +2005,8 @@ function restorePainting(dt, initial=false) {
  gl.uniform1f(restoreProgram.uniforms.water,new URLSearchParams(location.search).has('water')?1:0);
  gl.uniform1f(restoreProgram.uniforms.aspect,canvas.width/canvas.height);
  gl.uniform1f(restoreProgram.uniforms.mobile,canvas.clientWidth<650?1:0);
- const idle=Math.max(0,(performance.now()-lastGesture-550)/1000);
- const recovery=hybridMode?1.35:Math.min(3.2,idle*4.);
+ const idle=Math.max(0,(performance.now()-lastGesture-180)/1000);
+ const recovery=hybridMode?2.5:Math.min(3.2,idle*4.);
  gl.uniform1f(restoreProgram.uniforms.recoveryAge,initial?10:idle);
  gl.uniform1f(restoreProgram.uniforms.amount,initial?1:1-Math.exp(-dt*recovery));
  blit(dye.write);

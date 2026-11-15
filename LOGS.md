@@ -138,3 +138,10 @@
 - Ported actual profile fluid-watercolor-study.js solver, retaining license; replaced image input with a measured headline texture. Removed the old puff emitter. Added transparent output, same-origin messaging, renderer teardown, idle pause, and context-loss fallback.
 - Browser verified desktop artwork, actual letter breakup, mobile renderer, Motion teardown, and all five home/form themes at 320px without horizontal overflow. Fixed mobile botanical crop and iframe color-scheme transparency.
 - Typecheck, 18 existing tests, and production build pass. No actual inquiry email sent, no push, no deploy. OS reduced-motion and physical touch-device checks remain unperformed.
+
+## 2026-11-14 — Cinematic illustration and quicker fluid response
+- Saved 2eb5b2f on rollback/before-cinematic-themes-20261114.
+- Added custom desktop/portrait digital Tokyo and TRON art, plus illustrated Matcha pond garden. Prior images preserved.
+- Corrected lost pointer momentum between glyphs; stronger bounded displacement, quicker recovery, and frame-rate-aware delta cap. Verified visible response to a quick browser pointer sweep.
+- Local-only review; no push/deployment. Typecheck and 18 tests passed; build and final mobile checks recorded in completion.
+- Final build passed; desktop and portrait Tokyo/TRON plus illustrated Matcha reviewed at 350px CSS width, with no horizontal overflow observed. Inquiry navigation verified. Browser error/warning log empty. Preview left on TRON.

@@ -66,7 +66,7 @@ export default function NoirTitleSmoke() {
       if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
         title.dataset.fluidReady = "true";
         clearTimeout(settle);
-        settle = setTimeout(() => { delete title.dataset.fluidReady; frame?.contentWindow?.postMessage({type:"fluid-visible",visible:false}, location.origin); }, 6500);
+        settle = setTimeout(() => { delete title.dataset.fluidReady; frame?.contentWindow?.postMessage({type:"fluid-visible",visible:false}, location.origin); }, 3200);
         frame.contentWindow?.postMessage({type:"fluid-visible",visible:true}, location.origin);
         frame.contentWindow?.postMessage({type:"fluid-pointer",x,y}, location.origin);
       }
