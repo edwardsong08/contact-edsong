@@ -58,3 +58,7 @@ Matcha has sparse maple-shaped leaves with slow tumbling motion and three-ring e
 
 ## Control contrast refinement — November 14, 2026
 Rollback: rollback/before-control-contrast-20261114 at 841fe4f. Portrait has a 2px theme-ink border, gear uses a 2px stroke and primary ink, and Back links use 14px semibold text with a larger arrow. Gear keyboard focus thickens the silhouette with a soft halo; the underline pseudo-element is removed. No circular gear container. Local only.
+
+## Silver Noir alignment and finish — November 14, 2026
+Rollback: rollback/before-noir-text-alignment-20261114 at 9e009cc. NoirTitleSmoke now serializes computed typography into an SVG foreignObject and rasterizes the browser-laid-out headline, preserving baseline, kerning, spaces, italics, and responsive wraps. Generation tokens cancel stale async font/image captures; original text remains if capture fails. The fluid and static headline share silver ink. Removed decorative frame lines. User clarified charcoal and soft silver, not an all-black background; final scene uses a subdued graphite gradient and faint ambient silver wash.
+Fluid motion now uses lower curl, broader brush, less granular breakup, gentler velocity decay, and a more gradual local recovery. After 3.8s idle, a 350ms aligned opacity handoff returns the original text before pausing the solver. New interaction cancels the pending pause. Reduced-motion and forced-colors keep readable static text. Local only.

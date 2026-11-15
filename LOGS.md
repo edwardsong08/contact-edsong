@@ -156,3 +156,9 @@
 ## 2026-11-14 — Portrait and navigation contrast
 - Saved rollback/before-control-contrast-20261114. CSS-only portrait border, gear contrast/stroke/focus, and inquiry/portfolio Back-link refinements.
 - Checked shared styles across all five themes; visually reviewed TRON home/form and Matcha form. Escape restores gear focus with 3px stroke and no underline. Browser warning/error log empty. No push or deploy.
+
+## 2026-11-14 — Silver Noir typography and material refinement
+- Preserved 9e009cc on rollback/before-noir-text-alignment-20261114.
+- Replaced stretched canvas word redraw with actual browser text layout capture. Desktop static/effect comparison produced matching baselines and bounds within one pixel at the right edges. Reviewed responsive effect at measured 425px CSS width without overflow, then reset viewport.
+- Removed frame lines; final charcoal/silver palette follows user correction against an all-black page. Retuned fluid breakup/velocity/recovery and added a 350ms final handoff to crisp text.
+- Observed dispersion and full text recovery; no browser errors/warnings. Typecheck, JS syntax, 18 existing tests, and final production build passed. No push/deploy. Preview remains local.

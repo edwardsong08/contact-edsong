@@ -16,15 +16,21 @@ export default function NoirTitleSmoke() {
     let source = "";
     let loaded = false;
     let settle: ReturnType<typeof setTimeout>;
+    let pause: ReturnType<typeof setTimeout>;
+    let generation = 0;
     const clear = () => {
-      clearTimeout(settle); loaded = false;
+      generation++;
+      clearTimeout(settle); clearTimeout(pause); loaded = false;
       delete title.dataset.fluidReady;
       frame?.remove(); frame = null;
     };
     const setup = () => {
       clearTimeout(timer); clear();
       if (root.dataset.theme !== "noir" || reduced.matches || document.hidden) return;
-      timer = setTimeout(() => {
+      timer = setTimeout(async () => {
+        const revision = generation;
+        await document.fonts.ready;
+        if (revision !== generation) return;
         const box = element.getBoundingClientRect();
         if (!box.width || !box.height) return;
         const mask = document.createElement("canvas");
@@ -32,20 +38,32 @@ export default function NoirTitleSmoke() {
         mask.width = Math.round(box.width * dpr); mask.height = Math.round(box.height * dpr);
         const ink = mask.getContext("2d");
         if (!ink) return;
-        ink.scale(dpr, dpr); ink.fillStyle = "white"; ink.fillRect(0, 0, box.width, box.height);
-        ink.fillStyle = "black"; ink.textBaseline = "alphabetic";
-        for (const node of title.querySelectorAll<HTMLElement>("[data-smoke-source]")) {
-          const rect = node.getBoundingClientRect(), style = getComputedStyle(node);
-          const text = node.textContent || "";
-          ink.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-          const metrics = ink.measureText(text);
-          const ascent = metrics.fontBoundingBoxAscent || parseFloat(style.fontSize) * .8;
-          const descent = metrics.fontBoundingBoxDescent || parseFloat(style.fontSize) * .2;
-          ink.save();
-          ink.translate(rect.left - box.left, rect.top - box.top + (rect.height - ascent - descent) / 2 + ascent);
-          ink.scale(rect.width / Math.max(metrics.width, 1), 1); ink.fillText(text, 0, 0); ink.restore();
-        }
-        source = mask.toDataURL("image/png");
+        // Use the browser's HTML text layout, not a second approximation of its
+        // baselines, kerning, italic metrics, whitespace, or responsive wrapping.
+        const clone = title.cloneNode(true) as HTMLElement;
+        clone.querySelector(".noir-title-smoke")?.remove();
+        const originals = [title, ...title.querySelectorAll<HTMLElement>("span,em,br")];
+        const copies = [clone, ...clone.querySelectorAll<HTMLElement>("span,em,br")];
+        const typography = ["font-family", "font-size", "font-weight", "font-style", "font-stretch", "font-kerning", "font-feature-settings", "font-variation-settings", "font-optical-sizing", "line-height", "letter-spacing", "word-spacing", "text-align", "text-indent", "text-transform", "white-space", "word-break", "overflow-wrap", "text-wrap", "direction", "display", "vertical-align"];
+        originals.forEach((node, index) => {
+          const style = getComputedStyle(node);
+          for (const property of typography) copies[index].style.setProperty(property, style.getPropertyValue(property));
+          copies[index].style.color = "black";
+          copies[index].style.textShadow = "none";
+          copies[index].style.opacity = "1";
+        });
+        const titleBox = title.getBoundingClientRect();
+        Object.assign(clone.style, {margin:"0", padding:"0", border:"0", position:"absolute", boxSizing:"border-box", width:`${titleBox.width}px`, height:`${titleBox.height}px`, left:`${titleBox.left-box.left}px`, top:`${titleBox.top-box.top}px`});
+        const markup = new XMLSerializer().serializeToString(clone);
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${box.width}" height="${box.height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:100%;height:100%;background:white">${markup}</div></foreignObject></svg>`;
+        try {
+          const image = new Image();
+          image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+          await image.decode();
+          if (revision !== generation) return;
+          ink.drawImage(image, 0, 0, mask.width, mask.height);
+          source = mask.toDataURL("image/png");
+        } catch { return; /* Keep the original text when rasterization is unavailable. */ }
         frame = document.createElement("iframe");
         frame.title = "Decorative headline dispersion"; frame.tabIndex = -1;
         frame.setAttribute("aria-hidden", "true");
@@ -65,8 +83,13 @@ export default function NoirTitleSmoke() {
       const x = (event.clientX - box.left) / box.width, y = (event.clientY - box.top) / box.height;
       if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
         title.dataset.fluidReady = "true";
-        clearTimeout(settle);
-        settle = setTimeout(() => { delete title.dataset.fluidReady; frame?.contentWindow?.postMessage({type:"fluid-visible",visible:false}, location.origin); }, 3200);
+        clearTimeout(settle); clearTimeout(pause);
+        settle = setTimeout(() => {
+          delete title.dataset.fluidReady;
+          // Let the final fluid detail dissolve into the identically aligned DOM
+          // text before suspending the solver. A new gesture cancels this pause.
+          pause = setTimeout(() => frame?.contentWindow?.postMessage({type:"fluid-visible",visible:false}, location.origin), 350);
+        }, 3800);
         frame.contentWindow?.postMessage({type:"fluid-visible",visible:true}, location.origin);
         frame.contentWindow?.postMessage({type:"fluid-pointer",x,y}, location.origin);
       }

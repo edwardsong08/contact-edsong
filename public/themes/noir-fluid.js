@@ -38,11 +38,11 @@ let config = {
     DYE_RESOLUTION: 1024,
     CAPTURE_RESOLUTION: 512,
     DENSITY_DISSIPATION: 0,
-    VELOCITY_DISSIPATION: 6.5,
+    VELOCITY_DISSIPATION: 4.8,
     PRESSURE: 0.8,
     PRESSURE_ITERATIONS: 20,
-    CURL: new URLSearchParams(location.search).has('water') ? 5 : 14,
-    SPLAT_RADIUS: 0.23,
+    CURL: new URLSearchParams(location.search).has('water') ? 5 : 9,
+    SPLAT_RADIUS: 0.27,
     SPLAT_FORCE: 950,
     SHADING: false,
     COLORFUL: false,
@@ -1776,7 +1776,7 @@ const pigmentNoise = `
  }
  float billows(vec2 q,float t){
    vec2 warp=vec2(noise(q*19.+t*.08),noise(q*23.-t*.06));
-   return .65*noise(q*95.+warp*3.)+.35*noise(q*183.+warp*4.);
+   return .7*noise(q*60.+warp*2.)+.3*noise(q*110.+warp*3.);
  }
 `;
 const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_SHADER, `
@@ -1803,9 +1803,9 @@ const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_S
    float recoveryPattern=noise(q*24.+vec2(3.,7.));
    float spatialElapsed=(1.-texture2D(activity,vUv).r)*3.2;
    float localAge=mix(max(0.,recoveryAge-recoveryPattern*.22),
-     max(0.,spatialElapsed-.9-recoveryPattern*.22),hybrid);
-   float gathering=smoothstep(0.,.7,localAge);
-   float detail=smoothstep(.25,1.25,localAge);
+     max(0.,spatialElapsed-.75-recoveryPattern*.22),hybrid);
+   float gathering=smoothstep(0.,.85,localAge);
+   float detail=smoothstep(.3,1.55,localAge);
    vec2 motion=texture2D(flow,vUv).xy;
    // Recovery is local: areas the pointer has already passed may settle while
    // the active stroke continues, but moving pigment stays out of the way.
@@ -1835,7 +1835,7 @@ const restoreProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_S
    pigment=mix(pigment,nearby,1.-exp(-stepTime*stirred*mix(9.,6.75,lighterMotion)));
    // Keep moving pigment legible long enough to form currents instead of
    // washing the whole territory out in one pass.
-   float thinning=stirred*mix(1.2,9.,smoothstep(.25,.7,billow))*(1.-gathering);
+   float thinning=stirred*mix(1.2,5.5,smoothstep(.25,.7,billow))*(1.-gathering);
    pigment*=exp(-stepTime*thinning*mix(1.,.65,water));
    float materialHandoff=smoothstep(.85,1.45,localAge);
    if(guided>.5 && gathering>0. && disturbed>.001){
@@ -1894,7 +1894,7 @@ const wispProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_SHAD
    // Small curling eddies carry released pigment, never an independent cursor trail.
    vec2 drift=vec2(sin(q.y*85.+clock*.65)*.009/aspect,
      .012+cos(q.x*85.-clock*.55)*.006)*mix(1.,.25,water);
-   float spatialAge=max(0.,(1.-texture2D(activity,vUv).r)*3.2-.9);
+   float spatialAge=max(0.,(1.-texture2D(activity,vUv).r)*3.2-.75);
    float gather=mix(smoothstep(0.,.8,recoveryAge),smoothstep(0.,1.15,spatialAge),hybrid);
    float homeH=1.,homeW=1.;
    vec2 homeUv=(vUv-vec2(.5,.5))/vec2(homeW,homeH)+.5;
@@ -1930,7 +1930,7 @@ const wispProgram = new Program(baseVertexShader, compileShader(gl.FRAGMENT_SHAD
    // then return to baseline decay before the final detail stage.
    wispDecay-=.2*materialReturn*gather*(1.-smoothstep(1.1,1.9,spatialAge));
    vec3 carried=texture2D(previous,uv).rgb*exp(-stepTime*wispDecay);
-   float loss=1.-exp(-stepTime*stirred*mix(1.2,9.,smoothstep(.25,.7,n))*mix(1.,.65,water));
+   float loss=1.-exp(-stepTime*stirred*mix(1.2,5.5,smoothstep(.25,.7,n))*mix(1.,.65,water));
    float h=1.,w=1.;
    vec2 materialUv=(vUv-vec2(.5,.5))/vec2(w,h)+.5;
    vec3 vapor=vec3(0.);

@@ -34,3 +34,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Theme scenes replace cursor spotlights: Tokyo city/rain, TRON traveling lights, Silver Noir fluid text dispersion, and Matcha illustrated garden. Keep the semantic headline readable. No deployment authorized.
 - Silver Noir now uses the actual profile fluid solver with a headline source texture, not a smoke emitter. Preserve the upstream MIT notice, static semantic text fallback, idle pause, and the narrowly scoped same-origin iframe policy. Tokyo/Matcha use custom WebP artwork; TRON uses a perspective arena. Local review only.
 - Motion is now intrinsic to each theme: no Motion toggle or saved motion preference. Always respect OS reduced-motion, pause hidden/inactive scenes, and keep animation off the form. Matcha canopy/pond interactions must never intercept links, inputs, or Doodle.
+
+- Silver Noir should feel like charcoal and soft silver, not a flat black page. No decorative header/footer frame lines. Preserve the normal Noir headline typography during dispersion; use browser-laid-out source capture rather than approximating and stretching individual words.
