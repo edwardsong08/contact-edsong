@@ -1,13 +1,8 @@
+import { createTronMotion } from "./tron-motion";
 type Point = { x: number; y: number };
 type Leaf = { x: number; y: number; targetX: number; targetY: number; age: number; duration: number; size: number; phase: number };
 type Ripple = { x: number; y: number; age: number; scale: number };
-type Curve = [Point, Point, Point, Point];
 const point = (x: number, y: number): Point => ({ x, y });
-const bezier = (p: Curve, t: number): Point => {
-  const s = 1 - t;
-  return point(s*s*s*p[0].x+3*s*s*t*p[1].x+3*s*t*t*p[2].x+t*t*t*p[3].x,
-    s*s*s*p[0].y+3*s*s*t*p[1].y+3*s*t*t*p[2].y+t*t*t*p[3].y);
-};
 
 /** One bounded decorative renderer. No React updates in the animation loop. */
 export function startSceneMotion(canvas: HTMLCanvasElement) {
@@ -19,13 +14,14 @@ export function startSceneMotion(canvas: HTMLCanvasElement) {
   let width = 0, height = 0, frame = 0, previous = 0, clock = 0;
   let theme = "", leaves: Leaf[] = [], ripples: Ripple[] = [];
   let nextLeaf = 4, lastInput = -10, lastPond = -10;
-  let laneEnergy = 0, activeLane = 0;
+  const tron = createTronMotion(ctx);
   const rain = Array.from({length:110}, (_, i) => ({
     x: ((i * 73.71) % 100) / 100, y: ((i * 43.13) % 100) / 100,
     depth: .25 + (i % 7) / 9,
   }));
   const resize = () => {
     width = innerWidth; height = innerHeight;
+    tron.resize(width,height);
     leaves=[];ripples=[];
     const dpr = Math.min(devicePixelRatio || 1, 1.5);
     canvas.width = Math.round(width*dpr); canvas.height = Math.round(height*dpr);
@@ -63,39 +59,6 @@ export function startSceneMotion(canvas: HTMLCanvasElement) {
       ctx.lineWidth=.4+drop.depth*.45;
       ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-1.5,y+4+drop.depth*12);ctx.stroke();
     }
-    ctx.restore();
-  }
-  function lane(curve: Curve, phase: number, color: string, energy: number) {
-    const t=(clock*.16+phase)%1;
-    const fade=Math.min(1,t*12,(1-t)*12);
-    // A tapered tail follows the SAME curve as the painted wall, from horizon out.
-    for(let i=0;i<28;i++) {
-      const u=t-i*.005;
-      if(u<0) continue;
-      const a=bezier(curve,u),b=bezier(curve,Math.max(0,u-.006));
-      const pa=map(a.x,a.y),pb=map(b.x,b.y);
-      const alpha=Math.pow(1-i/28,1.8)*fade*(.5+energy*.4);
-      ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=1.2+u*1.8;
-      ctx.shadowColor=color;ctx.shadowBlur=8;
-      ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.stroke();
-      // Reflection stretches with distance from the horizon, without a second clock.
-      ctx.globalAlpha=alpha*.19;ctx.lineWidth=3+u*5;ctx.shadowBlur=12;
-      ctx.beginPath();ctx.moveTo(pa.x,pa.y+5+u*11);ctx.lineTo(pb.x,pb.y+5+u*11);ctx.stroke();
-    }
-    ctx.shadowBlur=0;ctx.globalAlpha=1;
-  }
-  function tron(dt: number) {
-    laneEnergy=Math.max(0,laneEnergy-dt*.7);
-    const desktop=width>600;
-    const cyan: Curve=desktop
-      ? [point(570,738),point(400,730),point(170,665),point(-40,570)]
-      : [point(435,1340),point(620,1380),point(110,1455),point(-70,1510)];
-    const amber: Curve=desktop
-      ? [point(1100,738),point(1280,730),point(1490,665),point(1720,570)]
-      : [point(530,1340),point(390,1380),point(870,1460),point(1020,1530)];
-    ctx.save();ctx.globalCompositeOperation="screen";
-    lane(cyan,0,"#a8f3ff",activeLane===0?laneEnergy:0);
-    lane(amber,.5,"#ffca88",activeLane===1?laneEnergy:0);
     ctx.restore();
   }
   function releaseLeaf() {
@@ -154,21 +117,21 @@ export function startSceneMotion(canvas: HTMLCanvasElement) {
         releaseLeaf();lastInput=clock;
       }
     }
-    if(theme==="neon"&&event.clientY>height*.72){laneEnergy=1;activeLane=event.clientX<width*.5?0:1;}
+    if(theme==="neon")tron.pointer(event.clientX,event.clientY,event.type==="pointerdown");
   };
   const draw = (now: number) => {
     frame=requestAnimationFrame(draw);
-    if(now-previous<22)return;
+    if(now-previous<(theme==="neon"?14:22))return;
     const dt=Math.min((now-previous)/1000,.05);previous=now;clock+=dt;
     ctx.clearRect(0,0,width,height);
     if(theme==="tokyo")tokyo(dt);
-    else if(theme==="neon")tron(dt);
+    else if(theme==="neon")tron.draw(dt);
     else if(theme==="matcha")garden(dt);
   };
   const sync = () => {
     cancelAnimationFrame(frame);frame=0;ctx.clearRect(0,0,width,height);
     const next=root.dataset.theme||"light";
-    if(next!==theme){leaves=[];ripples=[];clock=0;nextLeaf=4;lastInput=-10;lastPond=-10;laneEnergy=0;theme=next;}
+    if(next!==theme){leaves=[];ripples=[];clock=0;nextLeaf=4;lastInput=-10;lastPond=-10;tron.reset();theme=next;}
     if(!document.hidden&&!reduce.matches&&["tokyo","neon","matcha"].includes(theme)) {
       previous=performance.now();frame=requestAnimationFrame(draw);
     }

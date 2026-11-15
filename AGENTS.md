@@ -36,3 +36,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Motion is now intrinsic to each theme: no Motion toggle or saved motion preference. Always respect OS reduced-motion, pause hidden/inactive scenes, and keep animation off the form. Matcha canopy/pond interactions must never intercept links, inputs, or Doodle.
 
 - Silver Noir should feel like charcoal and soft silver, not a flat black page. No decorative header/footer frame lines. Preserve the normal Noir headline typography during dispersion; use browser-laid-out source capture rather than approximating and stretching individual words.
+
+- TRON direction: preserve the cinematic light-wall composition Edward liked; use original edited desktop/portrait artwork without bikes or tower silhouettes. Do not replace it with simple abstract CSS lines, curvy sculptural worlds, or dense busy architecture. More motion should follow the actual light walls, edge structures and reflections. Silver Noir static-to-interactive typography must remain aligned even after switching themes.

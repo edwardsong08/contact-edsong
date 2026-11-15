@@ -55,7 +55,7 @@ body { background:var(--background); }
 .theme-option:hover .theme-swatch { transform:translateY(-1px); }
 .swatch-light { background:linear-gradient(#777,#777) center 9px/22px 2px no-repeat,linear-gradient(#0071e3,#0071e3) center 17px/9px 3px no-repeat,#f8f8fa; }
 .swatch-tokyo { background:url('/themes/tokyo-digital.webp') center/cover; }
-.swatch-neon { background:url('/themes/tron-cinema.webp') center/cover; }
+.swatch-neon { background:url('/themes/tron-original-world.webp') center/cover; }
 .swatch-noir { background:linear-gradient(125deg,#1b1b1b 20%,#aaa9a3 48%,#353535 70%); }
 .swatch-matcha { background:url('/themes/matcha-painted.webp') center/cover; }
 .doodle-toggle { width:100%; min-height:54px; margin-top:8px; padding:11px 10px 3px; display:flex; align-items:center; justify-content:space-between; border:0; border-top:1px solid color-mix(in srgb,var(--border) 65%,transparent); background:transparent; color:var(--ink); cursor:pointer; font-size:13px; font-weight:450; }

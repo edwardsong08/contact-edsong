@@ -162,3 +162,11 @@
 - Replaced stretched canvas word redraw with actual browser text layout capture. Desktop static/effect comparison produced matching baselines and bounds within one pixel at the right edges. Reviewed responsive effect at measured 425px CSS width without overflow, then reset viewport.
 - Removed frame lines; final charcoal/silver palette follows user correction against an all-black page. Retuned fluid breakup/velocity/recovery and added a 350ms final handoff to crisp text.
 - Observed dispersion and full text recovery; no browser errors/warnings. Typecheck, JS syntax, 18 existing tests, and final production build passed. No push/deploy. Preview remains local.
+
+## 2026-11-14 — Cinematic TRON world and more integrated light
+- Preserved e40c670 at rollback/before-abstract-tron-20261114. Retained earlier accepted composition through custom built-in image edits removing bikes/towers; final desktop and portrait WebP assets are about 175 KB together. Prompts saved in artifacts/tron-final-art-prompts.md.
+- Added mapped multi-path signals, nearby-line illumination and bidirectional click/touch pulses; smooth interpolation, bounded effects and lifecycle guards. No headline/portfolio/backend changes.
+- Isolated localhost browser checks passed: visible changing motion layer, Start/Back navigation, mobile 390x844 without overflow, correct portrait art, reduced-motion static fallback, no page errors. Noir static/effect bounding boxes matched exactly after switching from Default and Matcha, and recovery restored full DOM opacity. Screenshot/report artifacts saved locally.
+- Normal preview tooling became unavailable; unrelated HR browser inspection was auto-review rejected. Used a fresh headless Edge profile only against localhost instead, without accessing existing user tabs.
+- 18 tests and typecheck passed. Local-only preview restarted on 127.0.0.1:3096. No push or deployment.
+- Final production build passed after the mobile framing correction.

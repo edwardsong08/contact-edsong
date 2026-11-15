@@ -70,7 +70,7 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 [data-theme=matcha] .garden-scene::after { background:linear-gradient(180deg,#f3ead6b3,transparent 15%),linear-gradient(0deg,#f3ead6cc,transparent 16%); }
 
 /* Cinematic artwork, kept separate from the moving light and weather layers. */
-.tron-art { position:absolute; inset:0; background:url('/themes/tron-cinema.webp') center/100% 100% no-repeat; }
+.tron-art { position:absolute; inset:0; background:url('/themes/tron-original-world.webp') center/100% 100% no-repeat; }
 [data-theme=neon] .headline-accent { color:#b9f5ff; }
 [data-theme=neon] .intro h1 { font-weight:400; letter-spacing:-.025em; }
 .tokyo-art { background-size:100% 100%; background-position:center; }
@@ -82,7 +82,6 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 [data-theme=matcha] .garden-scene::after { background:linear-gradient(0deg,#e5e9c6bb,transparent 16%); }
 @media(max-width:600px) {
  .tokyo-art { background-size:100% 100%; background-position:center; }
- .tron-art { background-size:100% 100%; background-position:center; }
  .garden-art { background-size:auto 100%; background-position:57% center!important; }
  [data-theme=matcha] .garden-scene::after { background:linear-gradient(0deg,#e5e9c6b3,transparent 20%),linear-gradient(90deg,#e5e9c644,transparent)!important; }
 }
@@ -90,7 +89,8 @@ body:has(.form-page) .theme-atmosphere *, .theme-atmosphere[data-paused=true] * 
 [data-theme=neon] .settings-trigger svg,[data-theme=tokyo] .settings-trigger svg { filter:drop-shadow(0 1px 2px #000) drop-shadow(0 0 4px #000); }
 [data-theme=neon] .footer,[data-theme=tokyo] .footer,[data-theme=neon] .wordmark,[data-theme=tokyo] .wordmark { text-shadow:0 1px 4px #000; }
 
-@media(max-width:600px) { .tokyo-art { background-image:url('/themes/tokyo-mobile.webp'); background-size:cover; } .tron-art { background-image:url('/themes/tron-mobile.webp'); background-size:cover; } }
+@media(max-width:600px) { .tokyo-art { background-image:url('/themes/tokyo-mobile.webp'); background-size:cover; } }
+@media(max-width:600px) { .tron-art { background-image:url('/themes/tron-original-world-mobile.webp'); background-size:100% 100%; } }
 /* Motion now follows the artwork coordinates, not a separate decorative grid. */
 .scene-motion { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 .tokyo-rain,.tokyo-wetlight,.tron-distance,.tron-arena,.tron-horizon,.garden-light { display:none; }
