@@ -24,12 +24,6 @@ export default function PersonalSettings() {
   const previousPath = useRef(pathname);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("edsong-theme");
-      if (themes.some(([id]) => id === saved)) {
-        setTheme(saved!); document.documentElement.dataset.theme = saved!;
-      }
-    } catch { /* Storage is optional. */ }
     setReady(true);
   }, []);
   useEffect(() => {
@@ -52,8 +46,8 @@ export default function PersonalSettings() {
     if (open) panel.current?.querySelector<HTMLButtonElement>('[aria-checked="true"]')?.focus();
   }, [open]);
   function selectTheme(id: string) {
+    // Keep the choice within this visit; a new document starts in Default.
     setTheme(id); document.documentElement.dataset.theme = id;
-    try { localStorage.setItem("edsong-theme", id); } catch { /* Themes work without storage. */ }
   }
   function navigateThemes(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
     let next: number;

@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: "#fbfbfd" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('edsong-theme');if(['light','tokyo','neon','noir','matcha'].includes(t))document.documentElement.dataset.theme=t}catch(e){}` }} /></head><body><SiteNavigationHistory /><ThemeAtmosphere />{children}<PersonalSettings /></body></html>;
+  return <html lang="en" data-theme="light" suppressHydrationWarning><body><SiteNavigationHistory /><ThemeAtmosphere />{children}<PersonalSettings /></body></html>;
 }
