@@ -1,5 +1,7 @@
 # Contact Edward Song
 
+- November 24, 2026 portfolio update: Grantstead uses the current dated public homepage capture; Aesir Core is under In development as Software & hosting. Preserve direct new-tab navigation for projects with livePreview:false, including accurate link semantics, rather than opening a blocked iframe.
+
 Read CONTEXT.md and LOGS.md before making changes. This is Edward's personal inquiry site, independent of TROA and QFIN.
 
 - Canonical host is https://edsong.xyz. profile.edsong.xyz hosts the separate professional profile. Keep permanent old-contact page redirects with paths and referral parameters intact. Keep /api/deploy and /api/inquiry available on the legacy contact hostname so existing hooks and open forms continue working.

@@ -13,6 +13,7 @@ export type Project = {
   featured?: boolean;
   category: "work" | "development" | "personal";
   previewHref?: string;
+  livePreview?: boolean;
   comingSoon?: boolean;
 };
 
@@ -66,8 +67,9 @@ export default function ProjectGallery({ projects }: { projects: Project[] }) {
     </article>;
     return <article key={project.name} className={styles.project}>
       <a href={project.href} target="_blank" rel="noopener noreferrer" className={styles.previewLink}
-        aria-label={`Preview ${project.name}`} aria-haspopup="dialog" onClick={event => {
-          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        aria-label={project.livePreview === false ? `Open ${project.name} in a new tab` : `Preview ${project.name}`}
+        aria-haspopup={project.livePreview === false ? undefined : "dialog"} onClick={event => {
+          if (project.livePreview === false || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
           event.preventDefault(); opener.current = event.currentTarget; setSelected(project);
         }}>
         <div className={styles.preview}><Image src={project.image!} alt={project.alt!} width={1265} height={712}

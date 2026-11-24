@@ -1,5 +1,9 @@
 # Project context
 
+## Portfolio refresh — November 24, 2026
+
+Current requested update refreshes Grantstead's thumbnail to its navy photographic homepage and adds Aesir Core | Software & hosting under In development. Both screenshots were captured from public homepages at 1265 × 712. Grantstead uses grantstead-20261124.jpg to avoid stale optimized-image caches; the old screenshot remains. Aesir Core explicitly disables the live dialog and opens its public site in a new tab because its frame protections deny embedding. Existing projects retain their live previews. Scope is this portfolio update only; release verification is recorded in LOGS.md.
+
 Approved refinement, November 13, 2026: Edward reviewed the local two-page inquiry flow, then explicitly requested deploying it with the shorter description "Websites and web apps. From landing pages to complete platforms." This replaces the first-person homepage draft. The refinement keeps the existing headline, a stronger typographic wordmark, looser headline tracking, a solid gray second headline line, directional navigation arrows, a shorter form introduction, and restrained button feedback. Portfolio navigation stays hidden. Work was prepared on codex/contact-refinements-local from cec9724 and releases through main's existing signed webhook to personal Coolify. The optional local preview is http://127.0.0.1:3096, bound to loopback without a mail credential; production mail configuration remains in Coolify.
 
 Personal website and web application inquiries for Edward Song at https://edsong.xyz. Edward explicitly authorized moving this site to the main domain and the separate professional profile to https://profile.edsong.xyz.

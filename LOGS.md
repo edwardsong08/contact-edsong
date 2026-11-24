@@ -1,5 +1,11 @@
 # Work log
 
+## November 24, 2026 — portfolio thumbnail and Aesir Core
+
+Refreshed Grantstead from its current public homepage and added Aesir Core | Software & hosting under In development, using real 1265 × 712 public homepage captures. Grantstead has a dated asset URL to avoid stale optimized images; its old screenshot is retained. Aesir Core uses a direct new-tab link because its public frame policy denies embedding; other preview dialogs remain unchanged. Documentation updated.
+
+Validation: all 32 existing tests, typecheck, production build and diff check passed. React best-practices review applied to the two changed TSX files; no new dependencies, effects or state. Browser verified loaded thumbnails in the development section, desktop layout, measured 390 × 844 mobile layout without horizontal overflow, and Aesir Core opening its correct public homepage in a new tab without a dialog. Grantstead's iframe is blocked from localhost by its existing public framing policy; verify that preview from the deployed edsong.xyz parent. Sandbox preview server timed out; the normal-permission dev server at 127.0.0.1:3097 served successfully. No forms submitted. Evidence: artifacts/portfolio-20261124/. Release uses main's existing signed deployment hook; live verification follows.
+
 ## 2026-11-13 — approved shorter copy and refinement release
 
 - Edward found the first-person description wordy and approved "Websites and web apps. From landing pages to complete platforms." He then explicitly requested the change and deployment, superseding the initial local-only review boundary.
